@@ -1,4 +1,6 @@
 defmodule Reedly.Core.Test.FeederExEntryFactory do
+  @moduledoc "Factory functions for building FeederEx.Entry structs"
+
   def build do
     %FeederEx.Entry{
       title: Faker.Name.title(),

@@ -46,7 +46,7 @@ defmodule Reedly.Core.Test.FeedParserTest do
     end
   end
 
-  defp success_get_url_mock() do
+  defp success_get_url_mock do
     mock = fn _url -> {:ok, %HTTPoison.Response{body: Faker.Lorem.paragraph()}} end
     {HTTPoison, [], [start: fn -> {:ok, []} end, get: mock]}
   end

@@ -1,5 +1,7 @@
 # Reedly
 
+[![Build Status](https://travis-ci.org/lucerion/reedly.svg?branch=master)](https://travis-ci.org/lucerion/reedly)
+
 Stand-alone RSS aggregator
 
 
@@ -9,10 +11,14 @@ Stand-alone RSS aggregator
 
     mix test
 
-### Type checking
+### Type checker
 
     mix dialyzer
 
-### Code formatting
+### Static code analyzer
+
+    mix credo
+
+### Code formatter
 
     mix format

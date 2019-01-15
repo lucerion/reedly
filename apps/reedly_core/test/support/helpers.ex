@@ -1,4 +1,6 @@
 defmodule Reedly.Core.Test.Helpers do
+  @moduledoc "Tests helper functions"
+
   def feed_to_feed_attributes(feed) do
     %{
       title: feed.title,

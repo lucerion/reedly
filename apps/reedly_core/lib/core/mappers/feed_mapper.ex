@@ -1,8 +1,8 @@
 defmodule Reedly.Core.Mappers.FeedMapper do
   @moduledoc "Feed mapper maps parsed feed to a feed attributes"
 
-  alias Reedly.Core.Mappers.FeedEntryMapper
   alias FeederEx.Feed
+  alias Reedly.Core.Mappers.FeedEntryMapper
 
   @typedoc "FeederEx.Feed type"
   @type feeder_ex_feed :: %Feed{
