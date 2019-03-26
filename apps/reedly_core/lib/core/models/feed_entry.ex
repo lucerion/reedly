@@ -3,6 +3,8 @@ defmodule Reedly.Core.FeedEntry do
 
   use Ecto.Schema
 
+  import Ecto.Changeset
+
   alias Reedly.Core.Feed
 
   @typedoc "FeedEntry model type"
@@ -14,6 +16,22 @@ defmodule Reedly.Core.FeedEntry do
           read: boolean
         }
 
+  @typedoc "Feed entry attributes type"
+  @type attributes :: %{
+          title: String.t(),
+          summary: String.t(),
+          url: String.t(),
+          updated: String.t()
+        }
+
+  @fields ~w[
+    title
+    summary
+    url
+    updated
+    read
+  ]a
+
   schema "feed_entries" do
     field(:title, :string)
     field(:summary, :string)
@@ -24,5 +42,10 @@ defmodule Reedly.Core.FeedEntry do
     belongs_to(:feed, Feed)
 
     timestamps()
+  end
+
+  def changeset(model, attributes \\ %{}) do
+    model
+    |> cast(attributes, @fields)
   end
 end

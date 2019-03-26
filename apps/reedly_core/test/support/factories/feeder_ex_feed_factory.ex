@@ -4,11 +4,11 @@ defmodule Reedly.Core.Test.FeederExFeedFactory do
   def build(entries \\ []) do
     %FeederEx.Feed{
       title: Faker.Name.title(),
-      summary: Faker.Lorem.paragraph(),
+      summary: Faker.Lorem.paragraph(1..3),
       link: Faker.Internet.url(),
       url: Faker.Internet.url(),
-      entries: entries,
-      updated: DateTime.utc_now() |> DateTime.to_string()
+      updated: DateTime.utc_now() |> DateTime.to_string(),
+      entries: entries
     }
   end
 end
