@@ -1,7 +1,7 @@
 defmodule Reedly.Core.Test.Repositories.FeedRepositoryTest do
-  use ExUnit.Case
+  use Reedly.Core.Test.RepoCase
 
-  alias Reedly.Core.{Repo, Repositories.FeedRepository}
+  alias Reedly.Core.Repositories.FeedRepository
   alias Reedly.Core.Test.{Helpers, FeedAttributesFactory, FeedEntryAttributesFactory}
 
   describe "create()" do
