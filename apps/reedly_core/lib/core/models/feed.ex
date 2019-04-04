@@ -5,7 +5,7 @@ defmodule Reedly.Core.Feed do
 
   import Ecto.Changeset
 
-  alias Reedly.Core.FeedEntry
+  alias Reedly.Core.{Feed, FeedEntry}
 
   @typedoc "Feed model type"
   @type t :: %__MODULE__{
@@ -46,6 +46,7 @@ defmodule Reedly.Core.Feed do
     timestamps()
   end
 
+  @spec changeset(%Feed{}, map()) :: Ecto.Changeset.t()
   def changeset(model, attributes \\ %{}) do
     model
     |> cast(attributes, @fields)

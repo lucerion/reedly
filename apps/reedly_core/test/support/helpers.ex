@@ -2,8 +2,9 @@ defmodule Reedly.Core.Test.Helpers do
   @moduledoc "Tests helper functions"
 
   def feed_attributes_from_feed(feed) do
-    feed_attributes = Map.take(feed, ~w[title description url site updated entries]a)
-    Map.put(feed_attributes, :entries, feed_entry_attributes_from_feed_entry(feed_attributes.entries))
+    feed
+    |> Map.take(~w[title description url site updated entries]a)
+    |> Map.update(:entries, [], &feed_entry_attributes_from_feed_entry(&1))
   end
 
   def feed_entry_attributes_from_feed_entry(feed_entry) when is_list(feed_entry),
