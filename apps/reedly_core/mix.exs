@@ -10,7 +10,7 @@ defmodule Reedly.Core.MixProject do
       deps_path: "../../deps",
       elixirc_paths: elixirc_paths(Mix.env()),
       lockfile: "../../mix.lock",
-      elixir: "~> 1.7",
+      elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
       aliases: aliases()
@@ -25,12 +25,13 @@ defmodule Reedly.Core.MixProject do
 
   defp deps do
     [
-      {:ecto_sql, "~> 3.0"},
+      {:ecto_sql, "~> 3.1.0"},
       {:postgrex, "~> 0.14.0"},
-      {:httpoison, "~> 1.4"},
-      {:feeder_ex, "~> 1.1"},
+      {:jason, "~> 1.0.0"},
+      {:httpoison, "~> 1.5.0"},
+      {:feeder_ex, "~> 1.1.0"},
       {:mock, "~> 0.3.0", only: :test},
-      {:faker, "~> 0.11", only: :test}
+      {:faker, "~> 0.12.0", only: :test}
     ]
   end
 
