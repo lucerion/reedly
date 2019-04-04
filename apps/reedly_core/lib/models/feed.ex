@@ -16,16 +16,6 @@ defmodule Reedly.Core.Feed do
           updated: NaiveDateTime.t()
         }
 
-  @typedoc "Feed attributes type"
-  @type attributes :: %{
-          title: String.t(),
-          description: String.t(),
-          url: String.t(),
-          site: String.t(),
-          updated: String.t(),
-          entries: list(FeedEntry.attributes())
-        }
-
   @fields ~w[
     title
     description
@@ -46,7 +36,7 @@ defmodule Reedly.Core.Feed do
     timestamps()
   end
 
-  @spec changeset(%Feed{}, map()) :: Ecto.Changeset.t()
+  @spec changeset(%Feed{}, map) :: Ecto.Changeset.t()
   def changeset(model, attributes \\ %{}) do
     model
     |> cast(attributes, @fields)

@@ -10,14 +10,15 @@ Stand-alone RSS aggregator
     mix deps.get
 
 
+## Dependencies
+
+  * erlang-dev
+  * erlang-dialyzer
+  * erlang-tools
+  * erlang-xmerl
+
+
 ## Development
-
-### Tests
-
-    export TEST_DATABASE_URL="http://user:password@host:port/reedly_test"
-    MIX_ENV=test mix ecto.create
-    MIX_ENV=test mix ecto.migrate
-    mix test
 
 ### Type checker
 
@@ -30,11 +31,3 @@ Stand-alone RSS aggregator
 ### Code formatter
 
     mix format
-
-
-## Dependencies
-
-  * erlang-dev
-  * erlang-dialyzer
-  * erlang-tools
-  * erlang-xmerl

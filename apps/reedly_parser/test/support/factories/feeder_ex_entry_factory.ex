@@ -1,4 +1,4 @@
-defmodule Reedly.Core.Test.FeederExEntryFactory do
+defmodule Reedly.Parser.Test.FeederExEntryFactory do
   @moduledoc "Factory functions for building FeederEx.Entry structs"
 
   def build do

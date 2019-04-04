@@ -4,7 +4,7 @@ defmodule Reedly.Core.Repositories.FeedRepository do
   alias Reedly.Core.{Repo, Feed}
 
   @doc "Create a feed record"
-  @spec create(map()) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
+  @spec create(map) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
   def create(attributes \\ %{}) do
     %Feed{}
     |> Feed.changeset(attributes)

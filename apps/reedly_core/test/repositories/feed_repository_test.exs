@@ -13,7 +13,7 @@ defmodule Reedly.Core.Test.Repositories.FeedRepositoryTest do
 
       {:ok, feed} = FeedRepository.create(feed_attributes)
 
-      assert Helpers.feed_attributes_from_feed(feed) == feed_attributes
+      assert Helpers.feed_attributes(feed) == feed_attributes
     end
   end
 end

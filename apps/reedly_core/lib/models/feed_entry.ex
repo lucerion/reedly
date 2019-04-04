@@ -16,14 +16,6 @@ defmodule Reedly.Core.FeedEntry do
           read: boolean
         }
 
-  @typedoc "Feed entry attributes type"
-  @type attributes :: %{
-          title: String.t(),
-          summary: String.t(),
-          url: String.t(),
-          updated: String.t()
-        }
-
   @fields ~w[
     title
     summary
@@ -44,7 +36,7 @@ defmodule Reedly.Core.FeedEntry do
     timestamps()
   end
 
-  @spec changeset(%FeedEntry{}, map()) :: Ecto.Changeset.t()
+  @spec changeset(%FeedEntry{}, map) :: Ecto.Changeset.t()
   def changeset(model, attributes \\ %{}) do
     model
     |> cast(attributes, @fields)

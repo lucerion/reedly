@@ -1,9 +1,9 @@
-defmodule Reedly.Core.Test.FeedParserTest do
+defmodule Reedly.Parser.Test do
   use ExUnit.Case
   import Mock
 
-  alias Reedly.Core.Parsers.FeedParser
-  alias Reedly.Core.Test.{Helpers, FeederExEntryFactory, FeederExFeedFactory}
+  alias Reedly.Parser
+  alias Reedly.Parser.Test.{Helpers, FeederExEntryFactory, FeederExFeedFactory}
 
   describe "parse()" do
     test "returns a list of feed attributes" do
@@ -12,11 +12,11 @@ defmodule Reedly.Core.Test.FeedParserTest do
       feed_entry_3 = FeederExEntryFactory.build()
       feed_entries = [feed_entry_1, feed_entry_2, feed_entry_3]
       feed = FeederExFeedFactory.build(feed_entries)
-      feed_attributes = Helpers.feeder_ex_feed_to_feed_attributes(feed)
+      feed_attributes = Helpers.feed_attributes(feed)
 
       {:ok, parse_result} =
         with_mocks([success_get_url_mock(), body_parse_success(feed)]) do
-          FeedParser.parse(Faker.Internet.url())
+          Parser.parse(Faker.Internet.url())
         end
 
       assert parse_result == feed_attributes
@@ -27,7 +27,7 @@ defmodule Reedly.Core.Test.FeedParserTest do
 
       {_, parse_result} =
         with_mocks([fail_get_url_mock(error)]) do
-          FeedParser.parse(Faker.Internet.url())
+          Parser.parse(Faker.Internet.url())
         end
 
       assert parse_result == error
@@ -38,7 +38,7 @@ defmodule Reedly.Core.Test.FeedParserTest do
 
       {_, parse_result} =
         with_mocks([success_get_url_mock(), body_parse_failed(error)]) do
-          FeedParser.parse(Faker.Internet.url())
+          Parser.parse(Faker.Internet.url())
         end
 
       assert parse_result == error

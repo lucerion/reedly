@@ -1,4 +1,4 @@
-defmodule Reedly.Core.Test.FeederExFeedFactory do
+defmodule Reedly.Parser.Test.FeederExFeedFactory do
   @moduledoc "Factory functions for building FeederEx.Feed structs"
 
   def build(entries \\ []) do
