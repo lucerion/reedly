@@ -1,7 +1,5 @@
 # Reedly
 
-[![Build Status](https://travis-ci.org/lucerion/reedly.svg?branch=master)](https://travis-ci.org/lucerion/reedly)
-
 Stand-alone RSS aggregator
 
 
