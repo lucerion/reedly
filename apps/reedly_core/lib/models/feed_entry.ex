@@ -16,7 +16,7 @@ defmodule Reedly.Core.FeedEntry do
           read: boolean
         }
 
-  @fields ~w[
+  @allowed_attributes ~w[
     title
     summary
     url
@@ -39,6 +39,6 @@ defmodule Reedly.Core.FeedEntry do
   @spec changeset(%FeedEntry{}, map) :: Ecto.Changeset.t()
   def changeset(model, attributes \\ %{}) do
     model
-    |> cast(attributes, @fields)
+    |> cast(attributes, @allowed_attributes)
   end
 end

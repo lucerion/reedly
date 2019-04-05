@@ -8,6 +8,7 @@ defmodule Reedly.Core.Repo.Migrations.CreateFeedEntries do
       add :url,     :string
       add :updated, :naive_datetime
       add :read,    :boolean, default: false
+
       add :feed_id, references(:feeds)
 
       timestamps()

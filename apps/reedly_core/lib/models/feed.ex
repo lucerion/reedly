@@ -16,7 +16,7 @@ defmodule Reedly.Core.Feed do
           updated: NaiveDateTime.t()
         }
 
-  @fields ~w[
+  @allowed_attributes ~w[
     title
     description
     url
@@ -39,7 +39,7 @@ defmodule Reedly.Core.Feed do
   @spec changeset(%Feed{}, map) :: Ecto.Changeset.t()
   def changeset(model, attributes \\ %{}) do
     model
-    |> cast(attributes, @fields)
+    |> cast(attributes, @allowed_attributes)
     |> cast_assoc(:entries)
   end
 end
