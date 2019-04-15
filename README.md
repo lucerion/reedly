@@ -14,6 +14,7 @@ Stand-alone RSS aggregator
   * erlang-dialyzer
   * erlang-tools
   * erlang-xmerl
+  * erlang-parsetools
 
 
 ## Development

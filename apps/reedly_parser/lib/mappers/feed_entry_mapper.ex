@@ -2,6 +2,7 @@ defmodule Reedly.Parser.Mappers.FeedEntryMapper do
   @moduledoc "Feed entry mapper maps parsed feed entry to a feed entry attributes"
 
   alias FeederEx.Entry
+  alias Reedly.Parser.Helpers.DateTimeHelper
 
   @typedoc "FeederEx.Entry type"
   @type feeder_ex_entry :: %Entry{
@@ -16,7 +17,7 @@ defmodule Reedly.Parser.Mappers.FeedEntryMapper do
           title: String.t(),
           summary: String.t(),
           url: String.t(),
-          updated: String.t()
+          updated: NaiveDateTime.t()
         }
 
   @doc "Maps a list of parsed feed entries to a feed entries attributes"
@@ -30,7 +31,7 @@ defmodule Reedly.Parser.Mappers.FeedEntryMapper do
       title: title,
       summary: summary,
       url: link,
-      updated: updated
+      updated: DateTimeHelper.parse(updated)
     }
   end
 end

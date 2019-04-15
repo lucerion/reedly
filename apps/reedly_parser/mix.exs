@@ -27,6 +27,7 @@ defmodule ReedlyParser.MixProject do
     [
       {:httpoison, "~> 1.5.0"},
       {:feeder_ex, "~> 1.1.0"},
+      {:timex, "~> 3.5.0"},
       {:mock, "~> 0.3.0", only: :test},
       {:faker, "~> 0.12.0", only: :test}
     ]
