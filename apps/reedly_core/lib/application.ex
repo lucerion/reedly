@@ -9,6 +9,7 @@ defmodule Reedly.Core.Application do
     children = [
       worker(Reedly.Core.Repo, [])
     ]
+
     opts = [strategy: :one_for_one, name: Reedly.Core.Supervisor]
 
     Supervisor.start_link(children, opts)
