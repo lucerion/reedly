@@ -4,7 +4,7 @@ defmodule Reedly.Core.Repo.Migrations.CreateFeedEntries do
   def change do
     create table(:feed_entries) do
       add :title,   :string
-      add :summary, :string
+      add :summary, :text
       add :url,     :string
       add :updated, :naive_datetime
       add :read,    :boolean, default: false
