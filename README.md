@@ -10,11 +10,11 @@ Stand-alone RSS aggregator
 
 ## Dependencies
 
-  * erlang-dev
-  * erlang-dialyzer
-  * erlang-tools
-  * erlang-xmerl
-  * erlang-parsetools
+  * erlang-dev (httpoison, timex)
+  * erlang-dialyzer (dialyzer)
+  * erlang-parsetools (timex)
+  * erlang-tools (mock)
+  * erlang-xmerl (feeder_ex)
 
 
 ## Development
