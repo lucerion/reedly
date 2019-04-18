@@ -10,21 +10,15 @@ defmodule Reedly.Parser do
          {:ok, feed, _} <- FeederEx.parse(body) do
       {:ok, FeedMapper.map(feed)}
     else
-      error ->
-        error
+      error -> error
     end
   end
 
   @spec get(String.t()) :: {:ok, String.t()} | {:error, HTTPoison.Error.t()}
   defp get(url) do
-    HTTPoison.start()
-
     case HTTPoison.get(url) do
-      {:ok, %HTTPoison.Response{body: body}} ->
-        {:ok, body}
-
-      error ->
-        error
+      {:ok, %HTTPoison.Response{body: body}} -> {:ok, body}
+      error -> error
     end
   end
 end
