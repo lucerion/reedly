@@ -8,8 +8,7 @@ defmodule Reedly.Parser.Test.Helpers do
   def feed_attributes(feed) do
     %{
       title: feed.title,
-      description: feed.summary,
-      site: feed.link,
+      url: feed.link,
       updated: DateTimeHelper.parse(feed.updated),
       entries: Enum.map(feed.entries, &feed_entry_attributes(&1))
     }

@@ -10,25 +10,22 @@ defmodule Reedly.Core.Feed do
   @typedoc "Feed model type"
   @type t :: %__MODULE__{
           title: String.t(),
-          description: String.t(),
           url: String.t(),
-          site: String.t(),
+          feed_url: String.t(),
           updated: NaiveDateTime.t()
         }
 
   @allowed_attributes ~w[
     title
-    description
     url
-    site
+    feed_url
     updated
   ]a
 
   schema "feeds" do
     field(:title, :string)
-    field(:description, :string)
     field(:url, :string)
-    field(:site, :string)
+    field(:feed_url, :string)
     field(:updated, :naive_datetime)
 
     has_many(:entries, FeedEntry)

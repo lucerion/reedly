@@ -3,9 +3,8 @@ defmodule Reedly.Core.Test.Helpers do
 
   @feed_attributes ~w[
     title
-    description
     url
-    site
+    feed_url
     updated
     entries
   ]a
