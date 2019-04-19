@@ -8,6 +8,7 @@ defmodule Reedly.Parser.Test.FeederExEntryFactory do
       title: Faker.Name.title(),
       summary: Faker.Lorem.paragraph(),
       link: Faker.Internet.url(),
+      id: Faker.Internet.slug(),
       updated: DateTime.utc_now() |> Helpers.format_date_time()
     }
   end

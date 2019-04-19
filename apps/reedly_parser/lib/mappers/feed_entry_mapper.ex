@@ -9,15 +9,17 @@ defmodule Reedly.Parser.Mappers.FeedEntryMapper do
           title: String.t(),
           summary: String.t(),
           link: String.t(),
+          id: String.t(),
           updated: String.t()
         }
 
   @typedoc "Feed entry attributes type"
   @type feed_entry_attributes :: %{
           title: String.t(),
-          summary: String.t(),
+          content: String.t(),
           url: String.t(),
-          updated: NaiveDateTime.t()
+          entity_id: String.t(),
+          published: NaiveDateTime.t()
         }
 
   @doc "Maps a list of parsed feed entries to a feed entries attributes"
@@ -26,12 +28,13 @@ defmodule Reedly.Parser.Mappers.FeedEntryMapper do
 
   @doc "Maps a parsed feed entry to a feed entry attributes"
   @spec map(feeder_ex_entry) :: feed_entry_attributes()
-  def map(%Entry{title: title, summary: summary, link: link, updated: updated}) do
+  def map(%Entry{title: title, summary: summary, link: link, id: id, updated: updated}) do
     %{
       title: title,
-      summary: summary,
+      content: summary,
       url: link,
-      updated: DateTimeHelper.parse(updated)
+      entity_id: id,
+      published: DateTimeHelper.parse(updated)
     }
   end
 end

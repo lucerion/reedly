@@ -17,9 +17,10 @@ defmodule Reedly.Parser.Test.Helpers do
   def feed_entry_attributes(feed_entry) do
     %{
       title: feed_entry.title,
-      summary: feed_entry.summary,
+      content: feed_entry.summary,
       url: feed_entry.link,
-      updated: DateTimeHelper.parse(feed_entry.updated)
+      entity_id: feed_entry.id,
+      published: DateTimeHelper.parse(feed_entry.updated)
     }
   end
 

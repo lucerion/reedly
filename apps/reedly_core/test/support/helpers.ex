@@ -11,9 +11,10 @@ defmodule Reedly.Core.Test.Helpers do
 
   @feed_entry_attributes ~w[
     title
-    summary
+    content
     url
-    updated
+    entity_id
+    published
     read
   ]a
 

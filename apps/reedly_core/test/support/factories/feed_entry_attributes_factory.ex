@@ -4,9 +4,10 @@ defmodule Reedly.Core.Test.FeedEntryAttributesFactory do
   def build do
     %{
       title: Faker.Name.title(),
-      summary: Faker.Lorem.paragraph(),
+      content: Faker.Lorem.paragraph(),
       url: Faker.Internet.url(),
-      updated: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second),
+      entity_id: Faker.Internet.slug(),
+      published: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second),
       read: false
     }
   end

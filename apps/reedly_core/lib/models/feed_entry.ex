@@ -10,25 +10,28 @@ defmodule Reedly.Core.FeedEntry do
   @typedoc "FeedEntry model type"
   @type t :: %__MODULE__{
           title: String.t(),
-          summary: String.t(),
+          content: String.t(),
           url: String.t(),
-          updated: NaiveDateTime.t(),
+          entity_id: String.t(),
+          published: NaiveDateTime.t(),
           read: boolean
         }
 
   @allowed_attributes ~w[
     title
-    summary
+    content
     url
-    updated
+    entity_id
+    published
     read
   ]a
 
   schema "feed_entries" do
     field(:title, :string)
-    field(:summary, :string)
+    field(:content, :string)
     field(:url, :string)
-    field(:updated, :naive_datetime)
+    field(:entity_id, :string)
+    field(:published, :naive_datetime)
     field(:read, :boolean, default: false)
 
     belongs_to(:feed, Feed)
