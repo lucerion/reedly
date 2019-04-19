@@ -1,4 +1,4 @@
-defmodule ReedlyParser.MixProject do
+defmodule Reedly.Parser.MixProject do
   use Mix.Project
 
   def project do
