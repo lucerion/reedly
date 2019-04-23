@@ -3,6 +3,7 @@ defmodule Reedly.Parser.Test.FeederExEntryFactory do
 
   alias Reedly.Parser.Test.Helpers
 
+  @doc "Build FeederEx.Entry struct with data"
   def build do
     %FeederEx.Entry{
       title: Faker.Name.title(),

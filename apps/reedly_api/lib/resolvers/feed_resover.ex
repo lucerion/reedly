@@ -3,6 +3,7 @@ defmodule Reedly.API.Resolvers.FeedResolver do
 
   alias Reedly.Core.{Repositories.FeedRepository, Feed}
 
+  @doc "Create a feed with entries by feed url"
   @spec create(map(), map(), %Absinthe.Resolution{}) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()} | {:error, any()}
   def create(_parent, %{feed_url: feed_url}, _resolution) do
     with {:ok, feed_attributes} <- Reedly.Parser.parse(feed_url),

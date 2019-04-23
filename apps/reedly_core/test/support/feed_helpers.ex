@@ -1,5 +1,5 @@
 defmodule Reedly.Core.Test.FeedHelpers do
-  @moduledoc "Test helpers functions for Feed"
+  @moduledoc "Test helpers functions for feed"
 
   alias Reedly.Core.Test.FeedEntryHelpers
   alias Reedly.Core.{Repo, Feed}
@@ -19,12 +19,14 @@ defmodule Reedly.Core.Test.FeedHelpers do
     entries
   ]a
 
+  @doc "Feed attributes"
   def attributes(feed) do
     feed
     |> Map.take(@attributes_with_relations)
     |> Map.update(:entries, [], &FeedEntryHelpers.attributes(&1))
   end
 
+  @doc "Feed entry attributes with data"
   def build_attributes(entries_attributes \\ []) do
     %{
       title: Faker.Name.title(),
@@ -35,6 +37,7 @@ defmodule Reedly.Core.Test.FeedHelpers do
     }
   end
 
+  @doc "Create a feed with entries"
   def create(attributes \\ %{}, entries_attributes \\ []) do
     full_attributes = Map.merge(build_attributes(entries_attributes), attributes)
 

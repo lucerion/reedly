@@ -5,7 +5,7 @@ defmodule Reedly.Core.Test.Repositories.FeedEntryRepositoryTest do
   alias Reedly.Core.Test.{Helpers, FeedHelpers, FeedEntryHelpers}
 
   describe "all()" do
-    test "return all feed entries" do
+    test "returns all feed entries" do
       {:ok, feed_entry_1} = FeedEntryHelpers.create()
       {:ok, feed_entry_2} = FeedEntryHelpers.create()
       {:ok, feed_entry_3} = FeedEntryHelpers.create()

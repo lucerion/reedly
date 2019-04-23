@@ -5,7 +5,7 @@ defmodule Reedly.Core.Test.Repositories.FeedRepositoryTest do
   alias Reedly.Core.Test.{Helpers, FeedHelpers, FeedEntryHelpers}
 
   describe "create()" do
-    test "creates a feed record" do
+    test "creates a feed" do
       feed_entry_attribute_1 = FeedEntryHelpers.build_attributes()
       feed_entry_attribute_2 = FeedEntryHelpers.build_attributes()
       feed_entries_attributes = [feed_entry_attribute_1, feed_entry_attribute_2]

@@ -3,7 +3,7 @@ defmodule Reedly.Core.Repositories.FeedEntryRepository do
 
   alias Reedly.Core.{Repo, FeedEntry}
 
-  @doc "Returns all feed entries"
+  @doc "All feed entries"
   @spec all() :: list(FeedEntry.t())
   def all, do: Repo.all(FeedEntry)
 end

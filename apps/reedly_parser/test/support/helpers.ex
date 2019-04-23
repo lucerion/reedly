@@ -5,6 +5,7 @@ defmodule Reedly.Parser.Test.Helpers do
 
   alias Reedly.Parser.Helpers.DateTimeHelper
 
+  @doc "Feed attributes"
   def feed_attributes(feed) do
     %{
       title: feed.title,
@@ -14,6 +15,7 @@ defmodule Reedly.Parser.Test.Helpers do
     }
   end
 
+  @doc "Feed entry attributes"
   def feed_entry_attributes(feed_entry) do
     %{
       title: feed_entry.title,

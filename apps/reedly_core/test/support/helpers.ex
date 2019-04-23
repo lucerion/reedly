@@ -1,6 +1,7 @@
 defmodule Reedly.Core.Test.Helpers do
   @moduledoc "Tests helper functions"
 
+  @doc "Checks failed validation type for field"
   def validation_error?({:error, %{errors: errors}}, attribute, error_type),
     do: Enum.any?(errors, &(invalid_attribute?(&1, attribute) && error_type?(&1, error_type)))
 
