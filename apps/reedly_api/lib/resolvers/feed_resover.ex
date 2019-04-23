@@ -1,7 +1,7 @@
 defmodule Reedly.API.Resolvers.FeedResolver do
   @moduledoc "Feed resolvers"
 
-  alias Reedly.Core.{Repositories.FeedRepository, Feed}
+  alias Reedly.Core.{Feed, Repositories.FeedRepository}
 
   @doc "Create a feed with entries by feed url"
   @spec create(map(), map(), %Absinthe.Resolution{}) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()} | {:error, any()}
@@ -11,7 +11,8 @@ defmodule Reedly.API.Resolvers.FeedResolver do
          {:ok, feed} <- FeedRepository.create(full_attributes) do
       {:ok, feed}
     else
-      {:error, changeset} -> {:ok, changeset}
+      {:error, %Ecto.Changeset{} = changeset} -> {:ok, changeset}
+      error -> error
     end
   end
 end

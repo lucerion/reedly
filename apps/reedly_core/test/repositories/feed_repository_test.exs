@@ -1,4 +1,4 @@
-defmodule Reedly.Core.Test.Repositories.FeedRepositoryTest do
+defmodule Reedly.Core.Test.FeedRepositoryTest do
   use Reedly.Core.Test.RepoCase
 
   alias Reedly.Core.Repositories.FeedRepository

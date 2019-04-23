@@ -3,6 +3,8 @@ defmodule Reedly.API.Types.FeedEntryType do
 
   use Absinthe.Schema.Notation
 
+  alias Reedly.API.Resolvers.FeedEntryResolver
+
   @desc "Feed entry type"
   object :feed_entry do
     field(:id, :integer)
@@ -18,7 +20,7 @@ defmodule Reedly.API.Types.FeedEntryType do
   object :feed_entry_queries do
     @desc "All feed entries"
     field :feed_entries, type: list_of(:feed_entry) do
-      resolve(&Reedly.API.Resolvers.FeedEntryResolver.all/3)
+      resolve(&FeedEntryResolver.all/3)
     end
   end
 end

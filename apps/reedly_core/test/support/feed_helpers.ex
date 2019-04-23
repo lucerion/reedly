@@ -1,8 +1,8 @@
 defmodule Reedly.Core.Test.FeedHelpers do
   @moduledoc "Test helpers functions for feed"
 
-  alias Reedly.Core.Test.FeedEntryHelpers
   alias Reedly.Core.{Repo, Feed}
+  alias Reedly.Core.Test.FeedEntryHelpers
 
   @attributes ~w[
     title

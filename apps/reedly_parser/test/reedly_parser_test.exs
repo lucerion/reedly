@@ -1,4 +1,4 @@
-defmodule Reedly.Parser.Test do
+defmodule Reedly.Parser.Test.ParserTest do
   use ExUnit.Case
   import Mock
 
@@ -47,11 +47,11 @@ defmodule Reedly.Parser.Test do
 
   defp success_get_url_mock do
     mock = fn _url -> {:ok, %HTTPoison.Response{body: Faker.Lorem.paragraph()}} end
-    {HTTPoison, [], [start: fn -> {:ok, []} end, get: mock]}
+    {HTTPoison, [], [get: mock]}
   end
 
   defp fail_get_url_mock(error),
-    do: {HTTPoison, [], [start: fn -> {:ok, []} end, get: fn _url -> {:error, error} end]}
+    do: {HTTPoison, [], [get: fn _url -> {:error, error} end]}
 
   defp body_parse_success(feed),
     do: {FeederEx, [], [parse: fn _body -> {:ok, feed, ""} end]}

@@ -1,8 +1,8 @@
-defmodule Reedly.Core.Test.Repositories.FeedEntryRepositoryTest do
+defmodule Reedly.Core.Test.FeedEntryRepositoryTest do
   use Reedly.Core.Test.RepoCase
 
   alias Reedly.Core.Repositories.FeedEntryRepository
-  alias Reedly.Core.Test.{Helpers, FeedHelpers, FeedEntryHelpers}
+  alias Reedly.Core.Test.FeedEntryHelpers
 
   describe "all()" do
     test "returns all feed entries" do
@@ -20,6 +20,6 @@ defmodule Reedly.Core.Test.Repositories.FeedEntryRepositoryTest do
   defp sort_feed_entries_attributes(feed_entries) do
     feed_entries
     |> FeedEntryHelpers.attributes()
-    |> Enum.sort_by(&(&1.entity_id))
+    |> Enum.sort_by(& &1.entity_id)
   end
 end

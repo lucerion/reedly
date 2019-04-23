@@ -30,7 +30,9 @@ defmodule Reedly.API.MixProject do
       {:kronky, "~> 0.5.0"},
       {:plug_cowboy, "~> 2.0.0"},
       {:absinthe_plug, "~> 1.4.0"},
-      {:jason, "~> 1.0.0"}
+      {:jason, "~> 1.0.0"},
+      {:mock, "~> 0.3.0", only: :test},
+      {:faker, "~> 0.12.0", only: :test}
     ]
   end
 
