@@ -22,6 +22,8 @@ defmodule Reedly.Core.Feed do
     updated
   ]a
 
+  @required_attributes ~w[feed_url]a
+
   schema "feeds" do
     field(:title, :string)
     field(:url, :string)
@@ -37,6 +39,8 @@ defmodule Reedly.Core.Feed do
   def changeset(model, attributes \\ %{}) do
     model
     |> cast(attributes, @allowed_attributes)
+    |> validate_required(@required_attributes)
+    |> unique_constraint(:feed_url)
     |> cast_assoc(:entries)
   end
 end

@@ -10,5 +10,7 @@ defmodule Reedly.Core.Repo.Migrations.CreateFeeds do
 
       timestamps()
     end
+
+    create unique_index(:feeds, :feed_url)
   end
 end

@@ -1,32 +1,11 @@
 defmodule Reedly.Core.Test.Helpers do
   @moduledoc "Tests helper functions"
 
-  @feed_attributes ~w[
-    title
-    url
-    feed_url
-    updated
-    entries
-  ]a
+  def validation_error?({:error, %{errors: errors}}, attribute, error_type),
+    do: Enum.any?(errors, &(invalid_attribute?(&1, attribute) && error_type?(&1, error_type)))
 
-  @feed_entry_attributes ~w[
-    title
-    content
-    url
-    entity_id
-    published
-    read
-  ]a
+  defp invalid_attribute?({error_attribute, _}, attribute), do: error_attribute == attribute
 
-  def feed_attributes(feed) do
-    feed
-    |> Map.take(@feed_attributes)
-    |> Map.update(:entries, [], &feed_entry_attributes(&1))
-  end
-
-  defp feed_entry_attributes(feed_entry) when is_list(feed_entry),
-    do: Enum.map(feed_entry, &feed_entry_attributes(&1))
-
-  defp feed_entry_attributes(feed_entry),
-    do: Map.take(feed_entry, @feed_entry_attributes)
+  defp error_type?({_attribute, {_message, [validation: error_type]}}, type), do: error_type == type
+  defp error_type?({_attribute, {_message, [constraint: error_type, constraint_name: _]}}, type), do: error_type == type
 end
