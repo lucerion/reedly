@@ -1,23 +1,15 @@
 defmodule Reedly.Parser do
   @moduledoc "Feed parser gets feed by URL, parses the response and converts it to the feed attributes"
 
-  alias Reedly.Parser.Mappers.FeedMapper
+  alias Reedly.Parser.{Fetcher, Mappers.FeedMapper}
 
   @doc "Parses feed by url"
   @spec parse(String.t()) :: {:ok, FeedMapper.feed_attributes()} | {:error, any}
   def parse(url) do
-    with {:ok, body} <- get(url),
-         {:ok, feed, _} <- FeederEx.parse(body) do
+    with {:ok, xml} <- Fetcher.fetch(url),
+         {:ok, feed, _} <- FeederEx.parse(xml) do
       {:ok, FeedMapper.map(feed)}
     else
-      error -> error
-    end
-  end
-
-  @spec get(String.t()) :: {:ok, String.t()} | {:error, HTTPoison.Error.t()}
-  defp get(url) do
-    case HTTPoison.get(url) do
-      {:ok, %HTTPoison.Response{body: body}} -> {:ok, body}
       error -> error
     end
   end
