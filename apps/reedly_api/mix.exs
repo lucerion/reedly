@@ -26,7 +26,6 @@ defmodule Reedly.API.MixProject do
   defp deps do
     [
       {:reedly_core, in_umbrella: true},
-      {:reedly_parser, in_umbrella: true},
       {:kronky, "~> 0.5.0"},
       {:plug_cowboy, "~> 2.0.0"},
       {:absinthe_plug, "~> 1.4.0"},
@@ -39,7 +38,7 @@ defmodule Reedly.API.MixProject do
   defp aliases do
     [
       dialyzer: "cmd cd ../.. && mix dialyzer",
-      credo: "cmd cd ../.. && mix credo ./apps/reedly_parser"
+      credo: "cmd cd ../.. && mix credo ./apps/reedly_api"
     ]
   end
 end

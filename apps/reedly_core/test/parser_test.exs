@@ -1,21 +1,18 @@
-defmodule Reedly.Parser.Test.ParserTest do
+defmodule Reedly.Core.Test.ParserTest do
   use ExUnit.Case
   import Mock
 
-  alias Reedly.Parser
-  alias Reedly.Parser.Test.{Helpers, FeederExEntryFactory, FeederExFeedFactory}
+  alias Reedly.Core.Parser
+  alias Reedly.Core.Test.FeederExHelpers
 
   describe "parse()" do
     test "returns a list of feed attributes" do
-      feed_entry_1 = FeederExEntryFactory.build()
-      feed_entry_2 = FeederExEntryFactory.build()
-      feed_entry_3 = FeederExEntryFactory.build()
-      feed_entries = [feed_entry_1, feed_entry_2, feed_entry_3]
-      feed = FeederExFeedFactory.build(feed_entries)
-      feed_attributes = Helpers.feed_attributes(feed)
+      feeder_ex_entries = [FeederExHelpers.build_entry(), FeederExHelpers.build_entry(), FeederExHelpers.build_entry()]
+      feeder_ex_feed = FeederExHelpers.build_feed(feeder_ex_entries)
+      feed_attributes = FeederExHelpers.to_feed_attributes(feeder_ex_feed)
 
       {:ok, parse_result} =
-        with_mocks([success_get_url_mock(), body_parse_success(feed)]) do
+        with_mocks([success_get_url_mock(), body_parse_success(feeder_ex_feed)]) do
           Parser.parse(Faker.Internet.url())
         end
 
@@ -53,8 +50,8 @@ defmodule Reedly.Parser.Test.ParserTest do
   defp fail_get_url_mock(error),
     do: {HTTPoison, [], [get: fn _url -> {:error, error} end]}
 
-  defp body_parse_success(feed),
-    do: {FeederEx, [], [parse: fn _body -> {:ok, feed, ""} end]}
+  defp body_parse_success(feeder_ex_feed),
+    do: {FeederEx, [], [parse: fn _body -> {:ok, feeder_ex_feed, ""} end]}
 
   defp body_parse_failed(error),
     do: {FeederEx, [], [parse: fn _body -> {:error, error} end]}

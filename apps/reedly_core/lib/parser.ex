@@ -1,7 +1,7 @@
-defmodule Reedly.Parser do
+defmodule Reedly.Core.Parser do
   @moduledoc "Feed parser gets feed by URL, parses the response and converts it to the feed attributes"
 
-  alias Reedly.Parser.{Fetcher, Mappers.FeedMapper}
+  alias Reedly.Core.{Fetcher, Mappers.FeedMapper}
 
   @doc "Parses feed by url"
   @spec parse(String.t()) :: {:ok, FeedMapper.feed_attributes()} | {:error, any}

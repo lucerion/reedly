@@ -1,6 +1,6 @@
 # Reedly Core
 
-Data access layer
+Data access layer and business logic
 
 
 ## Setup

@@ -1,7 +1,7 @@
-defmodule Reedly.Parser.Test.DateTimeHelperTest do
+defmodule Reedly.Core.Test.DateTimeHelperTest do
   use ExUnit.Case
 
-  alias Reedly.Parser.Helpers.DateTimeHelper
+  alias Reedly.Core.Helpers.DateTimeHelper
 
   describe "parse()" do
     test "returns a parsed date time when date time string is valid" do

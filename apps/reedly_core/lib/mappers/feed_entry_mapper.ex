@@ -1,8 +1,8 @@
-defmodule Reedly.Parser.Mappers.FeedEntryMapper do
+defmodule Reedly.Core.Mappers.FeedEntryMapper do
   @moduledoc "Feed entry mapper maps parsed feed entry to a feed entry attributes"
 
   alias FeederEx.Entry
-  alias Reedly.Parser.Helpers.DateTimeHelper
+  alias Reedly.Core.Helpers.DateTimeHelper
 
   @typedoc "FeederEx.Entry type"
   @type feeder_ex_entry :: %Entry{

@@ -1,4 +1,4 @@
-defmodule Reedly.Parser.Fetcher do
+defmodule Reedly.Core.Fetcher do
   @moduledoc "Fetches feed xml from the Internet"
 
   @doc "Fetch feed xml by url"

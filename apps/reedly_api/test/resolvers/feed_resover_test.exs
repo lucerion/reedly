@@ -43,11 +43,11 @@ defmodule Reedly.API.Test.FeedResolverTest do
 
   defp success_parsing() do
     mock = fn _feed_url -> {:ok, %{}} end
-    {Reedly.Parser, [], [parse: mock]}
+    {Reedly.Core.Parser, [], [parse: mock]}
   end
 
   defp failed_parsing(error_message) do
     mock = fn _feed_url -> {:error, error_message} end
-    {Reedly.Parser, [], [parse: mock]}
+    {Reedly.Core.Parser, [], [parse: mock]}
   end
 end
