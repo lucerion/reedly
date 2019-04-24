@@ -1,5 +1,5 @@
 defmodule Reedly.Core.Fetcher do
-  @moduledoc "Fetches feed xml from the Internet"
+  @moduledoc "Fetches feed xml"
 
   @doc "Fetch feed xml by url"
   @spec fetch(String.t()) :: {:ok, String.t()} | {:error, HTTPoison.Error.t()}
