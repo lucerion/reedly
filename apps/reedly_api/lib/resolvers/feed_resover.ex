@@ -7,7 +7,7 @@ defmodule Reedly.API.Resolvers.FeedResolver do
   @spec create(map(), map(), %Absinthe.Resolution{}) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()} | {:error, any()}
   def create(_parent, %{feed_url: feed_url}, _resolution) do
     with {:ok, xml} <- Fetcher.fetch(feed_url),
-         {:ok, feed_attributes} <- Parser.parse(feed_url),
+         {:ok, feed_attributes} <- Parser.parse(xml),
          full_attributes = Map.put(feed_attributes, :feed_url, feed_url),
          {:ok, feed} <- FeedRepository.create(full_attributes) do
       {:ok, feed}
