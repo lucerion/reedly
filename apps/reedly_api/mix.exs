@@ -38,7 +38,8 @@ defmodule Reedly.API.MixProject do
   defp aliases do
     [
       dialyzer: "cmd cd ../.. && mix dialyzer",
-      credo: "cmd cd ../.. && mix credo ./apps/reedly_api"
+      credo: "cmd cd ../.. && mix credo ./apps/reedly_api",
+      check: "cmd mix credo && mix dialyzer && mix test"
     ]
   end
 end

@@ -40,7 +40,10 @@ defmodule Reedly.Core.MixProject do
   defp aliases do
     [
       dialyzer: "cmd cd ../.. && mix dialyzer",
-      credo: "cmd cd ../.. && mix credo ./apps/reedly_core"
+      credo: "cmd cd ../.. && mix credo ./apps/reedly_core",
+      setup: ["ecto.create", "ecto.migrate"],
+      reset: ["ecto.drop", "setup"],
+      check: "cmd mix credo && mix dialyzer && mix test"
     ]
   end
 

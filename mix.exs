@@ -5,7 +5,8 @@ defmodule Reedly.MixProject do
     [
       apps_path: "apps",
       start_permanent: Mix.env() == :prod,
-      deps: deps()
+      deps: deps(),
+      aliases: aliases()
     ]
   end
 
@@ -13,6 +14,12 @@ defmodule Reedly.MixProject do
     [
       {:dialyxir, "~> 0.5", only: :dev, runtime: false},
       {:credo, "~> 1.0.0", only: :dev, runtime: false}
+    ]
+  end
+
+  defp aliases do
+    [
+      check: "cmd mix credo && mix dialyzer && mix test"
     ]
   end
 end
