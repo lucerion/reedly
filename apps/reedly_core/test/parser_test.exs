@@ -7,8 +7,7 @@ defmodule Reedly.Core.Test.ParserTest do
 
   describe "parse()" do
     test "returns a list of feed attributes" do
-      feeder_ex_entries = [FeederExHelpers.build_entry(), FeederExHelpers.build_entry(), FeederExHelpers.build_entry()]
-      feeder_ex_feed = FeederExHelpers.build_feed(feeder_ex_entries)
+      feeder_ex_feed = FeederExHelpers.build_feed(entries_count: 3)
       feed_attributes = FeederExHelpers.to_feed_attributes(feeder_ex_feed)
 
       {:ok, parse_result} =

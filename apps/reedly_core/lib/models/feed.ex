@@ -15,14 +15,18 @@ defmodule Reedly.Core.Feed do
           updated: NaiveDateTime.t()
         }
 
-  @allowed_attributes ~w[
+  @create_allowed_attributes ~w[
     title
     url
     feed_url
     updated
   ]a
+  @create_required_attributes ~w[feed_url]a
 
-  @required_attributes ~w[feed_url]a
+  @update_allowed_attributes ~w[
+    title
+    updated
+  ]a
 
   schema "feeds" do
     field(:title, :string)
@@ -30,17 +34,24 @@ defmodule Reedly.Core.Feed do
     field(:feed_url, :string)
     field(:updated, :naive_datetime)
 
-    has_many(:entries, FeedEntry)
+    has_many(:entries, FeedEntry, on_delete: :delete_all)
 
     timestamps()
   end
 
-  @spec changeset(%Feed{}, map) :: Ecto.Changeset.t()
-  def changeset(model, attributes \\ %{}) do
-    model
-    |> cast(attributes, @allowed_attributes)
-    |> validate_required(@required_attributes)
+  @spec create_changeset(%Feed{}, map) :: Ecto.Changeset.t()
+  def create_changeset(%Feed{} = feed, attributes \\ %{}) do
+    feed
+    |> cast(attributes, @create_allowed_attributes)
+    |> validate_required(@create_required_attributes)
     |> unique_constraint(:feed_url)
     |> cast_assoc(:entries)
+  end
+
+  @spec update_changeset(%Feed{}, map) :: Ecto.Changeset.t()
+  def update_changeset(%Feed{} = feed, attributes) do
+    feed
+    |> cast(attributes, @update_allowed_attributes)
+    |> put_assoc(:entries, feed.entries ++ attributes.entries)
   end
 end

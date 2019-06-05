@@ -5,7 +5,7 @@ defmodule Reedly.Core.Repo.Migrations.CreateFeeds do
     create table(:feeds) do
       add :title,       :string
       add :url,         :string
-      add :feed_url,    :string
+      add :feed_url,    :string, null: false
       add :updated,     :naive_datetime
 
       timestamps()

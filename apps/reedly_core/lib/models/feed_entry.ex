@@ -40,8 +40,8 @@ defmodule Reedly.Core.FeedEntry do
   end
 
   @spec changeset(%FeedEntry{}, map) :: Ecto.Changeset.t()
-  def changeset(model, attributes \\ %{}) do
-    model
+  def changeset(%FeedEntry{} = feed_entry, attributes \\ %{}) do
+    feed_entry
     |> cast(attributes, @allowed_attributes)
   end
 end

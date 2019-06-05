@@ -1,8 +1,10 @@
 defmodule Reedly.API.Test.FeedResolverTest do
   use ExUnit.Case
+  use Reedly.Core.Test.RepoCase
   import Mock
 
   alias Reedly.API.Resolvers.FeedResolver
+  alias Reedly.Core.Test.Helpers
 
   describe "create()" do
     test "creates a feed by feed_url" do
@@ -25,7 +27,7 @@ defmodule Reedly.API.Test.FeedResolverTest do
           FeedResolver.create(nil, args, nil)
         end
 
-      assert Reedly.Core.Test.Helpers.validation_error?({:error, changeset}, :feed_url, :required) == true
+      assert Helpers.validation_error?({:error, changeset}, :feed_url, :required) == true
     end
 
     test "fails if url fetch is failed" do

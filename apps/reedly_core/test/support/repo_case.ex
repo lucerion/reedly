@@ -3,6 +3,7 @@ defmodule Reedly.Core.Test.RepoCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox
   alias Reedly.Core.Repo
 
   using do
@@ -14,6 +15,12 @@ defmodule Reedly.Core.Test.RepoCase do
   end
 
   setup tags do
-    Ecto.Adapters.SQL.Sandbox.checkout(Repo)
+    :ok = Sandbox.checkout(Repo)
+
+    unless tags[:async] do
+      Sandbox.mode(Repo, {:shared, self()})
+    end
+
+    :ok
   end
 end

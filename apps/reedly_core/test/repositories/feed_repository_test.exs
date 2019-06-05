@@ -2,14 +2,25 @@ defmodule Reedly.Core.Test.FeedRepositoryTest do
   use Reedly.Core.Test.RepoCase
 
   alias Reedly.Core.Repositories.FeedRepository
-  alias Reedly.Core.Test.{Helpers, FeedHelpers, FeedEntryHelpers}
+  alias Reedly.Core.Test.{Helpers, FeedHelpers}
+
+  describe "all()" do
+    test "returns feeds with their entries" do
+      FeedHelpers.create(entries_count: 1)
+      FeedHelpers.create(entries_count: 2)
+      FeedHelpers.create(entries_count: 3)
+
+      feeds = FeedRepository.all()
+      entries = Enum.flat_map(feeds, & &1.entries)
+
+      assert length(feeds) == 3
+      assert length(entries) == 6
+    end
+  end
 
   describe "create()" do
     test "creates a feed" do
-      feed_entry_attribute_1 = FeedEntryHelpers.build_attributes()
-      feed_entry_attribute_2 = FeedEntryHelpers.build_attributes()
-      feed_entries_attributes = [feed_entry_attribute_1, feed_entry_attribute_2]
-      feed_attributes = FeedHelpers.build_attributes(feed_entries_attributes)
+      feed_attributes = FeedHelpers.build_attributes(entries_count: 2)
 
       {:ok, feed} = FeedRepository.create(feed_attributes)
 
@@ -27,6 +38,19 @@ defmodule Reedly.Core.Test.FeedRepositoryTest do
       result = FeedRepository.create(feed_attributes)
 
       assert Helpers.validation_error?(result, :feed_url, :unique) == true
+    end
+  end
+
+  describe "update()" do
+    test "updates a feed" do
+      {:ok, feed} = FeedHelpers.create(entries_count: 2)
+
+      new_feed_attributes = FeedHelpers.build_attributes(entries_count: 2)
+      {:ok, updated_feed} = FeedRepository.update(feed, new_feed_attributes)
+
+      refute feed.title == updated_feed.title
+      refute feed.updated == updated_feed.updated
+      assert length(updated_feed.entries) == 4
     end
   end
 end

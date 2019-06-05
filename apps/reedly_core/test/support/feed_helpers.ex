@@ -2,7 +2,7 @@ defmodule Reedly.Core.Test.FeedHelpers do
   @moduledoc "Test helpers functions for feed"
 
   alias Reedly.Core.{Repo, Feed}
-  alias Reedly.Core.Test.FeedEntryHelpers
+  alias Reedly.Core.Test.{FeedEntryHelpers, Helpers}
 
   @attributes ~w[
     title
@@ -19,30 +19,46 @@ defmodule Reedly.Core.Test.FeedHelpers do
     entries
   ]a
 
-  @doc "Feed attributes"
-  def attributes(feed) do
+  @doc "Get feed attributes"
+  def attributes(%Feed{} = feed) do
     feed
     |> Map.take(@attributes_with_relations)
     |> Map.update(:entries, [], &FeedEntryHelpers.attributes(&1))
   end
 
-  @doc "Feed entry attributes with data"
-  def build_attributes(entries_attributes \\ []) do
+  @doc "Build feed attributes"
+  def build_attributes(entries: entries) do
     %{
       title: Faker.Name.title(),
       url: Faker.Internet.url(),
       feed_url: Faker.Internet.url(),
-      updated: NaiveDateTime.utc_now() |> NaiveDateTime.truncate(:second),
-      entries: entries_attributes
+      updated: Helpers.random_naive_date_time(truncate: :second),
+      entries: entries
     }
   end
 
-  @doc "Create a feed with entries"
-  def create(attributes \\ %{}, entries_attributes \\ []) do
-    full_attributes = Map.merge(build_attributes(entries_attributes), attributes)
+  def build_attributes(entries_count: entries_count) when entries_count <= 0,
+    do: build_attributes(entries: [])
 
+  def build_attributes(entries_count: entries_count) do
+    entries = FeedEntryHelpers.build_attributes(count: entries_count)
+    build_attributes(entries: entries)
+  end
+
+  @doc "Create a feed"
+  def create(entries_count: entries_count) do
+    build_attributes(entries_count: entries_count)
+    |> create()
+  end
+
+  def create(entries: entries) do
+    build_attributes(entries: entries)
+    |> create()
+  end
+
+  def create(attributes) do
     %Feed{}
-    |> Ecto.Changeset.cast(full_attributes, @attributes)
+    |> Ecto.Changeset.cast(attributes, @attributes)
     |> Ecto.Changeset.cast_assoc(:entries)
     |> Repo.insert()
   end

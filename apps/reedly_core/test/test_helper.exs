@@ -1,3 +1,6 @@
+Application.ensure_all_started(:bypass)
+
 ExUnit.start()
 Faker.start()
-Reedly.Core.Repo.start_link()
+
+Ecto.Adapters.SQL.Sandbox.mode(Reedly.Core.Repo, :manual)
