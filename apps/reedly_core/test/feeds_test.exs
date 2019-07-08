@@ -1,9 +1,9 @@
-defmodule Reedly.Core.Test.UpdaterTest do
+defmodule Reedly.Core.Test.FeedsTest do
   use ExUnit.Case
   use Reedly.Core.Test.RepoCase
   import Mock
 
-  alias Reedly.Core.Updater
+  alias Reedly.Core.Feeds
   alias Reedly.Core.Test.{Helpers, FeedHelpers, FeedEntryHelpers}
 
   describe "update/1" do
@@ -12,8 +12,8 @@ defmodule Reedly.Core.Test.UpdaterTest do
       new_attributes = FeedHelpers.build_attributes(entries_count: 2)
 
       {:ok, updated_feed} =
-        with_mocks([get_mock(), parse_mock(new_attributes)]) do
-          Updater.update(feed)
+        with_mocks([get_mock(), parse_mock(), map_mock(new_attributes)]) do
+          Feeds.update(feed)
         end
 
       assert length(updated_feed.entries) == 5
@@ -27,8 +27,8 @@ defmodule Reedly.Core.Test.UpdaterTest do
       {:ok, feed} = FeedHelpers.create(entries: entries)
 
       {:ok, updated_feed} =
-        with_mocks([get_mock(), parse_mock(new_attributes)]) do
-          Updater.update(feed)
+        with_mocks([get_mock(), parse_mock(), map_mock(new_attributes)]) do
+          Feeds.update(feed)
         end
 
       assert updated_feed.entries == feed.entries
@@ -40,6 +40,9 @@ defmodule Reedly.Core.Test.UpdaterTest do
   defp get_mock,
     do: {Reedly.Core.Helpers.HTTPHelper, [], [get: fn _url -> {:ok, "body"} end]}
 
-  defp parse_mock(attributes),
-    do: {Reedly.Core.Parser, [], [parse: fn _body -> {:ok, attributes} end]}
+  defp parse_mock,
+    do: {FeederEx, [], [parse: fn _body -> {:ok, %{}, "message"} end]}
+
+  defp map_mock(attributes),
+    do: {Reedly.Core.Mappers.FeedMapper, [], [map: fn _feed -> attributes end]}
 end

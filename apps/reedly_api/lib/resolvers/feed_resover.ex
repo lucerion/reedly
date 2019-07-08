@@ -1,19 +1,14 @@
 defmodule Reedly.API.Resolvers.FeedResolver do
   @moduledoc "Feed resolvers"
 
-  alias Reedly.Core.{Feed, Helpers.HTTPHelper, Parser, Repositories.FeedRepository}
+  alias Reedly.Core.{Feed, Feeds}
 
   @doc "Create a feed with entries by feed url"
   @spec create(map(), map(), %Absinthe.Resolution{}) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()} | {:error, any()}
-  def create(_parent, %{feed_url: feed_url}, _resolution) do
-    with {:ok, xml} <- HTTPHelper.get(feed_url),
-         {:ok, attributes} <- Parser.parse(xml),
-         full_attributes = Map.put(attributes, :feed_url, feed_url),
-         {:ok, feed} <- FeedRepository.create(full_attributes) do
-      {:ok, feed}
-    else
+  def create(_parent, params, _resolution) do
+    case Feeds.create(params) do
+      {:ok, feed} -> {:ok, feed}
       {:error, %Ecto.Changeset{} = changeset} -> {:ok, changeset}
-      error -> error
     end
   end
 end
