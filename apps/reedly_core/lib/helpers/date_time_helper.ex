@@ -1,5 +1,5 @@
 defmodule Reedly.Core.Helpers.DateTimeHelper do
-  @moduledoc "Helper functions for working with dates"
+  @moduledoc "Dates helper functions"
 
   @default_format "%a, %d %b %Y %H:%M:%S %z"
 

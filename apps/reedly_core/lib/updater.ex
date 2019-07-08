@@ -1,7 +1,7 @@
 defmodule Reedly.Core.Updater do
   @moduledoc "Updates feeds/feed"
 
-  alias Reedly.Core.{Feed, Fetcher, Parser, Repositories.FeedRepository}
+  alias Reedly.Core.{Feed, Helpers.HTTPHelper, Parser, Repositories.FeedRepository}
 
   @doc "Update all feeds"
   @spec update() :: :ok
@@ -13,7 +13,7 @@ defmodule Reedly.Core.Updater do
   @doc "Update feed"
   @spec update(Feed.t()) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
   def update(%Feed{feed_url: feed_url} = feed) do
-    with {:ok, xml} <- Fetcher.fetch(feed_url),
+    with {:ok, xml} <- HTTPHelper.get(feed_url),
          {:ok, attributes} <- Parser.parse(xml) do
       new_attributes = new_attributes(feed, attributes)
       FeedRepository.update(feed, new_attributes)

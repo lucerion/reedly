@@ -12,7 +12,7 @@ defmodule Reedly.API.Test.FeedResolverTest do
       args = %{feed_url: feed_url}
 
       {:ok, feed} =
-        with_mocks([success_fetch(), success_parsing()]) do
+        with_mocks([get_success_mock(), parse_success_mock()]) do
           FeedResolver.create(nil, args, nil)
         end
 
@@ -23,7 +23,7 @@ defmodule Reedly.API.Test.FeedResolverTest do
       args = %{feed_url: nil}
 
       {:ok, changeset} =
-        with_mocks([success_fetch(), success_parsing()]) do
+        with_mocks([get_success_mock(), parse_success_mock()]) do
           FeedResolver.create(nil, args, nil)
         end
 
@@ -35,7 +35,7 @@ defmodule Reedly.API.Test.FeedResolverTest do
       error_message = "url_fetch_error_message"
 
       {:error, message} =
-        with_mocks([fail_fetch(error_message)]) do
+        with_mocks([get_failed_mock(error_message)]) do
           FeedResolver.create(nil, args, nil)
         end
 
@@ -47,7 +47,7 @@ defmodule Reedly.API.Test.FeedResolverTest do
       error_message = "xml_parsing_error_message"
 
       {:error, message} =
-        with_mocks([success_fetch(), failed_parsing(error_message)]) do
+        with_mocks([get_success_mock(), parse_failed_mock(error_message)]) do
           FeedResolver.create(nil, args, nil)
         end
 
@@ -55,21 +55,21 @@ defmodule Reedly.API.Test.FeedResolverTest do
     end
   end
 
-  defp success_fetch do
+  defp get_success_mock do
     mock = fn _url -> {:ok, %HTTPoison.Response{body: Faker.Lorem.paragraph()}} end
     {HTTPoison, [], [get: mock]}
   end
 
-  defp fail_fetch(error) do
+  defp get_failed_mock(error) do
     {HTTPoison, [], [get: fn _url -> {:error, error} end]}
   end
 
-  defp success_parsing do
+  defp parse_success_mock do
     mock = fn _feed_url -> {:ok, %{}} end
     {Reedly.Core.Parser, [], [parse: mock]}
   end
 
-  defp failed_parsing(error_message) do
+  defp parse_failed_mock(error_message) do
     mock = fn _feed_url -> {:error, error_message} end
     {Reedly.Core.Parser, [], [parse: mock]}
   end

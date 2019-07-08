@@ -12,7 +12,7 @@ defmodule Reedly.Core.Test.UpdaterTest do
       new_attributes = FeedHelpers.build_attributes(entries_count: 2)
 
       {:ok, updated_feed} =
-        with_mocks([mock_fetch(), mock_parse(new_attributes)]) do
+        with_mocks([get_mock(), parse_mock(new_attributes)]) do
           Updater.update(feed)
         end
 
@@ -27,7 +27,7 @@ defmodule Reedly.Core.Test.UpdaterTest do
       {:ok, feed} = FeedHelpers.create(entries: entries)
 
       {:ok, updated_feed} =
-        with_mocks([mock_fetch(), mock_parse(new_attributes)]) do
+        with_mocks([get_mock(), parse_mock(new_attributes)]) do
           Updater.update(feed)
         end
 
@@ -37,9 +37,9 @@ defmodule Reedly.Core.Test.UpdaterTest do
     end
   end
 
-  defp mock_fetch,
-    do: {Reedly.Core.Fetcher, [], [fetch: fn _url -> {:ok, "body"} end]}
+  defp get_mock,
+    do: {Reedly.Core.Helpers.HTTPHelper, [], [get: fn _url -> {:ok, "body"} end]}
 
-  defp mock_parse(attributes),
+  defp parse_mock(attributes),
     do: {Reedly.Core.Parser, [], [parse: fn _body -> {:ok, attributes} end]}
 end

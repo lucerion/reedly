@@ -9,7 +9,7 @@ defmodule Reedly.API.Test.FeedEntryResolverTest do
       entries = ~w[entry_1 entry_2 entry_3]a
 
       {:ok, entries_from_db} =
-        with_mocks([entries(entries)]) do
+        with_mocks([entries_mock(entries)]) do
           FeedEntryResolver.all(nil, nil, nil)
         end
 
@@ -17,7 +17,7 @@ defmodule Reedly.API.Test.FeedEntryResolverTest do
     end
   end
 
-  defp entries(entries) do
+  defp entries_mock(entries) do
     {Reedly.Core.Repositories.FeedEntryRepository, [], [all: fn -> entries end]}
   end
 end

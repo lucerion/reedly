@@ -11,7 +11,7 @@ defmodule Reedly.Core.Test.ParserTest do
       feed_attributes = FeederExHelpers.to_feed_attributes(feeder_ex_feed)
 
       {:ok, parse_result} =
-        with_mocks([xml_parse_success(feeder_ex_feed)]) do
+        with_mocks([xml_parse_success_mock(feeder_ex_feed)]) do
           Parser.parse(Faker.Internet.url())
         end
 
@@ -22,7 +22,7 @@ defmodule Reedly.Core.Test.ParserTest do
       error = "body parse error message"
 
       {_, parse_result} =
-        with_mocks([xml_parse_failed(error)]) do
+        with_mocks([xml_parse_failed_mock(error)]) do
           Parser.parse(Faker.Internet.url())
         end
 
@@ -30,9 +30,9 @@ defmodule Reedly.Core.Test.ParserTest do
     end
   end
 
-  defp xml_parse_success(feeder_ex_feed),
+  defp xml_parse_success_mock(feeder_ex_feed),
     do: {FeederEx, [], [parse: fn _body -> {:ok, feeder_ex_feed, ""} end]}
 
-  defp xml_parse_failed(error),
+  defp xml_parse_failed_mock(error),
     do: {FeederEx, [], [parse: fn _body -> {:error, error} end]}
 end
