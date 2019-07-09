@@ -31,6 +31,7 @@ defmodule Reedly.Core.MixProject do
       {:jason, "~> 1.0.0"},
       {:feeder_ex, "~> 1.1.0"},
       {:httpoison, "~> 1.5.0"},
+      {:quantum, "~> 2.3"},
       {:timex, "~> 3.5.0"},
       {:mock, "~> 0.3.0", only: :test},
       {:faker, "~> 0.12.0", only: :test}

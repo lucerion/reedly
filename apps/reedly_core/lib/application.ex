@@ -7,7 +7,8 @@ defmodule Reedly.Core.Application do
     import Supervisor.Spec
 
     children = [
-      worker(Reedly.Core.Repo, [])
+      worker(Reedly.Core.Repo, []),
+      worker(Reedly.Core.Scheduler, [])
     ]
 
     opts = [strategy: :one_for_one, name: Reedly.Core.Supervisor]
