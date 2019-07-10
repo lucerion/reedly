@@ -1,5 +1,5 @@
 defmodule Reedly.Core.FeedEntry do
-  @moduledoc "RSS/Atom feed entry representation"
+  @moduledoc "Feed entry model"
 
   use Ecto.Schema
 

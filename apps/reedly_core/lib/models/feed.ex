@@ -1,11 +1,11 @@
 defmodule Reedly.Core.Feed do
-  @moduledoc "RSS/Atom feed representation"
+  @moduledoc "Feed model"
 
   use Ecto.Schema
 
   import Ecto.Changeset
 
-  alias Reedly.Core.{Feed, FeedEntry}
+  alias Reedly.Core.{Feed, Category, FeedEntry}
 
   @typedoc "Feed model type"
   @type t :: %__MODULE__{
@@ -20,12 +20,14 @@ defmodule Reedly.Core.Feed do
     url
     feed_url
     updated
+    category_id
   ]a
   @create_required_attributes ~w[feed_url]a
 
   @update_allowed_attributes ~w[
     title
     updated
+    category_id
   ]a
 
   schema "feeds" do
@@ -34,6 +36,7 @@ defmodule Reedly.Core.Feed do
     field(:feed_url, :string)
     field(:updated, :naive_datetime)
 
+    belongs_to(:category, Category)
     has_many(:entries, FeedEntry, on_delete: :delete_all)
 
     timestamps()

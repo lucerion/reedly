@@ -1,6 +1,8 @@
 defmodule Reedly.Core.Test.FeedHelpers do
   @moduledoc "Test helpers functions for feed"
 
+  import Ecto.Query
+
   alias Reedly.Core.{Repo, Feed}
   alias Reedly.Core.Test.{FeedEntryHelpers, Helpers}
 
@@ -9,6 +11,7 @@ defmodule Reedly.Core.Test.FeedHelpers do
     url
     feed_url
     updated
+    category_id
   ]a
 
   @attributes_with_relations ~w[
@@ -27,6 +30,8 @@ defmodule Reedly.Core.Test.FeedHelpers do
   end
 
   @doc "Build feed attributes"
+  def build_attributes, do: build_attributes(entries: [])
+
   def build_attributes(entries: entries) do
     %{
       title: Faker.Name.title(),
@@ -38,7 +43,7 @@ defmodule Reedly.Core.Test.FeedHelpers do
   end
 
   def build_attributes(entries_count: entries_count) when entries_count <= 0,
-    do: build_attributes(entries: [])
+    do: build_attributes()
 
   def build_attributes(entries_count: entries_count) do
     entries = FeedEntryHelpers.build_attributes(count: entries_count)
@@ -56,10 +61,24 @@ defmodule Reedly.Core.Test.FeedHelpers do
     |> create()
   end
 
-  def create(attributes) do
+  def create(attributes \\ %{}) do
+    full_attributes = Map.merge(build_attributes(), attributes)
+
     %Feed{}
-    |> Ecto.Changeset.cast(attributes, @attributes)
+    |> Ecto.Changeset.cast(full_attributes, @attributes)
     |> Ecto.Changeset.cast_assoc(:entries)
     |> Repo.insert()
   end
+
+  def create(attributes, count: count) when count <= 0,
+    do: create(attributes)
+
+  def create(attributes, count: count) do
+    0..(count - 1)
+    |> Enum.map(fn _x -> create(attributes) end)
+    |> Enum.map(fn {:ok, feed} -> feed end)
+  end
+
+  def find_by_ids(ids),
+    do: Repo.all(from(feed in Feed, where: feed.id in ^ids))
 end

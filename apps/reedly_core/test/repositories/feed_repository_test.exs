@@ -1,8 +1,8 @@
 defmodule Reedly.Core.Test.FeedRepositoryTest do
   use Reedly.Core.Test.RepoCase
 
-  alias Reedly.Core.Repositories.FeedRepository
-  alias Reedly.Core.Test.{Helpers, FeedHelpers}
+  alias Reedly.Core.{Repositories.FeedRepository, Repo}
+  alias Reedly.Core.Test.{Helpers, FeedHelpers, CategoryHelpers}
 
   describe "all()" do
     test "returns feeds with their entries" do
@@ -38,6 +38,14 @@ defmodule Reedly.Core.Test.FeedRepositoryTest do
       result = FeedRepository.create(feed_attributes)
 
       assert Helpers.validation_error?(result, :feed_url, :unique) == true
+    end
+
+    test "creates feed with category" do
+      {:ok, category} = CategoryHelpers.create()
+
+      {:ok, feed} = FeedRepository.create(%{category_id: category.id, feed_url: Faker.Internet.url()})
+
+      assert Repo.preload(feed, [:category]).category == category
     end
   end
 
