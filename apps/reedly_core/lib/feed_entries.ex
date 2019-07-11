@@ -4,6 +4,6 @@ defmodule Reedly.Core.FeedEntries do
   alias Reedly.Core.{FeedEntry, Repositories.FeedEntryRepository}
 
   @doc "All feed entries"
-  @spec all(map()) :: list(FeedEntry.t())
+  @spec all(map) :: list(FeedEntry.t())
   def all(attributes \\ %{}), do: FeedEntryRepository.all()
 end

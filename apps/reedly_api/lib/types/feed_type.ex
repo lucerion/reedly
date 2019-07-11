@@ -20,8 +20,8 @@ defmodule Reedly.API.Types.FeedType do
   payload_object(:feed_result, :feed)
 
   object :feed_mutations do
-    @desc "Add feed"
-    field :add_feed, type: :feed_result do
+    @desc "Create feed"
+    field :create_feed, type: :feed_result do
       arg(:feed_url, non_null(:string))
 
       resolve(&FeedResolver.create/3)

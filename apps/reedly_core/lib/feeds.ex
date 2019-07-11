@@ -4,7 +4,7 @@ defmodule Reedly.Core.Feeds do
   alias Reedly.Core.{Feed, Helpers.HTTPHelper, Repositories.FeedRepository, Mappers.FeedMapper}
 
   @doc "Create a feed"
-  @spec create(map()) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
+  @spec create(map) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
   def create(%{feed_url: feed_url}) do
     case parse(feed_url) do
       {:ok, attributes} ->

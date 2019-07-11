@@ -28,13 +28,4 @@ defmodule Reedly.Core.Repositories.CategoryRepository do
   @doc "Delete a category"
   @spec delete(Category.t()) :: {:ok, Category.t()}
   def delete(%Category{} = category), do: Repo.delete(category)
-
-  @doc "Delete a category by id"
-  @spec delete(integer | String.t()) :: {:ok, Category.t()} | {:error, :not_found}
-  def delete(id) when is_integer(id) or is_binary(id) do
-    case find(id) do
-      nil -> {:error, :not_found}
-      category -> delete(category)
-    end
-  end
 end

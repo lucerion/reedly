@@ -13,15 +13,17 @@ defmodule Reedly.Core.Test.FeedEntryTestHelper do
     read
   ]a
 
+  @full_attributes @attributes ++ ~w[id]a
+
   @doc "A list of feed entries attributes"
-  def attributes(feed_entries) when is_list(feed_entries) do
+  def attributes(feed_entries, attributes \\ @attributes) when is_list(feed_entries) do
     feed_entries
-    |> Enum.map(&attributes(&1))
+    |> Enum.map(&attributes(&1, attributes))
   end
 
   @doc "Get feed entry attributes"
-  def attributes(%FeedEntry{} = feed_entry),
-    do: Map.take(feed_entry, @attributes)
+  def attributes(%FeedEntry{} = feed_entry, attributes),
+    do: Map.take(feed_entry, attributes)
 
   @doc "Build feed entry attributes"
   def build_attributes do
@@ -58,4 +60,7 @@ defmodule Reedly.Core.Test.FeedEntryTestHelper do
     |> Ecto.Changeset.cast(full_attributes, @attributes)
     |> Repo.insert()
   end
+
+  def equal?(entries_1, entries_2) when is_list(entries_1) and is_list(entries_2),
+    do: attributes(entries_1, @full_attributes) == attributes(entries_2, @full_attributes)
 end

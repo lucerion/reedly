@@ -4,7 +4,7 @@ defmodule Reedly.Core.Test.CategoryRepositoryTest do
   alias Reedly.Core.Repositories.CategoryRepository
   alias Reedly.Core.Test.{TestHelper, CategoryTestHelper, FeedTestHelper}
 
-  describe "find()" do
+  describe "find/1" do
     test "returns category by id" do
       {:ok, new_category} = CategoryTestHelper.create()
 
@@ -20,7 +20,7 @@ defmodule Reedly.Core.Test.CategoryRepositoryTest do
     end
   end
 
-  describe "create()" do
+  describe "create/1" do
     test "creates a category" do
       attributes = CategoryTestHelper.build_attributes()
 
@@ -63,7 +63,7 @@ defmodule Reedly.Core.Test.CategoryRepositoryTest do
     end
   end
 
-  describe "update()" do
+  describe "update/2" do
     test "updates a category name" do
       {:ok, category} = CategoryTestHelper.create()
 
@@ -90,27 +90,13 @@ defmodule Reedly.Core.Test.CategoryRepositoryTest do
     end
   end
 
-  describe "delete()" do
+  describe "delete/1" do
     test "deletes category" do
       {:ok, category} = CategoryTestHelper.create()
 
       {:ok, deleted_category} = CategoryRepository.delete(category)
 
       assert category.id == deleted_category.id
-    end
-
-    test "deletes category by id" do
-      {:ok, category} = CategoryTestHelper.create()
-
-      {:ok, deleted_category} = CategoryRepository.delete(category)
-
-      assert category.id == deleted_category.id
-    end
-
-    test "fails when category is not found" do
-      result = CategoryRepository.delete(42)
-
-      assert result == {:error, :not_found}
     end
 
     test "nilify feeds ids after deletion" do

@@ -14,13 +14,7 @@ defmodule Reedly.Core.Test.FeedTestHelper do
     category_id
   ]a
 
-  @attributes_with_relations ~w[
-    title
-    url
-    feed_url
-    updated
-    entries
-  ]a
+  @attributes_with_relations @attributes ++ ~w[entries]a
 
   @doc "Get feed attributes"
   def attributes(%Feed{} = feed) do
@@ -38,7 +32,8 @@ defmodule Reedly.Core.Test.FeedTestHelper do
       url: Faker.Internet.url(),
       feed_url: Faker.Internet.url(),
       updated: TestHelper.random_naive_date_time(truncate: :second),
-      entries: entries
+      entries: entries,
+      category_id: nil
     }
   end
 

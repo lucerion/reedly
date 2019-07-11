@@ -1,14 +1,15 @@
-defmodule Reedly.Core.Test.FeedEntryRepositoryTest do
+defmodule Reedly.Core.Test.FeedEntriesTest do
+  use ExUnit.Case
   use Reedly.Core.Test.RepoCase
 
-  alias Reedly.Core.Repositories.FeedEntryRepository
+  alias Reedly.Core.FeedEntries
   alias Reedly.Core.Test.FeedEntryTestHelper
 
-  describe "all()" do
+  describe "all/1" do
     test "returns all feed entries" do
       entries = FeedEntryTestHelper.create(count: 3)
 
-      all_entries = FeedEntryRepository.all()
+      all_entries = FeedEntries.all()
 
       assert FeedEntryTestHelper.equal?(entries, all_entries)
     end

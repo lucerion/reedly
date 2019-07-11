@@ -5,8 +5,10 @@ defmodule Reedly.API.Schema do
 
   import_types(Absinthe.Type.Custom)
   import_types(Kronky.ValidationMessageTypes)
+
   import_types(Reedly.API.Types.FeedType)
   import_types(Reedly.API.Types.FeedEntryType)
+  import_types(Reedly.API.Types.CategoryType)
 
   query do
     import_fields(:feed_entry_queries)
@@ -14,5 +16,6 @@ defmodule Reedly.API.Schema do
 
   mutation do
     import_fields(:feed_mutations)
+    import_fields(:category_mutations)
   end
 end

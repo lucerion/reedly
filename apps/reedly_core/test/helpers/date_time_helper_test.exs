@@ -3,7 +3,7 @@ defmodule Reedly.Core.Test.DateTimeHelperTest do
 
   alias Reedly.Core.Helpers.DateTimeHelper
 
-  describe "parse()" do
+  describe "parse/1" do
     test "returns a parsed date time when date time string is valid" do
       assert DateTimeHelper.parse("Mon, 10 Jan 2011 12:13:14 +0000") == ~N[2011-01-10 12:13:14]
     end

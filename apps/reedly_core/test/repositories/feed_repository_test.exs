@@ -18,7 +18,7 @@ defmodule Reedly.Core.Test.FeedRepositoryTest do
     end
   end
 
-  describe "create()" do
+  describe "create/1" do
     test "creates a feed" do
       feed_attributes = FeedTestHelper.build_attributes(entries_count: 2)
 
@@ -49,7 +49,7 @@ defmodule Reedly.Core.Test.FeedRepositoryTest do
     end
   end
 
-  describe "update()" do
+  describe "update/2" do
     test "updates a feed" do
       {:ok, feed} = FeedTestHelper.create(entries_count: 2)
 

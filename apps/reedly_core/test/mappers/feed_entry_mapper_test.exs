@@ -4,7 +4,7 @@ defmodule Reedly.Core.Test.FeedEntryMapperTest do
   alias Reedly.Core.Mappers.FeedEntryMapper
   alias Reedly.Core.Test.FeederExTestHelper
 
-  describe "map()" do
+  describe "map/1" do
     test "returns a feed entry attributes" do
       feeder_ex_entry = FeederExTestHelper.build_entry()
       feed_entry_attributes = FeederExTestHelper.to_feed_entry_attributes(feeder_ex_entry)

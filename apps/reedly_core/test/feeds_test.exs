@@ -1,6 +1,7 @@
 defmodule Reedly.Core.Test.FeedsTest do
   use ExUnit.Case
   use Reedly.Core.Test.RepoCase
+
   import Mock
 
   alias Reedly.Core.Feeds

@@ -1,23 +1,16 @@
 defmodule Reedly.API.Test.FeedEntryResolverTest do
-  use ExUnit.Case
-  import Mock
+  use Reedly.API.Test.ResolverCase
 
   alias Reedly.API.Resolvers.FeedEntryResolver
+  alias Reedly.Core.Test.FeedEntryTestHelper
 
-  describe "all()" do
-    test "returns all feed entries" do
-      entries = ~w[entry_1 entry_2 entry_3]a
+  describe "all/3" do
+    test "returns all feed entries", %{parent: parent, args: args, resolution: resolution} do
+      entries = FeedEntryTestHelper.create(count: 3)
 
-      {:ok, entries_from_db} =
-        with_mocks([entries_mock(entries)]) do
-          FeedEntryResolver.all(nil, nil, nil)
-        end
+      {:ok, all_entries} = FeedEntryResolver.all(parent, args, resolution)
 
-      assert entries == entries_from_db
+      assert FeedEntryTestHelper.equal?(entries, all_entries)
     end
-  end
-
-  defp entries_mock(entries) do
-    {Reedly.Core.Repositories.FeedEntryRepository, [], [all: fn -> entries end]}
   end
 end

@@ -8,6 +8,7 @@ defmodule Reedly.API.MixProject do
       build_path: "../../_build",
       config_path: "../../config/config.exs",
       deps_path: "../../deps",
+      elixirc_paths: elixirc_paths(Mix.env()),
       lockfile: "../../mix.lock",
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
@@ -42,4 +43,7 @@ defmodule Reedly.API.MixProject do
       check: "cmd mix credo && mix dialyzer && mix test"
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "reedly_api", "test/support"]
+  defp elixirc_paths(_), do: ["lib", "reedly_api"]
 end
