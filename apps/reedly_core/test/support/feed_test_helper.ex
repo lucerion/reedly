@@ -1,10 +1,10 @@
-defmodule Reedly.Core.Test.FeedHelpers do
+defmodule Reedly.Core.Test.FeedTestHelper do
   @moduledoc "Test helpers functions for feed"
 
   import Ecto.Query
 
   alias Reedly.Core.{Repo, Feed}
-  alias Reedly.Core.Test.{FeedEntryHelpers, Helpers}
+  alias Reedly.Core.Test.{TestHelper, FeedEntryTestHelper}
 
   @attributes ~w[
     title
@@ -26,7 +26,7 @@ defmodule Reedly.Core.Test.FeedHelpers do
   def attributes(%Feed{} = feed) do
     feed
     |> Map.take(@attributes_with_relations)
-    |> Map.update(:entries, [], &FeedEntryHelpers.attributes(&1))
+    |> Map.update(:entries, [], &FeedEntryTestHelper.attributes(&1))
   end
 
   @doc "Build feed attributes"
@@ -37,7 +37,7 @@ defmodule Reedly.Core.Test.FeedHelpers do
       title: Faker.Name.title(),
       url: Faker.Internet.url(),
       feed_url: Faker.Internet.url(),
-      updated: Helpers.random_naive_date_time(truncate: :second),
+      updated: TestHelper.random_naive_date_time(truncate: :second),
       entries: entries
     }
   end
@@ -46,7 +46,7 @@ defmodule Reedly.Core.Test.FeedHelpers do
     do: build_attributes()
 
   def build_attributes(entries_count: entries_count) do
-    entries = FeedEntryHelpers.build_attributes(count: entries_count)
+    entries = FeedEntryTestHelper.build_attributes(count: entries_count)
     build_attributes(entries: entries)
   end
 

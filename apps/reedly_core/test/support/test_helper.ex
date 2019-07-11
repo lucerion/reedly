@@ -1,4 +1,4 @@
-defmodule Reedly.Core.Test.Helpers do
+defmodule Reedly.Core.Test.TestHelper do
   @moduledoc "Tests helper functions"
 
   @default_date_time_format "%a, %d %b %Y %H:%M:%S %z"

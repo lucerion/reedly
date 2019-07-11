@@ -1,8 +1,8 @@
-defmodule Reedly.Core.Test.FeedEntryHelpers do
+defmodule Reedly.Core.Test.FeedEntryTestHelper do
   @moduledoc "Test helpers functions for feed entry"
 
   alias Reedly.Core.{Repo, FeedEntry}
-  alias Reedly.Core.Test.Helpers
+  alias Reedly.Core.Test.TestHelper
 
   @attributes ~w[
     title
@@ -30,7 +30,7 @@ defmodule Reedly.Core.Test.FeedEntryHelpers do
       content: Faker.Lorem.paragraph(),
       url: Faker.Internet.url(),
       entity_id: Faker.Internet.slug(),
-      published: Helpers.random_naive_date_time(truncate: :second),
+      published: TestHelper.random_naive_date_time(truncate: :second),
       read: false
     }
   end

@@ -1,4 +1,4 @@
-defmodule Reedly.Core.Test.CategoryHelpers do
+defmodule Reedly.Core.Test.CategoryTestHelper do
   @moduledoc "Test helpers functions for category"
 
   alias Reedly.Core.{Repo, Category}

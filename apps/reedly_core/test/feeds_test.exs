@@ -4,12 +4,12 @@ defmodule Reedly.Core.Test.FeedsTest do
   import Mock
 
   alias Reedly.Core.Feeds
-  alias Reedly.Core.Test.{Helpers, FeedHelpers, FeedEntryHelpers}
+  alias Reedly.Core.Test.{TestHelper, FeedTestHelper, FeedEntryTestHelper}
 
   describe "update/1" do
     test "updates a feed" do
-      {:ok, feed} = FeedHelpers.create(entries_count: 3)
-      new_attributes = FeedHelpers.build_attributes(entries_count: 2)
+      {:ok, feed} = FeedTestHelper.create(entries_count: 3)
+      new_attributes = FeedTestHelper.build_attributes(entries_count: 2)
 
       {:ok, updated_feed} =
         with_mocks([get_mock(), parse_mock(), map_mock(new_attributes)]) do
@@ -22,9 +22,9 @@ defmodule Reedly.Core.Test.FeedsTest do
     end
 
     test "updates feed title and updated attributes when there are no new entries" do
-      entries = FeedEntryHelpers.build_attributes(count: 3)
-      new_attributes = FeedHelpers.build_attributes(entries: entries)
-      {:ok, feed} = FeedHelpers.create(entries: entries)
+      entries = FeedEntryTestHelper.build_attributes(count: 3)
+      new_attributes = FeedTestHelper.build_attributes(entries: entries)
+      {:ok, feed} = FeedTestHelper.create(entries: entries)
 
       {:ok, updated_feed} =
         with_mocks([get_mock(), parse_mock(), map_mock(new_attributes)]) do

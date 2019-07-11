@@ -1,8 +1,8 @@
-defmodule Reedly.Core.Test.FeederExHelpers do
+defmodule Reedly.Core.Test.FeederExTestHelper do
   @moduledoc "FeederEx helpers functions"
 
   alias Reedly.Core.Helpers.DateTimeHelper
-  alias Reedly.Core.Test.Helpers
+  alias Reedly.Core.Test.TestHelper
 
   @doc "Build FeederEx.Feed"
   def build_feed, do: build_feed(entries: [])
@@ -11,7 +11,7 @@ defmodule Reedly.Core.Test.FeederExHelpers do
     %FeederEx.Feed{
       title: Faker.Name.title(),
       link: Faker.Internet.url(),
-      updated: DateTime.utc_now() |> Helpers.format_date_time(),
+      updated: DateTime.utc_now() |> TestHelper.format_date_time(),
       entries: entries
     }
   end
@@ -36,7 +36,7 @@ defmodule Reedly.Core.Test.FeederExHelpers do
       summary: Faker.Lorem.paragraph(),
       link: Faker.Internet.url(),
       id: Faker.Internet.slug(),
-      updated: DateTime.utc_now() |> Helpers.format_date_time()
+      updated: DateTime.utc_now() |> TestHelper.format_date_time()
     }
   end
 
