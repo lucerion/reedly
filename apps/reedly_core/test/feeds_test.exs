@@ -5,7 +5,7 @@ defmodule Reedly.Core.Test.FeedsTest do
   import Mock
 
   alias Reedly.Core.Feeds
-  alias Reedly.Core.Test.{TestHelper, FeedTestHelper, FeedEntryTestHelper}
+  alias Reedly.Core.Test.{FeedTestHelper, FeedEntryTestHelper}
 
   describe "update/1" do
     test "updates a feed" do

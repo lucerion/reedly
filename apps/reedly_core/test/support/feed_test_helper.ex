@@ -3,7 +3,7 @@ defmodule Reedly.Core.Test.FeedTestHelper do
 
   import Ecto.Query
 
-  alias Reedly.Core.{Repo, Feed}
+  alias Reedly.Core.{Repo, Feed, FeedEntry}
   alias Reedly.Core.Test.{TestHelper, FeedEntryTestHelper}
 
   @attributes ~w[
@@ -61,7 +61,7 @@ defmodule Reedly.Core.Test.FeedTestHelper do
 
     %Feed{}
     |> Ecto.Changeset.cast(full_attributes, @attributes)
-    |> Ecto.Changeset.cast_assoc(:entries)
+    |> Ecto.Changeset.cast_assoc(:entries, with: &FeedEntry.create_changeset/2)
     |> Repo.insert()
   end
 

@@ -16,6 +16,7 @@ defmodule Reedly.API.Schema do
 
   mutation do
     import_fields(:feed_mutations)
+    import_fields(:feed_entry_mutations)
     import_fields(:category_mutations)
   end
 end

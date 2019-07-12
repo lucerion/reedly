@@ -48,7 +48,7 @@ defmodule Reedly.Core.Feed do
     |> cast(attributes, @create_allowed_attributes)
     |> validate_required(@create_required_attributes)
     |> unique_constraint(:feed_url)
-    |> cast_assoc(:entries)
+    |> cast_assoc(:entries, with: &FeedEntry.create_changeset/2)
   end
 
   @spec update_changeset(%Feed{}, map) :: Ecto.Changeset.t()

@@ -13,4 +13,18 @@ defmodule Reedly.API.Test.FeedEntryResolverTest do
       assert FeedEntryTestHelper.equal?(entries, all_entries)
     end
   end
+
+  describe "update/3" do
+    test "updates a category", %{parent: parent, resolution: resolution} do
+      {:ok, feed_entry} = FeedEntryTestHelper.create(%{read: false})
+
+      {:ok, updated_feed_entry} = FeedEntryResolver.update(parent, %{id: feed_entry.id, read: true}, resolution)
+
+      refute feed_entry.read == updated_feed_entry.read
+    end
+
+    test "fails if category not found", %{parent: parent, resolution: resolution} do
+      assert FeedEntryResolver.update(parent, %{id: 42, read: true}, resolution) == {:error, :not_found}
+    end
+  end
 end

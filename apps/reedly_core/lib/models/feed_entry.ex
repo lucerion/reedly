@@ -17,7 +17,7 @@ defmodule Reedly.Core.FeedEntry do
           read: boolean
         }
 
-  @allowed_attributes ~w[
+  @create_allowed_attributes ~w[
     title
     content
     url
@@ -25,6 +25,8 @@ defmodule Reedly.Core.FeedEntry do
     published
     read
   ]a
+
+  @update_allowed_attributes ~w[read]a
 
   schema "feed_entries" do
     field(:title, :string)
@@ -39,9 +41,15 @@ defmodule Reedly.Core.FeedEntry do
     timestamps()
   end
 
-  @spec changeset(%FeedEntry{}, map) :: Ecto.Changeset.t()
-  def changeset(%FeedEntry{} = feed_entry, attributes \\ %{}) do
+  @spec create_changeset(%FeedEntry{}, map) :: Ecto.Changeset.t()
+  def create_changeset(%FeedEntry{} = feed_entry, attributes \\ %{}) do
     feed_entry
-    |> cast(attributes, @allowed_attributes)
+    |> cast(attributes, @create_allowed_attributes)
+  end
+
+  @spec update_changeset(%FeedEntry{}, map) :: Ecto.Changeset.t()
+  def update_changeset(%FeedEntry{} = feed_entry, attributes) do
+    feed_entry
+    |> cast(attributes, @update_allowed_attributes)
   end
 end
