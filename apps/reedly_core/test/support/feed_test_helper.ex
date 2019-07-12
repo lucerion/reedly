@@ -4,7 +4,7 @@ defmodule Reedly.Core.Test.FeedTestHelper do
   import Ecto.Query
 
   alias Reedly.Core.{Repo, Feed, FeedEntry}
-  alias Reedly.Core.Test.{TestHelper, FeedEntryTestHelper}
+  alias Reedly.Core.Test.{DateTimeTestHelper, FeedEntryTestHelper}
 
   @attributes ~w[
     title
@@ -31,7 +31,7 @@ defmodule Reedly.Core.Test.FeedTestHelper do
       title: Faker.Name.title(),
       url: Faker.Internet.url(),
       feed_url: Faker.Internet.url(),
-      updated: TestHelper.random_naive_date_time(truncate: :second),
+      updated: DateTimeTestHelper.random_naive_date_time(truncate: :second),
       entries: entries,
       category_id: nil
     }
