@@ -4,7 +4,7 @@ defmodule Reedly.API.Test.FeedResolverTest do
   import Mock
 
   alias Reedly.API.Resolvers.FeedResolver
-  alias Reedly.Core.Test.TestHelper
+  alias Reedly.Core.Test.ValidationTestHelper
 
   describe "create/3" do
     test "creates a feed by feed_url", %{parent: parent, resolution: resolution} do
@@ -27,7 +27,7 @@ defmodule Reedly.API.Test.FeedResolverTest do
           FeedResolver.create(parent, args, resolution)
         end
 
-      assert TestHelper.validation_error?({:error, changeset}, :feed_url, :required) == true
+      assert ValidationTestHelper.validation_error?({:error, changeset}, :feed_url, :required) == true
     end
   end
 

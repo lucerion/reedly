@@ -2,7 +2,7 @@ defmodule Reedly.Core.Test.FeedRepositoryTest do
   use Reedly.Core.Test.RepoCase
 
   alias Reedly.Core.{Repositories.FeedRepository, Repo}
-  alias Reedly.Core.Test.{TestHelper, FeedTestHelper, CategoryTestHelper}
+  alias Reedly.Core.Test.{ValidationTestHelper, FeedTestHelper, CategoryTestHelper}
 
   describe "all()" do
     test "returns feeds with their entries" do
@@ -28,7 +28,7 @@ defmodule Reedly.Core.Test.FeedRepositoryTest do
     end
 
     test "returns feed_url required validation error without feed_url attribute" do
-      assert TestHelper.validation_error?(FeedRepository.create(), :feed_url, :required) == true
+      assert ValidationTestHelper.validation_error?(FeedRepository.create(), :feed_url, :required) == true
     end
 
     test "returns feed_url uniqness validation error if feed_url is not unique" do
@@ -37,7 +37,7 @@ defmodule Reedly.Core.Test.FeedRepositoryTest do
 
       result = FeedRepository.create(feed_attributes)
 
-      assert TestHelper.validation_error?(result, :feed_url, :unique) == true
+      assert ValidationTestHelper.validation_error?(result, :feed_url, :unique) == true
     end
 
     test "creates feed with category" do

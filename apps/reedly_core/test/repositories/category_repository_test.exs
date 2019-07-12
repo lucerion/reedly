@@ -2,7 +2,7 @@ defmodule Reedly.Core.Test.CategoryRepositoryTest do
   use Reedly.Core.Test.RepoCase
 
   alias Reedly.Core.Repositories.CategoryRepository
-  alias Reedly.Core.Test.{TestHelper, CategoryTestHelper, FeedTestHelper}
+  alias Reedly.Core.Test.{ValidationTestHelper, CategoryTestHelper, FeedTestHelper}
 
   describe "find/1" do
     test "returns category by id" do
@@ -34,7 +34,7 @@ defmodule Reedly.Core.Test.CategoryRepositoryTest do
 
       result = CategoryRepository.create(attributes)
 
-      assert TestHelper.validation_error?(result, :name, :required)
+      assert ValidationTestHelper.validation_error?(result, :name, :required)
     end
 
     test "fails when a category without type" do
@@ -42,7 +42,7 @@ defmodule Reedly.Core.Test.CategoryRepositoryTest do
 
       result = CategoryRepository.create(attributes)
 
-      assert TestHelper.validation_error?(result, :type, :required)
+      assert ValidationTestHelper.validation_error?(result, :type, :required)
     end
 
     test "fails when a type is not correct" do
@@ -50,7 +50,7 @@ defmodule Reedly.Core.Test.CategoryRepositoryTest do
 
       result = CategoryRepository.create(attributes)
 
-      assert TestHelper.validation_error?(result, :type, :inclusion)
+      assert ValidationTestHelper.validation_error?(result, :type, :inclusion)
     end
 
     test "fails when name and type is not unique" do
@@ -59,7 +59,7 @@ defmodule Reedly.Core.Test.CategoryRepositoryTest do
 
       result = CategoryRepository.create(attributes)
 
-      assert TestHelper.validation_error?(result, :name, :unique)
+      assert ValidationTestHelper.validation_error?(result, :name, :unique)
     end
   end
 
@@ -77,7 +77,7 @@ defmodule Reedly.Core.Test.CategoryRepositoryTest do
 
       result = CategoryRepository.update(category, %{name: nil})
 
-      assert TestHelper.validation_error?(result, :name, :required)
+      assert ValidationTestHelper.validation_error?(result, :name, :required)
     end
 
     test "fails when name is not unique" do
@@ -86,7 +86,7 @@ defmodule Reedly.Core.Test.CategoryRepositoryTest do
 
       result = CategoryRepository.update(category_1, %{name: category_2.name})
 
-      assert TestHelper.validation_error?(result, :name, :unique)
+      assert ValidationTestHelper.validation_error?(result, :name, :unique)
     end
   end
 
