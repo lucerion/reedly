@@ -3,7 +3,7 @@ defmodule Reedly.Core.MixProject do
 
   def project do
     [
-      app: :reedly_core,
+      app: :core,
       version: "0.0.1",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -41,13 +41,13 @@ defmodule Reedly.Core.MixProject do
   defp aliases do
     [
       dialyzer: "cmd cd ../.. && mix dialyzer",
-      credo: "cmd cd ../.. && mix credo ./apps/reedly_core",
+      credo: "cmd cd ../.. && mix credo ./apps/core",
       setup: ["ecto.create", "ecto.migrate"],
       reset: ["ecto.drop", "setup"],
       check: "cmd mix credo && mix dialyzer && mix test"
     ]
   end
 
-  defp elixirc_paths(:test), do: ["lib", "reedly_core", "test/support"]
-  defp elixirc_paths(_), do: ["lib", "reedly_core"]
+  defp elixirc_paths(:test), do: ["lib", "core", "test/support"]
+  defp elixirc_paths(_), do: ["lib", "core"]
 end
