@@ -28,7 +28,7 @@ defmodule Reedly.Core.Helpers.DateTimeHelper do
   @spec parse(String.t() | nil, list(String.t()) | String.t()) :: NaiveDateTime.t() | nil
   def parse(nil), do: nil
   def parse(timestamp), do: parse(timestamp, @timestamp_formats)
-  def parse(timestamp, []), do: nil
+  def parse(_timestamp, []), do: nil
 
   def parse(timestamp, [format | formats]) do
     case Timex.parse(timestamp, format) do

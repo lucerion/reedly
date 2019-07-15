@@ -5,7 +5,7 @@ defmodule Reedly.Core.FeedEntries do
 
   @doc "All feed entries"
   @spec all(map) :: list(FeedEntry.t())
-  def all(attributes \\ %{}), do: FeedEntryRepository.all()
+  def all(_attributes \\ %{}), do: FeedEntryRepository.all()
 
   @doc "Update a feed entry"
   @spec update(map) :: {:ok, FeedEntry.t()} | {:error, Ecto.Changeset.t()} | {:error, nil}
