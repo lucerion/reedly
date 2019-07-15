@@ -7,7 +7,7 @@ defmodule Reedly.API.Application do
     import Supervisor.Spec
 
     children = [
-      {Plug.Cowboy, scheme: :http, plug: Reedly.API.Router, options: [port: Application.get_env(:reedly_api, :port)]}
+      {Plug.Cowboy, scheme: :http, plug: Reedly.API.Router, options: [port: Application.get_env(:api, :port)]}
     ]
 
     opts = [strategy: :one_for_one, name: Reedly.API.Supervisor]

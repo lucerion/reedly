@@ -3,7 +3,7 @@ defmodule Reedly.API.MixProject do
 
   def project do
     [
-      app: :reedly_api,
+      app: :api,
       version: "0.0.1",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -39,11 +39,11 @@ defmodule Reedly.API.MixProject do
   defp aliases do
     [
       dialyzer: "cmd cd ../.. && mix dialyzer",
-      credo: "cmd cd ../.. && mix credo ./apps/reedly_api",
+      credo: "cmd cd ../.. && mix credo ./apps/api",
       check: "cmd mix credo && mix dialyzer && mix test"
     ]
   end
 
-  defp elixirc_paths(:test), do: ["lib", "reedly_api", "test/support"]
-  defp elixirc_paths(_), do: ["lib", "reedly_api"]
+  defp elixirc_paths(:test), do: ["lib", "api", "test/support"]
+  defp elixirc_paths(_), do: ["lib", "api"]
 end
