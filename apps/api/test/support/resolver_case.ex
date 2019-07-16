@@ -6,7 +6,7 @@ defmodule Reedly.API.Test.ResolverCase do
   using do
     quote do
       use ExUnit.Case
-      use Reedly.Core.Test.RepoCase
+      use Reedly.Database.Test.RepoCase
 
       import Reedly.API.Test.ResolverCase
     end

@@ -1,7 +1,7 @@
 defmodule Reedly.Core.Categories do
   @moduledoc "Categories related business logic"
 
-  alias Reedly.Core.{Category, Repositories.CategoryRepository}
+  alias Reedly.Database.{Category, Repositories.CategoryRepository}
 
   @doc "Create a category"
   @spec create(map) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()}

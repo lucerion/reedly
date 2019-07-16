@@ -1,7 +1,7 @@
 defmodule Reedly.Core.FeedEntries do
   @moduledoc "Feed entries related business logic"
 
-  alias Reedly.Core.{FeedEntry, Repositories.FeedEntryRepository}
+  alias Reedly.Database.{FeedEntry, Repositories.FeedEntryRepository}
 
   @doc "All feed entries"
   @spec all(map) :: list(FeedEntry.t())

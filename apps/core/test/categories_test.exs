@@ -1,9 +1,9 @@
 defmodule Reedly.Core.Test.CategoriesTest do
   use ExUnit.Case
-  use Reedly.Core.Test.RepoCase
+  use Reedly.Database.Test.RepoCase
 
   alias Reedly.Core.Categories
-  alias Reedly.Core.Test.CategoryTestHelper
+  alias Reedly.Database.Test.CategoryTestHelper
 
   describe "create/1" do
     test "creates a category" do

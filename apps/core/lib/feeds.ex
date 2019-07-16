@@ -1,7 +1,8 @@
 defmodule Reedly.Core.Feeds do
   @moduledoc "Feeds related business logic"
 
-  alias Reedly.Core.{Feed, Helpers.HTTPHelper, Repositories.FeedRepository, Mappers.FeedMapper}
+  alias Reedly.Database.{Feed, Repositories.FeedRepository}
+  alias Reedly.Core.{Helpers.HTTPHelper, Mappers.FeedMapper}
 
   @doc "Create a feed"
   @spec create(map) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}

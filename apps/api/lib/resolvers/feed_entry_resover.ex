@@ -1,7 +1,8 @@
 defmodule Reedly.API.Resolvers.FeedEntryResolver do
   @moduledoc "Feed entry resolvers"
 
-  alias Reedly.Core.{FeedEntry, FeedEntries}
+  alias Reedly.Database.FeedEntry
+  alias Reedly.Core.FeedEntries
 
   @doc "All feed entries"
   @spec all(map, map, %Absinthe.Resolution{}) :: {:ok, list(FeedEntry.t())}

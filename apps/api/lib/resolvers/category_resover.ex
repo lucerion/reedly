@@ -1,7 +1,8 @@
 defmodule Reedly.API.Resolvers.CategoryResolver do
   @moduledoc "Category resolvers"
 
-  alias Reedly.Core.{Category, Categories}
+  alias Reedly.Database.Category
+  alias Reedly.Core.Categories
 
   @doc "Create a category"
   @spec create(map, map, %Absinthe.Resolution{}) :: {:ok, Category.t()} | {:ok, Ecto.Changeset.t()}

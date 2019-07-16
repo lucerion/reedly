@@ -2,7 +2,7 @@ defmodule Reedly.API.Test.FeedEntryResolverTest do
   use Reedly.API.Test.ResolverCase
 
   alias Reedly.API.Resolvers.FeedEntryResolver
-  alias Reedly.Core.Test.FeedEntryTestHelper
+  alias Reedly.Database.Test.FeedEntryTestHelper
 
   describe "all/3" do
     test "returns all feed entries", %{parent: parent, args: args, resolution: resolution} do

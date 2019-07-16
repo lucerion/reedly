@@ -2,7 +2,7 @@ defmodule Reedly.API.Test.CategoryResolverTest do
   use Reedly.API.Test.ResolverCase
 
   alias Reedly.API.Resolvers.CategoryResolver
-  alias Reedly.Core.Test.CategoryTestHelper
+  alias Reedly.Database.Test.CategoryTestHelper
 
   describe "create/3" do
     test "creates a category", %{parent: parent, resolution: resolution} do

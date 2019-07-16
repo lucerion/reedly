@@ -4,7 +4,7 @@ defmodule Reedly.API.Test.FeedResolverTest do
   import Mock
 
   alias Reedly.API.Resolvers.FeedResolver
-  alias Reedly.Core.Test.ValidationTestHelper
+  alias Reedly.Database.Test.ValidationTestHelper
 
   describe "create/3" do
     test "creates a feed by feed_url", %{parent: parent, resolution: resolution} do

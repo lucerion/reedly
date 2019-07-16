@@ -1,11 +1,11 @@
 defmodule Reedly.Core.Test.FeedsTest do
   use ExUnit.Case
-  use Reedly.Core.Test.RepoCase
+  use Reedly.Database.Test.RepoCase
 
   import Mock
 
   alias Reedly.Core.Feeds
-  alias Reedly.Core.Test.{FeedTestHelper, FeedEntryTestHelper}
+  alias Reedly.Database.Test.{FeedTestHelper, FeedEntryTestHelper}
 
   describe "update/1" do
     test "updates a feed" do
