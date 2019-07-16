@@ -4,13 +4,14 @@ defmodule Reedly.API.Resolvers.FeedEntryResolver do
   alias Reedly.Database.FeedEntry
   alias Reedly.Core.FeedEntries
 
+  @type resolution :: %Absinthe.Resolution{}
+
   @doc "All feed entries"
-  @spec all(map, map, %Absinthe.Resolution{}) :: {:ok, list(FeedEntry.t())}
+  @spec all(map, map, resolution) :: {:ok, list(FeedEntry.t())}
   def all(_parent, params, _resolution), do: {:ok, FeedEntries.all(params)}
 
   @doc "Update a feed entry"
-  @spec update(map, map, %Absinthe.Resolution{}) ::
-          {:ok, FeedEntry.t()} | {:error, :not_found} | {:ok, Ecto.Changeset.t()}
+  @spec update(map, map, resolution) :: {:ok, FeedEntry.t()} | {:error, :not_found} | {:ok, Ecto.Changeset.t()}
   def update(_parent, params, _resolution) do
     case FeedEntries.update(params) do
       {:ok, feed_entry} -> {:ok, feed_entry}

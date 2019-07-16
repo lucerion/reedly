@@ -1,6 +1,6 @@
 # Reedly
 
-Stand-alone RSS aggregator
+Stand-alone web content (RSS/Atom, links) aggregator
 
 
 ## Setup

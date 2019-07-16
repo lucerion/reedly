@@ -4,8 +4,10 @@ defmodule Reedly.API.Resolvers.CategoryResolver do
   alias Reedly.Database.Category
   alias Reedly.Core.Categories
 
+  @type resolution :: %Absinthe.Resolution{}
+
   @doc "Create a category"
-  @spec create(map, map, %Absinthe.Resolution{}) :: {:ok, Category.t()} | {:ok, Ecto.Changeset.t()}
+  @spec create(map, map, resolution) :: {:ok, Category.t()} | {:ok, Ecto.Changeset.t()}
   def create(_parent, params, _resolution) do
     case Categories.create(params) do
       {:ok, category} -> {:ok, category}
@@ -14,8 +16,7 @@ defmodule Reedly.API.Resolvers.CategoryResolver do
   end
 
   @doc "Update a category"
-  @spec update(map, map, %Absinthe.Resolution{}) ::
-          {:ok, Category.t()} | {:error, :not_found} | {:ok, Ecto.Changeset.t()}
+  @spec update(map, map, resolution) :: {:ok, Category.t()} | {:error, :not_found} | {:ok, Ecto.Changeset.t()}
   def update(_parent, params, _resolution) do
     case Categories.update(params) do
       {:ok, category} -> {:ok, category}
@@ -25,7 +26,7 @@ defmodule Reedly.API.Resolvers.CategoryResolver do
   end
 
   @doc "Delete a category"
-  @spec delete(map, map, %Absinthe.Resolution{}) :: {:ok, Category.t()} | {:error, :not_found}
+  @spec delete(map, map, resolution) :: {:ok, Category.t()} | {:error, :not_found}
   def delete(_parent, params, _resolution) do
     case Categories.delete(params) do
       {:ok, category} -> {:ok, category}

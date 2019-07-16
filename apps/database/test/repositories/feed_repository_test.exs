@@ -6,15 +6,17 @@ defmodule Reedly.Database.Test.FeedRepositoryTest do
 
   describe "all()" do
     test "returns feeds with their entries" do
-      FeedTestHelper.create(entries_count: 1)
-      FeedTestHelper.create(entries_count: 2)
-      FeedTestHelper.create(entries_count: 3)
+      existing_feeds =
+        [
+          FeedTestHelper.create(entries_count: 1),
+          FeedTestHelper.create(entries_count: 2),
+          FeedTestHelper.create(entries_count: 3)
+        ]
+        |> Enum.map(fn {:ok, feed} -> feed end)
 
       feeds = FeedRepository.all()
-      entries = Enum.flat_map(feeds, & &1.entries)
 
-      assert length(feeds) == 3
-      assert length(entries) == 6
+      assert FeedTestHelper.equal?(feeds, existing_feeds)
     end
   end
 
@@ -24,7 +26,7 @@ defmodule Reedly.Database.Test.FeedRepositoryTest do
 
       {:ok, feed} = FeedRepository.create(feed_attributes)
 
-      assert FeedTestHelper.attributes(feed) == feed_attributes
+      assert FeedTestHelper.equal?(feed, feed_attributes)
     end
 
     test "returns feed_url required validation error without feed_url attribute" do

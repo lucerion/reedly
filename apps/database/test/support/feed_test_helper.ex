@@ -13,13 +13,19 @@ defmodule Reedly.Database.Test.FeedTestHelper do
     updated
     category_id
   ]a
+  @attributes_with_relations [:entries | @attributes]
+  @full_attributes [:id | @attributes_with_relations]
 
-  @attributes_with_relations @attributes ++ ~w[entries]a
+  @doc "A list of feeds attributes"
+  def attributes(feeds, attributes) when is_list(feeds),
+    do: Enum.map(feeds, &attributes(&1, attributes))
 
   @doc "Get feed attributes"
-  def attributes(%Feed{} = feed) do
+  def attributes(%Feed{} = feed), do: attributes(feed, @attributes_with_relations)
+
+  def attributes(%Feed{} = feed, attributes) do
     feed
-    |> Map.take(@attributes_with_relations)
+    |> Map.take(attributes)
     |> Map.update(:entries, [], &FeedEntryTestHelper.attributes(&1))
   end
 
@@ -56,7 +62,9 @@ defmodule Reedly.Database.Test.FeedTestHelper do
     |> create()
   end
 
-  def create(attributes \\ %{}) do
+  def create, do: create(%{})
+
+  def create(attributes) do
     full_attributes = Map.merge(build_attributes(), attributes)
 
     %Feed{}
@@ -73,6 +81,11 @@ defmodule Reedly.Database.Test.FeedTestHelper do
     |> Enum.map(fn _x -> create(attributes) end)
     |> Enum.map(fn {:ok, feed} -> feed end)
   end
+
+  def equal?(feeds_1, feeds_2) when is_list(feeds_1) and is_list(feeds_2),
+    do: attributes(feeds_1, @full_attributes) == attributes(feeds_2, @full_attributes)
+
+  def equal?(%Feed{} = feed, attributes), do: attributes(feed) == attributes
 
   def find_by_ids(ids),
     do: Repo.all(from(feed in Feed, where: feed.id in ^ids))

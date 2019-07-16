@@ -6,11 +6,11 @@ defmodule Reedly.API.Test.FeedEntryResolverTest do
 
   describe "all/3" do
     test "returns all feed entries", %{parent: parent, args: args, resolution: resolution} do
-      entries = FeedEntryTestHelper.create(count: 3)
+      existing_entries = FeedEntryTestHelper.create(count: 3)
 
-      {:ok, all_entries} = FeedEntryResolver.all(parent, args, resolution)
+      {:ok, entries} = FeedEntryResolver.all(parent, args, resolution)
 
-      assert FeedEntryTestHelper.equal?(entries, all_entries)
+      assert FeedEntryTestHelper.equal?(entries, existing_entries)
     end
   end
 

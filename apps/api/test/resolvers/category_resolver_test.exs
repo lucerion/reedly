@@ -10,7 +10,7 @@ defmodule Reedly.API.Test.CategoryResolverTest do
 
       {:ok, category} = CategoryResolver.create(parent, attributes, resolution)
 
-      assert CategoryTestHelper.attributes(category) == attributes
+      CategoryTestHelper.equal?(category, attributes)
     end
   end
 
@@ -34,7 +34,7 @@ defmodule Reedly.API.Test.CategoryResolverTest do
 
       {:ok, deleted_category} = CategoryResolver.delete(parent, %{id: category.id}, resolution)
 
-      assert deleted_category.id == category.id
+      assert CategoryTestHelper.equal?(deleted_category, category)
     end
 
     test "fails if category not found", %{parent: parent, resolution: resolution} do

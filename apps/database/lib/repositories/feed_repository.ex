@@ -1,5 +1,5 @@
 defmodule Reedly.Database.Repositories.FeedRepository do
-  @moduledoc "Functions to read and manipulate feed"
+  @moduledoc "Functions to read and change feeds in the database"
 
   import Ecto.Query
 

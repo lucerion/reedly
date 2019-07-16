@@ -7,11 +7,11 @@ defmodule Reedly.Core.Test.FeedEntriesTest do
 
   describe "all/1" do
     test "returns all feed entries" do
-      entries = FeedEntryTestHelper.create(count: 3)
+      existing_entries = FeedEntryTestHelper.create(count: 3)
 
-      all_entries = FeedEntries.all()
+      entries = FeedEntries.all()
 
-      assert FeedEntryTestHelper.equal?(entries, all_entries)
+      assert FeedEntryTestHelper.equal?(entries, existing_entries)
     end
   end
 

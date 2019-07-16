@@ -6,11 +6,11 @@ defmodule Reedly.Database.Test.FeedEntryRepositoryTest do
 
   describe "all()" do
     test "returns all feed entries" do
-      entries = FeedEntryTestHelper.create(count: 3)
+      existing_entries = FeedEntryTestHelper.create(count: 3)
 
-      all_entries = FeedEntryRepository.all()
+      entries = FeedEntryRepository.all()
 
-      assert FeedEntryTestHelper.equal?(entries, all_entries)
+      assert FeedEntryTestHelper.equal?(entries, existing_entries)
     end
   end
 

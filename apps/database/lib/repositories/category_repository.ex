@@ -1,5 +1,5 @@
 defmodule Reedly.Database.Repositories.CategoryRepository do
-  @moduledoc "Functions to read and manipulate categories"
+  @moduledoc "Functions to read and change categories in the database"
 
   import Ecto.Query
 

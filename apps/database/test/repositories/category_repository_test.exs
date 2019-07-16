@@ -6,17 +6,15 @@ defmodule Reedly.Database.Test.CategoryRepositoryTest do
 
   describe "find/1" do
     test "returns category by id" do
-      {:ok, new_category} = CategoryTestHelper.create()
+      {:ok, existing_category} = CategoryTestHelper.create()
 
-      category = CategoryRepository.find(new_category.id)
+      category = CategoryRepository.find(existing_category.id)
 
-      assert new_category.id == category.id
+      assert CategoryTestHelper.equal?(category, existing_category)
     end
 
     test "returns nil when category is not found" do
-      result = CategoryRepository.find(42)
-
-      assert result == nil
+      assert CategoryRepository.find(42) == nil
     end
   end
 
@@ -26,7 +24,7 @@ defmodule Reedly.Database.Test.CategoryRepositoryTest do
 
       {:ok, category} = CategoryRepository.create(attributes)
 
-      assert CategoryTestHelper.attributes(category) == attributes
+      assert CategoryTestHelper.equal?(category, attributes)
     end
 
     test "fails when a category without name" do
@@ -96,7 +94,7 @@ defmodule Reedly.Database.Test.CategoryRepositoryTest do
 
       {:ok, deleted_category} = CategoryRepository.delete(category)
 
-      assert category.id == deleted_category.id
+      assert CategoryTestHelper.equal?(deleted_category, category)
     end
 
     test "nilify feeds ids after deletion" do
@@ -106,13 +104,13 @@ defmodule Reedly.Database.Test.CategoryRepositoryTest do
       assert Enum.all?(feeds, &(&1.category_id != nil))
 
       CategoryRepository.delete(category)
-
-      updated_feeds =
-        feeds
-        |> Enum.map(& &1.id)
-        |> FeedTestHelper.find_by_ids()
-
-      assert Enum.all?(updated_feeds, &(&1.category_id == nil))
+      assert Enum.all?(updated_feeds(feeds), &(&1.category_id == nil))
     end
+  end
+
+  defp updated_feeds(feeds) do
+    feeds
+    |> Enum.map(& &1.id)
+    |> FeedTestHelper.find_by_ids()
   end
 end

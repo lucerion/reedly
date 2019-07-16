@@ -13,17 +13,18 @@ defmodule Reedly.Database.Test.FeedEntryTestHelper do
     read
   ]a
 
-  @full_attributes @attributes ++ ~w[id]a
+  @full_attributes [:id | @attributes]
 
   @doc "A list of feed entries attributes"
-  def attributes(feed_entries, attributes \\ @attributes) when is_list(feed_entries) do
-    feed_entries
-    |> Enum.map(&attributes(&1, attributes))
-  end
+  def attributes(feed_entries) when is_list(feed_entries),
+    do: attributes(feed_entries, @attributes)
+
+  def attributes(feed_entries, attributes) when is_list(feed_entries),
+    do: Enum.map(feed_entries, &attributes(&1, attributes))
 
   @doc "Get feed entry attributes"
-  def attributes(%FeedEntry{} = feed_entry, attributes),
-    do: Map.take(feed_entry, attributes)
+  def attributes(%FeedEntry{} = feed_entry), do: attributes(feed_entry, @attributes)
+  def attributes(%FeedEntry{} = feed_entry, attributes), do: Map.take(feed_entry, attributes)
 
   @doc "Build feed entry attributes"
   def build_attributes do
@@ -53,7 +54,9 @@ defmodule Reedly.Database.Test.FeedEntryTestHelper do
     |> Enum.map(fn {:ok, entry} -> entry end)
   end
 
-  def create(attributes \\ %{}) do
+  def create, do: create(%{})
+
+  def create(attributes) do
     full_attributes = Map.merge(build_attributes(), attributes)
 
     %FeedEntry{}

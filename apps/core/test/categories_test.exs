@@ -11,7 +11,7 @@ defmodule Reedly.Core.Test.CategoriesTest do
 
       {:ok, category} = Categories.create(attributes)
 
-      assert CategoryTestHelper.attributes(category) == attributes
+      assert CategoryTestHelper.equal?(category, attributes)
     end
   end
 
@@ -25,9 +25,7 @@ defmodule Reedly.Core.Test.CategoriesTest do
     end
 
     test "fails if category not found" do
-      result = Categories.update(%{id: 42, name: "new_name"})
-
-      assert result == {:error, nil}
+      assert Categories.update(%{id: 42, name: "new_name"}) == {:error, nil}
     end
   end
 
@@ -37,13 +35,11 @@ defmodule Reedly.Core.Test.CategoriesTest do
 
       {:ok, deleted_category} = Categories.delete(%{id: category.id})
 
-      assert deleted_category.id == category.id
+      assert CategoryTestHelper.equal?(deleted_category, category)
     end
 
     test "fails if category not found" do
-      result = Categories.delete(%{id: 42})
-
-      assert result == {:error, nil}
+      assert Categories.delete(%{id: 42}) == {:error, nil}
     end
   end
 end

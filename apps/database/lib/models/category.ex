@@ -13,7 +13,7 @@ defmodule Reedly.Database.Category do
           type: String.t()
         }
 
-  @types ~w[feed]
+  @types ~w[feed link]
 
   @create_allowed_attributes ~w[name type]a
   @create_required_attributes ~w[name type]a

@@ -9,14 +9,17 @@ defmodule Reedly.API.Schema do
   import_types(Reedly.API.Types.FeedType)
   import_types(Reedly.API.Types.FeedEntryType)
   import_types(Reedly.API.Types.CategoryType)
+  import_types(Reedly.API.Types.LinkType)
 
   query do
     import_fields(:feed_entry_queries)
+    import_fields(:link_queries)
   end
 
   mutation do
     import_fields(:feed_mutations)
     import_fields(:feed_entry_mutations)
     import_fields(:category_mutations)
+    import_fields(:link_mutations)
   end
 end
