@@ -10,6 +10,22 @@ Business logic
 
 ## Development
 
+Run tests, type checker and static code analyzer
+
+    mix check
+
 ### Tests
 
     mix test
+
+### Type checker
+
+    mix dialyzer
+
+### Static code analyzer
+
+    mix credo
+
+### Code formatter
+
+    mix format

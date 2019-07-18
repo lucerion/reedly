@@ -19,6 +19,17 @@ Stand-alone web content (RSS/Atom, links) aggregator
 
 ## Development
 
+Run tests, type checker and static code analyzer
+
+    mix check
+
+### Tests
+
+  * [setup tests](apps/database#tests) the for database app
+  * run
+
+        mix test
+
 ### Type checker
 
     mix dialyzer

@@ -15,16 +15,16 @@ Data access layer
 
         export DATABASE_URL="http://user:password@host:port/reedly"
 
-  * create a database
+  * create a database and run migrations
 
-        mix ecto.create
-
-  * run migrations
-
-        mix ecto.migrate
+        mix setup
 
 
 ## Development
+
+Run tests, type checker and static code analyzer
+
+    mix check
 
 ### Tests
 
@@ -32,14 +32,22 @@ Data access layer
 
         export TEST_DATABASE_URL="http://user:password@host:port/reedly_test"
 
-  * create a database
+  * create a database and run migrations
 
-        MIX_ENV=test mix ecto.create
-
-  * run migrations
-
-        MIX_ENV=test mix ecto.migrate
+        MIX_ENV=test mix setup
 
   * run tests
 
         mix test
+
+### Type checker
+
+    mix dialyzer
+
+### Static code analyzer
+
+    mix credo
+
+### Code formatter
+
+    mix format
