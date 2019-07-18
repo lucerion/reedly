@@ -2,7 +2,7 @@ defmodule Reedly.API.Resolvers.FeedEntryResolver do
   @moduledoc "Feed entry resolvers"
 
   alias Reedly.Database.FeedEntry
-  alias Reedly.Core.FeedEntries
+  alias Reedly.Feeds.FeedEntries
 
   @type resolution :: %Absinthe.Resolution{}
 

@@ -1,9 +1,9 @@
-defmodule Reedly.Core.MixProject do
+defmodule Reedly.Links.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :core,
+      app: :links,
       version: "0.0.1",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -18,18 +18,13 @@ defmodule Reedly.Core.MixProject do
 
   def application do
     [
-      extra_applications: [:logger],
-      mod: {Reedly.Core.Application, []}
+      extra_applications: [:logger]
     ]
   end
 
   defp deps do
     [
-      {:database, in_umbrella: true},
-      {:httpoison, "~> 1.5.0"},
-      {:quantum, "~> 2.3"},
-      {:timex, "~> 3.5.0"},
-      {:faker, "~> 0.12.0", only: :test}
+      {:database, in_umbrella: true}
     ]
   end
 

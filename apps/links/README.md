@@ -1,6 +1,6 @@
-# Reedly Core
+# Reedly Links
 
-Common business logic
+Links (web bookmarks) business logic
 
 
 ## Setup

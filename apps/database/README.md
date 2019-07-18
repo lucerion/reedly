@@ -1,6 +1,6 @@
 # Reedly Database
 
-Data access layer
+Database access layer
 
 
 ## Setup

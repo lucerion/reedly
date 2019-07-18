@@ -27,6 +27,8 @@ defmodule Reedly.API.MixProject do
   defp deps do
     [
       {:core, in_umbrella: true},
+      {:feeds, in_umbrella: true},
+      {:links, in_umbrella: true},
       {:kronky, "~> 0.5.0"},
       {:plug_cowboy, "~> 2.0.0"},
       {:absinthe_plug, "~> 1.4.0"},

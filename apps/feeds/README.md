@@ -1,6 +1,6 @@
-# Reedly Core
+# Reedly Feeds
 
-Common business logic
+Feeds business logic
 
 
 ## Setup

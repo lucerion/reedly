@@ -1,8 +1,8 @@
-defmodule Reedly.Core.Test.LinksTest do
+defmodule Reedly.Links.Test.LinksTest do
   use ExUnit.Case
   use Reedly.Database.Test.RepoCase
 
-  alias Reedly.Core.Links
+  alias Reedly.Links
   alias Reedly.Database.Test.LinkTestHelper
 
   describe "all/1" do

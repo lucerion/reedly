@@ -1,9 +1,9 @@
-defmodule Reedly.Core.MixProject do
+defmodule Reedly.Feeds.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :core,
+      app: :feeds,
       version: "0.0.1",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -12,24 +12,24 @@ defmodule Reedly.Core.MixProject do
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
+      elixirc_paths: elixirc_paths(Mix.env())
     ]
   end
 
   def application do
     [
-      extra_applications: [:logger],
-      mod: {Reedly.Core.Application, []}
+      extra_applications: [:logger]
     ]
   end
 
   defp deps do
     [
       {:database, in_umbrella: true},
-      {:httpoison, "~> 1.5.0"},
-      {:quantum, "~> 2.3"},
-      {:timex, "~> 3.5.0"},
-      {:faker, "~> 0.12.0", only: :test}
+      {:core, in_umbrella: true},
+      {:feeder_ex, "~> 1.1.0"},
+      {:faker, "~> 0.12.0", only: :test},
+      {:mock, "~> 0.3.0", only: :test}
     ]
   end
 
@@ -40,4 +40,7 @@ defmodule Reedly.Core.MixProject do
       check: "cmd mix credo && mix dialyzer && mix test"
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "feeds", "test/support"]
+  defp elixirc_paths(_), do: ["lib", "feeds"]
 end

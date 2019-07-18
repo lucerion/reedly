@@ -21,7 +21,7 @@ defmodule Reedly.Database.Test.LinkTestHelper do
   def attributes(%Link{} = link, attributes), do: Map.take(link, attributes)
 
   @doc "Build feed entry attributes"
-  def build_attributes() do
+  def build_attributes do
     %{
       url: Faker.Internet.url(),
       description: Faker.Name.title()

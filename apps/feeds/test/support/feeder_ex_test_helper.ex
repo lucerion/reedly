@@ -1,8 +1,8 @@
-defmodule Reedly.Core.Test.FeederExTestHelper do
+defmodule Reedly.Feeds.Test.FeederExTestHelper do
   @moduledoc "FeederEx helpers functions"
 
   alias Reedly.Core.Helpers.DateTimeHelper
-  alias Reedly.Core.Test.DateTimeTestHelper
+  alias Reedly.Feeds.Test.DateTimeTestHelper
 
   @doc "Build FeederEx.Feed"
   def build_feed, do: build_feed(entries: [])

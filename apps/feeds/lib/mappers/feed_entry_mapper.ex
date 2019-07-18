@@ -1,4 +1,4 @@
-defmodule Reedly.Core.Mappers.FeedEntryMapper do
+defmodule Reedly.Feeds.Mappers.FeedEntryMapper do
   @moduledoc "Feed entry mapper maps parsed feed entry to a feed entry attributes"
 
   alias FeederEx.Entry

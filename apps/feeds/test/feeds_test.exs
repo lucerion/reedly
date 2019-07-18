@@ -1,10 +1,10 @@
-defmodule Reedly.Core.Test.FeedsTest do
+defmodule Reedly.Feeds.Test.FeedsTest do
   use ExUnit.Case
   use Reedly.Database.Test.RepoCase
 
   import Mock
 
-  alias Reedly.Core.Feeds
+  alias Reedly.Feeds
   alias Reedly.Database.Test.{FeedTestHelper, FeedEntryTestHelper}
 
   describe "update/1" do
@@ -45,5 +45,5 @@ defmodule Reedly.Core.Test.FeedsTest do
     do: {FeederEx, [], [parse: fn _body -> {:ok, %{}, "message"} end]}
 
   defp map_mock(attributes),
-    do: {Reedly.Core.Mappers.FeedMapper, [], [map: fn _feed -> attributes end]}
+    do: {Reedly.Feeds.Mappers.FeedMapper, [], [map: fn _feed -> attributes end]}
 end

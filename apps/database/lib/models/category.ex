@@ -5,7 +5,7 @@ defmodule Reedly.Database.Category do
 
   import Ecto.Changeset
 
-  alias Reedly.Database.{Category, Feed}
+  alias Reedly.Database.{Category, Feed, Link}
 
   @typedoc "Category model type"
   @type t :: %__MODULE__{
@@ -26,6 +26,7 @@ defmodule Reedly.Database.Category do
     field(:type, :string)
 
     has_many(:feeds, Feed, on_delete: :nilify_all)
+    has_many(:links, Link, on_delete: :nilify_all)
 
     timestamps()
   end
