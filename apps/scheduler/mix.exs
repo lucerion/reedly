@@ -1,9 +1,9 @@
-defmodule Reedly.Core.MixProject do
+defmodule Reedly.Scheduler.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :core,
+      app: :scheduler,
       version: "0.0.1",
       build_path: "../../_build",
       config_path: "../../config/config.exs",
@@ -18,23 +18,24 @@ defmodule Reedly.Core.MixProject do
 
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      mod: {Reedly.Scheduler.Application, []}
     ]
   end
 
   defp deps do
     [
-      {:database, in_umbrella: true},
-      {:httpoison, "~> 1.5.0"},
-      {:faker, "~> 0.12.0", only: :test}
+      {:feeds, in_umbrella: true},
+      {:quantum, "~> 2.3"},
+      {:timex, "~> 3.5.0"}
     ]
   end
 
   defp aliases do
     [
       dialyzer: "cmd cd ../.. && mix dialyzer",
-      credo: "cmd cd ../.. && mix credo ./apps/core",
-      check: "cmd mix credo && mix dialyzer && mix test"
+      credo: "cmd cd ../.. && mix credo ./apps/scheduler",
+      check: "cmd mix credo && mix dialyzer"
     ]
   end
 end

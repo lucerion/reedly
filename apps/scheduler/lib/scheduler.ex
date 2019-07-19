@@ -1,4 +1,4 @@
-defmodule Reedly.Core.Scheduler do
+defmodule Reedly.Scheduler do
   @moduledoc "Run jobs by schedule"
 
   use Quantum.Scheduler,
