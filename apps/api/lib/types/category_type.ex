@@ -9,4 +9,10 @@ defmodule Reedly.API.Types.CategoryType do
     field(:name, :string)
     field(:type, :string)
   end
+
+  @desc "Category result type"
+  object :category_result do
+    field(:result, :category)
+    field(:errors, list_of(:error))
+  end
 end

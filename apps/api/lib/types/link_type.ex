@@ -9,4 +9,10 @@ defmodule Reedly.API.Types.LinkType do
     field(:url, :string)
     field(:description, :string)
   end
+
+  @desc "Link result type"
+  object :link_result do
+    field(:result, :link)
+    field(:errors, list_of(:error))
+  end
 end

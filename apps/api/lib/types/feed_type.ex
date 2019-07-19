@@ -12,4 +12,10 @@ defmodule Reedly.API.Types.FeedType do
     field(:updated, :naive_datetime)
     field(:entries, list_of(:feed_entry))
   end
+
+  @desc "Feed result type"
+  object :feed_result do
+    field(:result, :feed)
+    field(:errors, list_of(:error))
+  end
 end

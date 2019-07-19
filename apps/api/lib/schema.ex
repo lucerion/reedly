@@ -3,13 +3,14 @@ defmodule Reedly.API.Schema do
 
   use Absinthe.Schema
 
-  import_types(Absinthe.Type.Custom)
-  import_types(Kronky.ValidationMessageTypes)
+  alias Reedly.API.Middlewares.ErrorMiddleware
 
+  import_types(Absinthe.Type.Custom)
+  import_types(Reedly.API.Types.ErrorType)
   import_types(Reedly.API.Types.CategoryType)
   import_types(Reedly.API.Types.LinkType)
-  import_types(Reedly.API.Types.FeedType)
   import_types(Reedly.API.Types.FeedEntryType)
+  import_types(Reedly.API.Types.FeedType)
 
   import_types(Reedly.API.Queries.LinkQueries)
   import_types(Reedly.API.Queries.FeedEntryQueries)
@@ -18,6 +19,9 @@ defmodule Reedly.API.Schema do
   import_types(Reedly.API.Mutations.LinkMutations)
   import_types(Reedly.API.Mutations.FeedMutations)
   import_types(Reedly.API.Mutations.FeedEntryMutations)
+
+  def middleware(middlewares, _field, %{identifier: :mutation}), do: middlewares ++ [ErrorMiddleware]
+  def middleware(middlewares, _field, _object), do: middlewares
 
   query do
     import_fields(:link_queries)

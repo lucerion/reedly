@@ -24,7 +24,7 @@ defmodule Reedly.API.Test.CategoryResolverTest do
     end
 
     test "fails if category not found", %{parent: parent, resolution: resolution} do
-      assert CategoryResolver.update(parent, %{id: 42, name: "new_name"}, resolution) == {:error, :not_found}
+      assert CategoryResolver.update(parent, %{id: 42, name: "new_name"}, resolution) == {:error, nil}
     end
   end
 
@@ -38,7 +38,7 @@ defmodule Reedly.API.Test.CategoryResolverTest do
     end
 
     test "fails if category not found", %{parent: parent, resolution: resolution} do
-      assert CategoryResolver.delete(parent, %{id: 42}, resolution) == {:error, :not_found}
+      assert CategoryResolver.delete(parent, %{id: 42}, resolution) == {:error, nil}
     end
   end
 end

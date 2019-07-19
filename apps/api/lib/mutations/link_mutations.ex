@@ -3,11 +3,7 @@ defmodule Reedly.API.Mutations.LinkMutations do
 
   use Absinthe.Schema.Notation
 
-  import Kronky.Payload
-
   alias Reedly.API.Resolvers.LinkResolver
-
-  payload_object(:link_result, :link)
 
   object :link_mutations do
     @desc "Create a link"
@@ -16,7 +12,6 @@ defmodule Reedly.API.Mutations.LinkMutations do
       arg(:description, :string)
 
       resolve(&LinkResolver.create/3)
-      middleware(&build_payload/2)
     end
 
     @desc "Update a link"
@@ -25,7 +20,6 @@ defmodule Reedly.API.Mutations.LinkMutations do
       arg(:url, non_null(:string))
 
       resolve(&LinkResolver.update/3)
-      middleware(&build_payload/2)
     end
 
     @desc "Delete a link"
@@ -33,7 +27,6 @@ defmodule Reedly.API.Mutations.LinkMutations do
       arg(:id, non_null(:integer))
 
       resolve(&LinkResolver.delete/3)
-      middleware(&build_payload/2)
     end
   end
 end

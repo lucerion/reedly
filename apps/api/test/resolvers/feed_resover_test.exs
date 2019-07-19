@@ -22,12 +22,12 @@ defmodule Reedly.API.Test.FeedResolverTest do
     test "fails with validation error without feed_url arg", %{parent: parent, resolution: resolution} do
       args = %{feed_url: nil}
 
-      {:ok, changeset} =
+      result =
         with_mocks([get_mock(), parse_mock(), map_mock(args)]) do
           FeedResolver.create(parent, args, resolution)
         end
 
-      assert ValidationTestHelper.validation_error?({:error, changeset}, :feed_url, :required) == true
+      assert ValidationTestHelper.validation_error?(result, :feed_url, :required) == true
     end
   end
 

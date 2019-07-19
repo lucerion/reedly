@@ -14,4 +14,10 @@ defmodule Reedly.API.Types.FeedEntryType do
     field(:read, :boolean)
     field(:feed_id, :integer)
   end
+
+  @desc "Feed entry result type"
+  object :feed_entry_result do
+    field(:result, :feed_entry)
+    field(:errors, list_of(:error))
+  end
 end

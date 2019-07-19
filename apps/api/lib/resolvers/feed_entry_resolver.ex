@@ -11,12 +11,6 @@ defmodule Reedly.API.Resolvers.FeedEntryResolver do
   def all(_parent, params, _resolution), do: {:ok, FeedEntries.all(params)}
 
   @doc "Update a feed entry"
-  @spec update(map, map, resolution) :: {:ok, FeedEntry.t()} | {:error, :not_found} | {:ok, Ecto.Changeset.t()}
-  def update(_parent, params, _resolution) do
-    case FeedEntries.update(params) do
-      {:ok, feed_entry} -> {:ok, feed_entry}
-      {:error, nil} -> {:error, :not_found}
-      {:error, %Ecto.Changeset{} = changeset} -> {:ok, changeset}
-    end
-  end
+  @spec update(map, map, resolution) :: {:ok, FeedEntry.t()} | {:error, nil} | {:error, Ecto.Changeset.t()}
+  def update(_parent, params, _resolution), do: FeedEntries.update(params)
 end

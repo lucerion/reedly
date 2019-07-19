@@ -3,11 +3,7 @@ defmodule Reedly.API.Mutations.FeedEntryMutations do
 
   use Absinthe.Schema.Notation
 
-  import Kronky.Payload
-
   alias Reedly.API.Resolvers.FeedEntryResolver
-
-  payload_object(:feed_entry_result, :feed_entry)
 
   object :feed_entry_mutations do
     @desc "Update a feed entry"
@@ -16,7 +12,6 @@ defmodule Reedly.API.Mutations.FeedEntryMutations do
       arg(:read, non_null(:boolean))
 
       resolve(&FeedEntryResolver.update/3)
-      middleware(&build_payload/2)
     end
   end
 end

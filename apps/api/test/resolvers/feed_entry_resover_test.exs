@@ -24,7 +24,7 @@ defmodule Reedly.API.Test.FeedEntryResolverTest do
     end
 
     test "fails if category not found", %{parent: parent, resolution: resolution} do
-      assert FeedEntryResolver.update(parent, %{id: 42, read: true}, resolution) == {:error, :not_found}
+      assert FeedEntryResolver.update(parent, %{id: 42, read: true}, resolution) == {:error, nil}
     end
   end
 end

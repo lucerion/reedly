@@ -36,7 +36,7 @@ defmodule Reedly.API.Test.LinkResolverTest do
     end
 
     test "fails when a link not found", %{parent: parent, resolution: resolution} do
-      assert LinkResolver.update(parent, %{id: 42}, resolution) == {:error, :not_found}
+      assert LinkResolver.update(parent, %{id: 42}, resolution) == {:error, nil}
     end
   end
 
@@ -50,7 +50,7 @@ defmodule Reedly.API.Test.LinkResolverTest do
     end
 
     test "fails when a link not found", %{parent: parent, resolution: resolution} do
-      assert LinkResolver.delete(parent, %{id: 42}, resolution) == {:error, :not_found}
+      assert LinkResolver.delete(parent, %{id: 42}, resolution) == {:error, nil}
     end
   end
 end
