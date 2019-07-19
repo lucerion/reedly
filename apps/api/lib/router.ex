@@ -16,16 +16,10 @@ defmodule Reedly.API.Router do
     json_decoder: Jason
   )
 
-  forward("/api",
-    to: Absinthe.Plug,
-    init_opts: @init_opts
-  )
+  forward("/api", to: Absinthe.Plug, init_opts: @init_opts)
 
   if Mix.env() == :dev do
-    forward("/graphiql",
-      to: Absinthe.Plug.GraphiQL,
-      init_opts: @init_opts
-    )
+    forward("/graphiql", to: Absinthe.Plug.GraphiQL, init_opts: @init_opts)
   end
 
   plug(:match)

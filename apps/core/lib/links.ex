@@ -1,4 +1,4 @@
-defmodule Reedly.Links do
+defmodule Reedly.Core.Links do
   @moduledoc "Links related business logic"
 
   alias Reedly.Database.{Link, Repositories.LinkRepository}

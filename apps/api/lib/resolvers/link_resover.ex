@@ -2,7 +2,7 @@ defmodule Reedly.API.Resolvers.LinkResolver do
   @moduledoc "Link resolvers"
 
   alias Reedly.Database.Link
-  alias Reedly.Links
+  alias Reedly.Core.Links
 
   @type resolution :: %Absinthe.Resolution{}
 
