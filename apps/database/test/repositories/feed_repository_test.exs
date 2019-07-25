@@ -49,6 +49,23 @@ defmodule Reedly.Database.Test.FeedRepositoryTest do
 
       assert Repo.preload(feed, [:category]).category == category
     end
+
+    test "fails when category_id is not correct" do
+      attributes = FeedTestHelper.build_attributes(%{category_id: 42})
+
+      result = FeedRepository.create(attributes)
+
+      assert ValidationTestHelper.validation_error?(result, :category_id, :category)
+    end
+
+    test "fails when category type is not correct" do
+      {:ok, category} = CategoryTestHelper.create(%{type: "link"})
+      attributes = FeedTestHelper.build_attributes(%{category_id: category.id})
+
+      result = FeedRepository.create(attributes)
+
+      assert ValidationTestHelper.validation_error?(result, :category_id, :category_type)
+    end
   end
 
   describe "update/2" do
@@ -61,6 +78,32 @@ defmodule Reedly.Database.Test.FeedRepositoryTest do
       refute feed.title == updated_feed.title
       refute feed.updated == updated_feed.updated
       assert length(updated_feed.entries) == 4
+    end
+
+    test "updates feed category" do
+      {:ok, category} = CategoryTestHelper.create()
+      {:ok, feed} = FeedTestHelper.create()
+
+      {:ok, updated_feed} = FeedRepository.update(feed, %{category_id: category.id})
+
+      refute feed.category_id == updated_feed.category_id
+    end
+
+    test "fails when category_id is not correct" do
+      {:ok, feed} = FeedTestHelper.create()
+
+      result = FeedRepository.update(feed, %{category_id: 42})
+
+      assert ValidationTestHelper.validation_error?(result, :category_id, :category)
+    end
+
+    test "fails when category type is not correct" do
+      {:ok, category} = CategoryTestHelper.create(%{type: "link"})
+      {:ok, feed} = FeedTestHelper.create()
+
+      result = FeedRepository.update(feed, %{category_id: category.id})
+
+      assert ValidationTestHelper.validation_error?(result, :category_id, :category_type)
     end
   end
 end

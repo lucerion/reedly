@@ -4,8 +4,9 @@ defmodule Reedly.Database.Feed do
   use Ecto.Schema
 
   import Ecto.Changeset
+  import Reedly.Database.Validators.CategoryValidator
 
-  alias Reedly.Database.{Feed, Category, FeedEntry}
+  alias Reedly.Database.{Repo, Feed, Category, FeedEntry}
 
   @typedoc "Feed model type"
   @type t :: %__MODULE__{
@@ -30,6 +31,8 @@ defmodule Reedly.Database.Feed do
     category_id
   ]a
 
+  @allowed_category_type "feed"
+
   schema "feeds" do
     field(:title, :string)
     field(:url, :string)
@@ -47,14 +50,19 @@ defmodule Reedly.Database.Feed do
     feed
     |> cast(attributes, @create_allowed_attributes)
     |> validate_required(@create_required_attributes)
+    |> validate_category(@allowed_category_type)
     |> unique_constraint(:feed_url)
     |> cast_assoc(:entries, with: &FeedEntry.create_changeset/2)
   end
 
   @spec update_changeset(%Feed{}, map) :: Ecto.Changeset.t()
   def update_changeset(%Feed{} = feed, attributes) do
+    new_entries = Map.get(attributes, :entries, [])
+
     feed
+    |> Repo.preload(:entries)
     |> cast(attributes, @update_allowed_attributes)
-    |> put_assoc(:entries, feed.entries ++ attributes.entries)
+    |> validate_category(@allowed_category_type)
+    |> put_assoc(:entries, feed.entries ++ new_entries)
   end
 end

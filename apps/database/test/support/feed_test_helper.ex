@@ -51,6 +51,8 @@ defmodule Reedly.Database.Test.FeedTestHelper do
     build_attributes(entries: entries)
   end
 
+  def build_attributes(attributes), do: Map.merge(build_attributes(), attributes)
+
   @doc "Create a feed"
   def create(entries_count: entries_count) do
     build_attributes(entries_count: entries_count)
