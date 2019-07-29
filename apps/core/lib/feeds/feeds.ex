@@ -1,8 +1,8 @@
-defmodule Reedly.Feeds do
+defmodule Reedly.Core.Feeds do
   @moduledoc "Feeds related business logic"
 
   alias Reedly.Database.{Feed, Repositories.FeedRepository}
-  alias Reedly.Feeds.Mappers.FeedMapper
+  alias Reedly.Core.Feeds.Mappers.FeedMapper
   alias Reedly.Core.Helpers.HTTPHelper
 
   @doc "Create a feed"

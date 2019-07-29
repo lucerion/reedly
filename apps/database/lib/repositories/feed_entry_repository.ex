@@ -1,8 +1,6 @@
 defmodule Reedly.Database.Repositories.FeedEntryRepository do
   @moduledoc "Functions to read and change feed entries in the database"
 
-  import Ecto.Query
-
   alias Reedly.Database.{Repo, FeedEntry}
 
   @doc "Find a feed entry by id"

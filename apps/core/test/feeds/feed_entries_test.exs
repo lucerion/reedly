@@ -1,8 +1,8 @@
-defmodule Reedly.Feeds.Test.FeedEntriesTest do
+defmodule Reedly.Core.Test.FeedEntriesTest do
   use ExUnit.Case
   use Reedly.Database.Test.RepoCase
 
-  alias Reedly.Feeds.FeedEntries
+  alias Reedly.Core.Feeds.FeedEntries
   alias Reedly.Database.Test.FeedEntryTestHelper
 
   describe "all/1" do

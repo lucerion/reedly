@@ -7,7 +7,11 @@ defmodule Reedly.Database.Repositories.FeedRepository do
 
   @doc "All feeds"
   @spec all() :: list(Feed.t())
-  def all, do: Repo.all(from(feed in Feed, preload: [:entries]))
+  def all do
+    Feed
+    |> Repo.all()
+    |> Repo.preload(:entries)
+  end
 
   @doc "Create a feed"
   @spec create(map) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}

@@ -38,5 +38,5 @@ defmodule Reedly.API.Test.FeedResolverTest do
     do: {FeederEx, [], [parse: fn _body -> {:ok, %{}, "message"} end]}
 
   defp map_mock(attributes),
-    do: {Reedly.Feeds.Mappers.FeedMapper, [], [map: fn _feed -> attributes end]}
+    do: {Reedly.Core.Feeds.Mappers.FeedMapper, [], [map: fn _feed -> attributes end]}
 end

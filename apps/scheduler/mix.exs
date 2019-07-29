@@ -25,7 +25,7 @@ defmodule Reedly.Scheduler.MixProject do
 
   defp deps do
     [
-      {:feeds, in_umbrella: true},
+      {:core, in_umbrella: true},
       {:quantum, "~> 2.3"},
       {:timex, "~> 3.5.0"}
     ]

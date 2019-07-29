@@ -1,4 +1,4 @@
-defmodule Reedly.Feeds.FeedEntries do
+defmodule Reedly.Core.Feeds.FeedEntries do
   @moduledoc "Feed entries related business logic"
 
   alias Reedly.Database.{FeedEntry, Repositories.FeedEntryRepository}

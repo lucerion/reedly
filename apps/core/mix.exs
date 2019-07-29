@@ -12,7 +12,8 @@ defmodule Reedly.Core.MixProject do
       elixir: "~> 1.8",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
-      aliases: aliases()
+      aliases: aliases(),
+      elixirc_paths: elixirc_paths(Mix.env())
     ]
   end
 
@@ -26,7 +27,9 @@ defmodule Reedly.Core.MixProject do
     [
       {:database, in_umbrella: true},
       {:httpoison, "~> 1.5.0"},
-      {:faker, "~> 0.12.0", only: :test}
+      {:feeder_ex, "~> 1.1.0"},
+      {:faker, "~> 0.12.0", only: :test},
+      {:mock, "~> 0.3.0", only: :test}
     ]
   end
 
@@ -37,4 +40,7 @@ defmodule Reedly.Core.MixProject do
       check: "cmd mix credo && mix dialyzer && mix test"
     ]
   end
+
+  defp elixirc_paths(:test), do: ["lib", "core", "test/support"]
+  defp elixirc_paths(_), do: ["lib", "core"]
 end

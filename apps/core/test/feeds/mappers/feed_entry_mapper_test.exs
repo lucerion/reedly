@@ -1,8 +1,8 @@
-defmodule Reedly.Feeds.Test.FeedEntryMapperTest do
+defmodule Reedly.Core.Test.FeedEntryMapperTest do
   use ExUnit.Case
 
-  alias Reedly.Feeds.Mappers.FeedEntryMapper
-  alias Reedly.Feeds.Test.FeederExTestHelper
+  alias Reedly.Core.Feeds.Mappers.FeedEntryMapper
+  alias Reedly.Core.Test.FeederExTestHelper
 
   describe "map/1" do
     test "returns a feed entry attributes" do

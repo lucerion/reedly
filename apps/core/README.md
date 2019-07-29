@@ -1,6 +1,6 @@
 # Reedly Core
 
-Common business logic
+Business logic
 
 
 ## Setup

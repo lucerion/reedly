@@ -1,8 +1,6 @@
 defmodule Reedly.Database.Repositories.LinkRepository do
   @moduledoc "Functions to read and change links in the database"
 
-  import Ecto.Query
-
   alias Reedly.Database.{Repo, Link}
 
   @doc "Find a link by id"
