@@ -43,10 +43,8 @@ defmodule Reedly.Database.Test.LinkTestHelper do
   def create, do: create(%{})
 
   def create(attributes) do
-    full_attributes = Map.merge(build_attributes(), attributes)
-
     %Link{}
-    |> Ecto.Changeset.cast(full_attributes, @attributes)
+    |> Ecto.Changeset.cast(build_attributes(attributes), @attributes)
     |> Repo.insert()
   end
 

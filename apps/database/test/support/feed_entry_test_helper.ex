@@ -44,6 +44,9 @@ defmodule Reedly.Database.Test.FeedEntryTestHelper do
   def build_attributes(count: count),
     do: Enum.map(0..(count - 1), fn _x -> build_attributes() end)
 
+  def build_attributes(attributes),
+    do: Map.merge(build_attributes(), attributes)
+
   @doc "Create a feed entry"
   def create(count: count) when count <= 0,
     do: create()
@@ -57,10 +60,8 @@ defmodule Reedly.Database.Test.FeedEntryTestHelper do
   def create, do: create(%{})
 
   def create(attributes) do
-    full_attributes = Map.merge(build_attributes(), attributes)
-
     %FeedEntry{}
-    |> Ecto.Changeset.cast(full_attributes, @attributes)
+    |> Ecto.Changeset.cast(build_attributes(attributes), @attributes)
     |> Repo.insert()
   end
 

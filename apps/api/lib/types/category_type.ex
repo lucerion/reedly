@@ -8,6 +8,7 @@ defmodule Reedly.API.Types.CategoryType do
     field(:id, :integer)
     field(:name, :string)
     field(:type, :string)
+    field(:feeds, list_of(:feed))
   end
 
   @desc "Category result type"

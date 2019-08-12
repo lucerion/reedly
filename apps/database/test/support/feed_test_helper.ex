@@ -67,10 +67,8 @@ defmodule Reedly.Database.Test.FeedTestHelper do
   def create, do: create(%{})
 
   def create(attributes) do
-    full_attributes = Map.merge(build_attributes(), attributes)
-
     %Feed{}
-    |> Ecto.Changeset.cast(full_attributes, @attributes)
+    |> Ecto.Changeset.cast(build_attributes(attributes), @attributes)
     |> Ecto.Changeset.cast_assoc(:entries, with: &FeedEntry.create_changeset/2)
     |> Repo.insert()
   end

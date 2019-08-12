@@ -12,6 +12,7 @@ defmodule Reedly.API.Schema do
   import_types(Reedly.API.Types.FeedEntryType)
   import_types(Reedly.API.Types.FeedType)
 
+  import_types(Reedly.API.Queries.CategoryQueries)
   import_types(Reedly.API.Queries.LinkQueries)
   import_types(Reedly.API.Queries.FeedEntryQueries)
 
@@ -24,6 +25,7 @@ defmodule Reedly.API.Schema do
   def middleware(middlewares, _field, _object), do: middlewares
 
   query do
+    import_fields(:category_queries)
     import_fields(:link_queries)
     import_fields(:feed_entry_queries)
   end

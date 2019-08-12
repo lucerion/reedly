@@ -4,8 +4,11 @@ defmodule Reedly.Core.Feeds.FeedEntries do
   alias Reedly.Database.{FeedEntry, Repositories.FeedEntryRepository}
 
   @doc "All feed entries"
+  @spec all() :: list(FeedEntry.t())
+  def all, do: all(%{})
+
   @spec all(map) :: list(FeedEntry.t())
-  def all(_attributes \\ %{}), do: FeedEntryRepository.all()
+  def all(_attributes), do: FeedEntryRepository.all()
 
   @doc "Update a feed entry"
   @spec update(map) :: {:ok, FeedEntry.t()} | {:error, Ecto.Changeset.t()} | {:error, nil}

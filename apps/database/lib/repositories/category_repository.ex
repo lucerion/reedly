@@ -1,11 +1,31 @@
 defmodule Reedly.Database.Repositories.CategoryRepository do
   @moduledoc "Functions to read and change categories in the database"
 
+  import Ecto.Query
+
   alias Reedly.Database.{Repo, Category}
 
   @doc "Find a category by id"
   @spec find(integer | String.t()) :: Category.t() | nil
   def find(id), do: Repo.get(Category, id)
+
+  @doc "All categories"
+  @spec all() :: list(Category.t())
+  def all() do
+    Category
+    |> Repo.all()
+    |> Repo.preload(:feeds)
+  end
+
+  @doc "Categories by type"
+  @spec filter_by_type(String.t()) :: list(Category.t())
+  def filter_by_type("feed" = type) do
+    type
+    |> fetch_by_type()
+    |> Repo.preload(:feeds)
+  end
+
+  def filter_by_type(type), do: fetch_by_type(type)
 
   @doc "Create a category"
   @spec create(map) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()}
@@ -26,4 +46,13 @@ defmodule Reedly.Database.Repositories.CategoryRepository do
   @doc "Delete a category"
   @spec delete(Category.t()) :: {:ok, Category.t()}
   def delete(%Category{} = category), do: Repo.delete(category)
+
+  defp fetch_by_type(type) do
+    type
+    |> by_type_query()
+    |> Repo.all()
+  end
+
+  defp by_type_query(type),
+    do: from(category in Category, where: category.type == ^type)
 end

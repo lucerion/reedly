@@ -4,8 +4,11 @@ defmodule Reedly.Core.Links do
   alias Reedly.Database.{Link, Repositories.LinkRepository}
 
   @doc "All links"
+  @spec all() :: list(Link.t())
+  def all, do: all(%{})
+
   @spec all(map) :: list(Link.t())
-  def all(_attributes \\ %{}), do: LinkRepository.all()
+  def all(_attributes), do: LinkRepository.all()
 
   @doc "Create a link"
   @spec create(map) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()}
