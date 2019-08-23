@@ -3,11 +3,11 @@ defmodule Reedly.Core.Test.FeedEntriesTest do
   use Reedly.Database.Test.RepoCase
 
   alias Reedly.Core.Feeds.FeedEntries
-  alias Reedly.Database.Test.FeedEntryTestHelper
+  alias Reedly.Database.Test.{FeedEntryTestHelper, FeedEntryTestFactory}
 
   describe "all/1" do
     test "returns all feed entries" do
-      existing_entries = FeedEntryTestHelper.create(count: 3)
+      existing_entries = FeedEntryTestFactory.create(count: 3)
 
       entries = FeedEntries.all()
 
@@ -17,7 +17,7 @@ defmodule Reedly.Core.Test.FeedEntriesTest do
 
   describe "update/1" do
     test "updates a feed entry" do
-      {:ok, feed_entry} = FeedEntryTestHelper.create(%{read: false})
+      feed_entry = FeedEntryTestFactory.create(%{read: false})
 
       {:ok, updated_feed_entry} = FeedEntries.update(%{id: feed_entry.id, read: true})
 

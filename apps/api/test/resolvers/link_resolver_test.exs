@@ -2,11 +2,11 @@ defmodule Reedly.API.Test.LinkResolverTest do
   use Reedly.API.Test.ResolverCase
 
   alias Reedly.API.Resolvers.LinkResolver
-  alias Reedly.Database.Test.LinkTestHelper
+  alias Reedly.Database.Test.{LinkTestHelper, LinkTestFactory}
 
   describe "all/3" do
     test "returns all links", %{parent: parent, args: args, resolution: resolution} do
-      existing_links = LinkTestHelper.create(count: 3)
+      existing_links = LinkTestFactory.create(count: 3)
 
       {:ok, links} = LinkResolver.all(parent, args, resolution)
 
@@ -16,7 +16,7 @@ defmodule Reedly.API.Test.LinkResolverTest do
 
   describe "create/3" do
     test "creates a link", %{parent: parent, resolution: resolution} do
-      attributes = LinkTestHelper.build_attributes()
+      attributes = LinkTestFactory.build_attributes()
 
       {:ok, link} = LinkResolver.create(parent, attributes, resolution)
 
@@ -26,7 +26,7 @@ defmodule Reedly.API.Test.LinkResolverTest do
 
   describe "update/3" do
     test "updates a link", %{parent: parent, resolution: resolution} do
-      {:ok, existing_link} = LinkTestHelper.create()
+      existing_link = LinkTestFactory.create()
 
       new_attributes = %{id: existing_link.id, url: "http://example.com", description: "new description"}
       {:ok, link} = LinkResolver.update(parent, new_attributes, resolution)
@@ -42,7 +42,7 @@ defmodule Reedly.API.Test.LinkResolverTest do
 
   describe "delete/3" do
     test "deletes a link", %{parent: parent, resolution: resolution} do
-      {:ok, link} = LinkTestHelper.create()
+      link = LinkTestFactory.create()
 
       {:ok, deleted_link} = LinkResolver.delete(parent, %{id: link.id}, resolution)
 

@@ -11,7 +11,7 @@ defmodule Reedly.Database.Repositories.CategoryRepository do
 
   @doc "All categories"
   @spec all() :: list(Category.t())
-  def all() do
+  def all do
     Category
     |> Repo.all()
     |> Repo.preload(:feeds)

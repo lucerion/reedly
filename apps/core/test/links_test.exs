@@ -3,11 +3,11 @@ defmodule Reedly.Core.Test.LinksTest do
   use Reedly.Database.Test.RepoCase
 
   alias Reedly.Core.Links
-  alias Reedly.Database.Test.LinkTestHelper
+  alias Reedly.Database.Test.{LinkTestHelper, LinkTestFactory}
 
   describe "all/1" do
     test "returns all links" do
-      existing_links = LinkTestHelper.create(count: 3)
+      existing_links = LinkTestFactory.create(count: 3)
 
       links = Links.all()
 
@@ -17,7 +17,7 @@ defmodule Reedly.Core.Test.LinksTest do
 
   describe "create/1" do
     test "creates a link" do
-      attributes = LinkTestHelper.build_attributes()
+      attributes = LinkTestFactory.build_attributes()
 
       {:ok, link} = Links.create(attributes)
 
@@ -27,7 +27,7 @@ defmodule Reedly.Core.Test.LinksTest do
 
   describe "update/1" do
     test "updates a link" do
-      {:ok, existing_link} = LinkTestHelper.create()
+      existing_link = LinkTestFactory.create()
 
       {:ok, link} = Links.update(%{id: existing_link.id, url: "http://example.com", description: "new description"})
 
@@ -42,7 +42,7 @@ defmodule Reedly.Core.Test.LinksTest do
 
   describe "delete/1" do
     test "deletes a link" do
-      {:ok, link} = LinkTestHelper.create()
+      link = LinkTestFactory.create()
 
       {:ok, deleted_link} = Links.delete(%{id: link.id})
 

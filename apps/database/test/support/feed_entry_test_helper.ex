@@ -1,8 +1,7 @@
 defmodule Reedly.Database.Test.FeedEntryTestHelper do
   @moduledoc "Test helpers functions for feed entry"
 
-  alias Reedly.Database.{Repo, FeedEntry}
-  alias Reedly.Database.Test.DateTimeTestHelper
+  alias Reedly.Database.FeedEntry
 
   @attributes ~w[
     title
@@ -12,8 +11,7 @@ defmodule Reedly.Database.Test.FeedEntryTestHelper do
     published
     read
   ]a
-
-  @full_attributes [:id | @attributes]
+  @attributes_with_id [:id | @attributes]
 
   @doc "A list of feed entries attributes"
   def attributes(feed_entries) when is_list(feed_entries),
@@ -26,45 +24,6 @@ defmodule Reedly.Database.Test.FeedEntryTestHelper do
   def attributes(%FeedEntry{} = feed_entry), do: attributes(feed_entry, @attributes)
   def attributes(%FeedEntry{} = feed_entry, attributes), do: Map.take(feed_entry, attributes)
 
-  @doc "Build feed entry attributes"
-  def build_attributes do
-    %{
-      title: Faker.Name.title(),
-      content: Faker.Lorem.paragraph(),
-      url: Faker.Internet.url(),
-      entity_id: Faker.Internet.slug(),
-      published: DateTimeTestHelper.random_naive_date_time(truncate: :second),
-      read: false
-    }
-  end
-
-  def build_attributes(count: count) when count <= 0,
-    do: build_attributes()
-
-  def build_attributes(count: count),
-    do: Enum.map(0..(count - 1), fn _x -> build_attributes() end)
-
-  def build_attributes(attributes),
-    do: Map.merge(build_attributes(), attributes)
-
-  @doc "Create a feed entry"
-  def create(count: count) when count <= 0,
-    do: create()
-
-  def create(count: count) do
-    0..(count - 1)
-    |> Enum.map(fn _x -> create() end)
-    |> Enum.map(fn {:ok, entry} -> entry end)
-  end
-
-  def create, do: create(%{})
-
-  def create(attributes) do
-    %FeedEntry{}
-    |> Ecto.Changeset.cast(build_attributes(attributes), @attributes)
-    |> Repo.insert()
-  end
-
   def equal?(entries_1, entries_2) when is_list(entries_1) and is_list(entries_2),
-    do: attributes(entries_1, @full_attributes) == attributes(entries_2, @full_attributes)
+    do: attributes(entries_1, @attributes_with_id) == attributes(entries_2, @attributes_with_id)
 end

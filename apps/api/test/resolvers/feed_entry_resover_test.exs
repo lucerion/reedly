@@ -2,11 +2,11 @@ defmodule Reedly.API.Test.FeedEntryResolverTest do
   use Reedly.API.Test.ResolverCase
 
   alias Reedly.API.Resolvers.FeedEntryResolver
-  alias Reedly.Database.Test.FeedEntryTestHelper
+  alias Reedly.Database.Test.{FeedEntryTestHelper, FeedEntryTestFactory}
 
   describe "all/3" do
     test "returns all feed entries", %{parent: parent, args: args, resolution: resolution} do
-      existing_entries = FeedEntryTestHelper.create(count: 3)
+      existing_entries = FeedEntryTestFactory.create(count: 3)
 
       {:ok, entries} = FeedEntryResolver.all(parent, args, resolution)
 
@@ -16,7 +16,7 @@ defmodule Reedly.API.Test.FeedEntryResolverTest do
 
   describe "update/3" do
     test "updates a category", %{parent: parent, resolution: resolution} do
-      {:ok, feed_entry} = FeedEntryTestHelper.create(%{read: false})
+      feed_entry = FeedEntryTestFactory.create(%{read: false})
 
       {:ok, updated_feed_entry} = FeedEntryResolver.update(parent, %{id: feed_entry.id, read: true}, resolution)
 

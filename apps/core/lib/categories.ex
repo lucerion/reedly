@@ -8,11 +8,10 @@ defmodule Reedly.Core.Categories do
   def fetch(%{type: type}), do: CategoryRepository.filter_by_type(type)
 
   @doc "All categories"
+  def fetch(_attributes), do: CategoryRepository.all()
+
   @spec fetch() :: list(Category.t())
   def fetch, do: fetch(%{})
-
-  @spec fetch(map) :: list(Category.t())
-  def fetch(_attributes), do: CategoryRepository.all()
 
   @doc "Create a category"
   @spec create(map) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()}

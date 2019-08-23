@@ -19,6 +19,7 @@ defmodule Reedly.Database.Repositories.FeedRepository do
     %Feed{}
     |> Feed.create_changeset(attributes)
     |> Repo.insert()
+    |> preload_relation(:category)
   end
 
   @doc "Update a feed"
@@ -27,5 +28,13 @@ defmodule Reedly.Database.Repositories.FeedRepository do
     feed
     |> Feed.update_changeset(attributes)
     |> Repo.update()
+    |> preload_relation(:category)
+  end
+
+  defp preload_relation(result, relation) do
+    case result do
+      {:ok, feed} -> {:ok, Repo.preload(feed, relation)}
+      error -> error
+    end
   end
 end

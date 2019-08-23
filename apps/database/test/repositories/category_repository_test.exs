@@ -2,11 +2,11 @@ defmodule Reedly.Database.Test.CategoryRepositoryTest do
   use Reedly.Database.Test.RepoCase
 
   alias Reedly.Database.Repositories.CategoryRepository
-  alias Reedly.Database.Test.{ValidationTestHelper, CategoryTestHelper, FeedTestHelper}
+  alias Reedly.Database.Test.{CategoryTestHelper, CategoryTestFactory, FeedTestHelper, FeedTestFactory}
 
   describe "find/1" do
     test "returns category by id" do
-      {:ok, existing_category} = CategoryTestHelper.create()
+      existing_category = CategoryTestFactory.create()
 
       category = CategoryRepository.find(existing_category.id)
 
@@ -20,7 +20,7 @@ defmodule Reedly.Database.Test.CategoryRepositoryTest do
 
   describe "create/1" do
     test "creates a category" do
-      attributes = CategoryTestHelper.build_attributes()
+      attributes = CategoryTestFactory.build_attributes()
 
       {:ok, category} = CategoryRepository.create(attributes)
 
@@ -28,42 +28,42 @@ defmodule Reedly.Database.Test.CategoryRepositoryTest do
     end
 
     test "fails when a category without name" do
-      attributes = CategoryTestHelper.build_attributes(%{name: nil})
+      attributes = CategoryTestFactory.build_attributes(%{name: nil})
 
       result = CategoryRepository.create(attributes)
 
-      assert ValidationTestHelper.validation_error?(result, :name, :required)
+      assert validation_error?(result, :name, :required)
     end
 
     test "fails when a category without type" do
-      attributes = CategoryTestHelper.build_attributes(%{type: nil})
+      attributes = CategoryTestFactory.build_attributes(%{type: nil})
 
       result = CategoryRepository.create(attributes)
 
-      assert ValidationTestHelper.validation_error?(result, :type, :required)
+      assert validation_error?(result, :type, :required)
     end
 
     test "fails when a type is not correct" do
-      attributes = CategoryTestHelper.build_attributes(%{type: "not_allowed_type"})
+      attributes = CategoryTestFactory.build_attributes(%{type: "not_allowed_type"})
 
       result = CategoryRepository.create(attributes)
 
-      assert ValidationTestHelper.validation_error?(result, :type, :inclusion)
+      assert validation_error?(result, :type, :inclusion)
     end
 
     test "fails when name and type is not unique" do
-      attributes = CategoryTestHelper.build_attributes()
-      CategoryTestHelper.create(attributes)
+      attributes = CategoryTestFactory.build_attributes()
+      CategoryTestFactory.create(attributes)
 
       result = CategoryRepository.create(attributes)
 
-      assert ValidationTestHelper.validation_error?(result, :name, :unique)
+      assert validation_error?(result, :name, :unique)
     end
   end
 
   describe "update/2" do
     test "updates a category name" do
-      {:ok, category} = CategoryTestHelper.create()
+      category = CategoryTestFactory.create()
 
       {:ok, updated_category} = CategoryRepository.update(category, %{name: "new_name"})
 
@@ -71,26 +71,26 @@ defmodule Reedly.Database.Test.CategoryRepositoryTest do
     end
 
     test "fails when a category without name" do
-      {:ok, category} = CategoryTestHelper.create()
+      category = CategoryTestFactory.create()
 
       result = CategoryRepository.update(category, %{name: nil})
 
-      assert ValidationTestHelper.validation_error?(result, :name, :required)
+      assert validation_error?(result, :name, :required)
     end
 
     test "fails when name is not unique" do
-      {:ok, category_1} = CategoryTestHelper.create()
-      {:ok, category_2} = CategoryTestHelper.create()
+      category_1 = CategoryTestFactory.create()
+      category_2 = CategoryTestFactory.create()
 
       result = CategoryRepository.update(category_1, %{name: category_2.name})
 
-      assert ValidationTestHelper.validation_error?(result, :name, :unique)
+      assert validation_error?(result, :name, :unique)
     end
   end
 
   describe "delete/1" do
     test "deletes category" do
-      {:ok, category} = CategoryTestHelper.create()
+      category = CategoryTestFactory.create()
 
       {:ok, deleted_category} = CategoryRepository.delete(category)
 
@@ -98,9 +98,9 @@ defmodule Reedly.Database.Test.CategoryRepositoryTest do
     end
 
     test "nilify feeds ids after deletion" do
-      {:ok, category} = CategoryTestHelper.create()
+      category = CategoryTestFactory.create()
 
-      feeds = FeedTestHelper.create(%{category_id: category.id}, count: 2)
+      feeds = FeedTestFactory.create(%{category_id: category.id}, count: 2)
       assert Enum.all?(feeds, &(&1.category_id != nil))
 
       CategoryRepository.delete(category)

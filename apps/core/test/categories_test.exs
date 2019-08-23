@@ -3,11 +3,11 @@ defmodule Reedly.Core.Test.CategoriesTest do
   use Reedly.Database.Test.RepoCase
 
   alias Reedly.Core.Categories
-  alias Reedly.Database.Test.CategoryTestHelper
+  alias Reedly.Database.Test.{CategoryTestHelper, CategoryTestFactory}
 
   describe "create/1" do
     test "creates a category" do
-      attributes = CategoryTestHelper.build_attributes()
+      attributes = CategoryTestFactory.build_attributes()
 
       {:ok, category} = Categories.create(attributes)
 
@@ -17,7 +17,7 @@ defmodule Reedly.Core.Test.CategoriesTest do
 
   describe "update/1" do
     test "updates a category" do
-      {:ok, category} = CategoryTestHelper.create()
+      category = CategoryTestFactory.create()
 
       {:ok, updated_category} = Categories.update(%{id: category.id, name: "new_name"})
 
@@ -31,7 +31,7 @@ defmodule Reedly.Core.Test.CategoriesTest do
 
   describe "delete/1" do
     test "deletes a category" do
-      {:ok, category} = CategoryTestHelper.create()
+      category = CategoryTestFactory.create()
 
       {:ok, deleted_category} = Categories.delete(%{id: category.id})
 

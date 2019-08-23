@@ -11,6 +11,7 @@ defmodule Reedly.Database.Test.RepoCase do
       alias Reedly.Database.Repo
 
       import Reedly.Database.Test.RepoCase
+      import Reedly.Database.Test.ValidationTestHelper
     end
   end
 

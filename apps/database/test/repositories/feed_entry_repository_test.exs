@@ -2,11 +2,11 @@ defmodule Reedly.Database.Test.FeedEntryRepositoryTest do
   use Reedly.Database.Test.RepoCase
 
   alias Reedly.Database.Repositories.FeedEntryRepository
-  alias Reedly.Database.Test.FeedEntryTestHelper
+  alias Reedly.Database.Test.{FeedEntryTestHelper, FeedEntryTestFactory}
 
   describe "all()" do
     test "returns all feed entries" do
-      existing_entries = FeedEntryTestHelper.create(count: 3)
+      existing_entries = FeedEntryTestFactory.create(count: 3)
 
       entries = FeedEntryRepository.all()
 
@@ -16,7 +16,7 @@ defmodule Reedly.Database.Test.FeedEntryRepositoryTest do
 
   describe "update/2" do
     test "updates a feed entry" do
-      {:ok, feed_entry} = FeedEntryTestHelper.create(%{read: false})
+      feed_entry = FeedEntryTestFactory.create(%{read: false})
 
       {:ok, updated_feed_entry} = FeedEntryRepository.update(feed_entry, %{read: true})
 
@@ -24,7 +24,7 @@ defmodule Reedly.Database.Test.FeedEntryRepositoryTest do
     end
 
     test "not updates a feed entry if updated attribute is not 'read'" do
-      {:ok, feed_entry} = FeedEntryTestHelper.create()
+      feed_entry = FeedEntryTestFactory.create()
 
       {:ok, updated_feed_entry} = FeedEntryRepository.update(feed_entry, %{title: "Title updated!"})
 

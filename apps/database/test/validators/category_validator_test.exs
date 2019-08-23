@@ -2,7 +2,7 @@ defmodule Reedly.Database.Test.CategoryValidatorTest do
   use Reedly.Database.Test.RepoCase
 
   alias Reedly.Database.Validators.CategoryValidator
-  alias Reedly.Database.Test.CategoryTestHelper
+  alias Reedly.Database.Test.CategoryTestFactory
 
   describe "validate_category/2" do
     test "returns changeset when category_id is nil" do
@@ -30,7 +30,7 @@ defmodule Reedly.Database.Test.CategoryValidatorTest do
     end
 
     test "adds an error when category type is not correct" do
-      {:ok, category} = CategoryTestHelper.create(%{type: "allowed_type"})
+      category = CategoryTestFactory.create(%{type: "allowed_type"})
       changeset = %Ecto.Changeset{changes: %{category_id: category.id}}
 
       %{errors: errors} = CategoryValidator.validate_category(changeset, "not_allowed_type")

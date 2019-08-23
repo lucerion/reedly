@@ -1,40 +1,19 @@
 defmodule Reedly.Database.Test.CategoryTestHelper do
   @moduledoc "Test helpers functions for category"
 
-  alias Reedly.Database.{Repo, Category}
+  alias Reedly.Database.Category
 
   @attributes ~w[
     name
     type
   ]a
+  @attributes_with_id [:id | @attributes]
 
-  @full_attributes [:id | @attributes]
-
-  @doc "Get category attributes"
-  def attributes(%Category{} = category), do: attributes(category, @attributes)
-  def attributes(%Category{} = category, attributes), do: Map.take(category, attributes)
-
-  @doc "Build category attributes"
-  def build_attributes do
-    %{
-      name: Faker.Name.title(),
-      type: "feed"
-    }
-  end
-
-  def build_attributes(attributes), do: Map.merge(build_attributes(), attributes)
-
-  @doc "Create a category"
-  def create, do: create(%{})
-
-  def create(attributes) do
-    %Category{}
-    |> Ecto.Changeset.cast(build_attributes(attributes), @attributes)
-    |> Repo.insert()
-  end
+  defp attributes(%Category{} = category), do: attributes(category, @attributes)
+  defp attributes(%Category{} = category, attributes), do: Map.take(category, attributes)
 
   def equal?(%Category{} = category_1, %Category{} = category_2),
-    do: attributes(category_1, @full_attributes) == attributes(category_2, @full_attributes)
+    do: attributes(category_1, @attributes_with_id) == attributes(category_2, @attributes_with_id)
 
   def equal?(%Category{} = category, attributes), do: attributes(category) == attributes
 end

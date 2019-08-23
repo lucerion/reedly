@@ -3,8 +3,8 @@ defmodule Reedly.Database.Test.FeedTestHelper do
 
   import Ecto.Query
 
-  alias Reedly.Database.{Repo, Feed, FeedEntry}
-  alias Reedly.Database.Test.{DateTimeTestHelper, FeedEntryTestHelper}
+  alias Reedly.Database.{Repo, Feed}
+  alias Reedly.Database.Test.FeedEntryTestHelper
 
   @attributes ~w[
     title
@@ -12,78 +12,23 @@ defmodule Reedly.Database.Test.FeedTestHelper do
     feed_url
     updated
     category_id
+    entries
   ]a
-  @attributes_with_relations [:entries | @attributes]
-  @full_attributes [:id | @attributes_with_relations]
+  @attributes_with_id [:id | @attributes]
 
-  @doc "A list of feeds attributes"
-  def attributes(feeds, attributes) when is_list(feeds),
+  defp attributes(feeds, attributes) when is_list(feeds),
     do: Enum.map(feeds, &attributes(&1, attributes))
 
-  @doc "Get feed attributes"
-  def attributes(%Feed{} = feed), do: attributes(feed, @attributes_with_relations)
+  defp attributes(%Feed{} = feed), do: attributes(feed, @attributes)
 
-  def attributes(%Feed{} = feed, attributes) do
+  defp attributes(%Feed{} = feed, attributes) do
     feed
     |> Map.take(attributes)
     |> Map.update(:entries, [], &FeedEntryTestHelper.attributes(&1))
   end
 
-  @doc "Build feed attributes"
-  def build_attributes, do: build_attributes(entries: [])
-
-  def build_attributes(entries: entries) do
-    %{
-      title: Faker.Name.title(),
-      url: Faker.Internet.url(),
-      feed_url: Faker.Internet.url(),
-      updated: DateTimeTestHelper.random_naive_date_time(truncate: :second),
-      entries: entries,
-      category_id: nil
-    }
-  end
-
-  def build_attributes(entries_count: entries_count) when entries_count <= 0,
-    do: build_attributes()
-
-  def build_attributes(entries_count: entries_count) do
-    entries = FeedEntryTestHelper.build_attributes(count: entries_count)
-    build_attributes(entries: entries)
-  end
-
-  def build_attributes(attributes), do: Map.merge(build_attributes(), attributes)
-
-  @doc "Create a feed"
-  def create(entries_count: entries_count) do
-    build_attributes(entries_count: entries_count)
-    |> create()
-  end
-
-  def create(entries: entries) do
-    build_attributes(entries: entries)
-    |> create()
-  end
-
-  def create, do: create(%{})
-
-  def create(attributes) do
-    %Feed{}
-    |> Ecto.Changeset.cast(build_attributes(attributes), @attributes)
-    |> Ecto.Changeset.cast_assoc(:entries, with: &FeedEntry.create_changeset/2)
-    |> Repo.insert()
-  end
-
-  def create(attributes, count: count) when count <= 0,
-    do: create(attributes)
-
-  def create(attributes, count: count) do
-    0..(count - 1)
-    |> Enum.map(fn _x -> create(attributes) end)
-    |> Enum.map(fn {:ok, feed} -> feed end)
-  end
-
   def equal?(feeds_1, feeds_2) when is_list(feeds_1) and is_list(feeds_2),
-    do: attributes(feeds_1, @full_attributes) == attributes(feeds_2, @full_attributes)
+    do: attributes(feeds_1, @attributes_with_id) == attributes(feeds_2, @attributes_with_id)
 
   def equal?(%Feed{} = feed, attributes), do: attributes(feed) == attributes
 
