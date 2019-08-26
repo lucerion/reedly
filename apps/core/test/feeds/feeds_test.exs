@@ -5,6 +5,7 @@ defmodule Reedly.Core.Test.FeedsTest do
   import Mock
 
   alias Reedly.Core.Feeds
+  alias Reedly.Core.Test.Mocks
   alias Reedly.Database.Test.{FeedTestFactory, FeedEntryTestFactory}
 
   describe "update/1" do
@@ -13,7 +14,7 @@ defmodule Reedly.Core.Test.FeedsTest do
       new_attributes = FeedTestFactory.build_attributes(entries_count: 2)
 
       {:ok, updated_feed} =
-        with_mocks([get_mock(), parse_mock(), map_mock(new_attributes)]) do
+        with_mocks(Mocks.feed_fetch_and_parse_mock(new_attributes)) do
           Feeds.update(feed)
         end
 
@@ -28,7 +29,7 @@ defmodule Reedly.Core.Test.FeedsTest do
       feed = FeedTestFactory.create(entries: entries)
 
       {:ok, updated_feed} =
-        with_mocks([get_mock(), parse_mock(), map_mock(new_attributes)]) do
+        with_mocks(Mocks.feed_fetch_and_parse_mock(new_attributes)) do
           Feeds.update(feed)
         end
 
@@ -37,13 +38,4 @@ defmodule Reedly.Core.Test.FeedsTest do
       assert updated_feed.updated == NaiveDateTime.truncate(new_attributes.updated, :second)
     end
   end
-
-  defp get_mock,
-    do: {Reedly.Core.Helpers.HTTPHelper, [], [get: fn _url -> {:ok, "body"} end]}
-
-  defp parse_mock,
-    do: {FeederEx, [], [parse: fn _body -> {:ok, %{}, "message"} end]}
-
-  defp map_mock(attributes),
-    do: {Reedly.Core.Feeds.Mappers.FeedMapper, [], [map: fn _feed -> attributes end]}
 end
