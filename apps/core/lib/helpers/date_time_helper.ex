@@ -25,6 +25,7 @@ defmodule Reedly.Core.Helpers.DateTimeHelper do
     {UNIX}
   ]
 
+  @doc "Parses a date from the string"
   @spec parse(String.t() | nil, list(String.t()) | String.t()) :: NaiveDateTime.t() | nil
   def parse(nil), do: nil
   def parse(timestamp), do: parse(timestamp, @timestamp_formats)

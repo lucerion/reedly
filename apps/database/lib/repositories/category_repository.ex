@@ -5,11 +5,11 @@ defmodule Reedly.Database.Repositories.CategoryRepository do
 
   alias Reedly.Database.{Repo, Category}
 
-  @doc "Find a category by id"
+  @doc "Fetches a category by id"
   @spec find(integer | String.t()) :: Category.t() | nil
   def find(id), do: Repo.get(Category, id)
 
-  @doc "All categories"
+  @doc "Fetches all categories"
   @spec all() :: list(Category.t())
   def all do
     Category
@@ -17,7 +17,7 @@ defmodule Reedly.Database.Repositories.CategoryRepository do
     |> Repo.preload(:feeds)
   end
 
-  @doc "Categories by type"
+  @doc "Fetches categories by type"
   @spec filter_by_type(String.t()) :: list(Category.t())
   def filter_by_type("feed" = type) do
     type
@@ -27,7 +27,7 @@ defmodule Reedly.Database.Repositories.CategoryRepository do
 
   def filter_by_type(type), do: fetch_by_type(type)
 
-  @doc "Create a category"
+  @doc "Creates a category"
   @spec create(map) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()}
   def create(attributes \\ %{}) do
     %Category{}
@@ -35,7 +35,7 @@ defmodule Reedly.Database.Repositories.CategoryRepository do
     |> Repo.insert()
   end
 
-  @doc "Update a category"
+  @doc "Updates a category"
   @spec update(Category.t(), map) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()}
   def update(%Category{} = category, attributes) do
     category
@@ -43,7 +43,7 @@ defmodule Reedly.Database.Repositories.CategoryRepository do
     |> Repo.update()
   end
 
-  @doc "Delete a category"
+  @doc "Deletes a category"
   @spec delete(Category.t()) :: {:ok, Category.t()}
   def delete(%Category{} = category), do: Repo.delete(category)
 

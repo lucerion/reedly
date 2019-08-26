@@ -6,7 +6,7 @@ defmodule Reedly.API.Mutations.FeedEntryMutations do
   alias Reedly.API.Resolvers.FeedEntryResolver
 
   object :feed_entry_mutations do
-    @desc "Update a feed entry"
+    @desc "Updates a feed entry"
     field :update_feed_entry, type: :feed_entry_result do
       arg(:id, non_null(:integer))
       arg(:read, non_null(:boolean))

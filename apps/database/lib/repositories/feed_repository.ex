@@ -5,7 +5,7 @@ defmodule Reedly.Database.Repositories.FeedRepository do
 
   alias Reedly.Database.{Repo, Feed}
 
-  @doc "All feeds"
+  @doc "Fetches all feeds"
   @spec all() :: list(Feed.t())
   def all do
     Feed
@@ -13,7 +13,7 @@ defmodule Reedly.Database.Repositories.FeedRepository do
     |> Repo.preload(:entries)
   end
 
-  @doc "Create a feed"
+  @doc "Creates a feed"
   @spec create(map) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
   def create(attributes \\ %{}) do
     %Feed{}
@@ -22,7 +22,7 @@ defmodule Reedly.Database.Repositories.FeedRepository do
     |> preload_relation(:category)
   end
 
-  @doc "Update a feed"
+  @doc "Updates a feed"
   @spec update(Feed.t(), map) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
   def update(%Feed{} = feed, attributes) do
     feed

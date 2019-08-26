@@ -3,15 +3,15 @@ defmodule Reedly.Database.Repositories.LinkRepository do
 
   alias Reedly.Database.{Repo, Link}
 
-  @doc "Find a link by id"
+  @doc "Fetches a link by id"
   @spec find(integer | String.t()) :: Link.t() | nil
   def find(id), do: Repo.get(Link, id)
 
-  @doc "All links"
+  @doc "Fetches all links"
   @spec all :: list(Link.t())
   def all, do: Repo.all(Link)
 
-  @doc "Create a link"
+  @doc "Creates a link"
   @spec create(map) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()}
   def create(attributes \\ %{}) do
     %Link{}
@@ -19,7 +19,7 @@ defmodule Reedly.Database.Repositories.LinkRepository do
     |> Repo.insert()
   end
 
-  @doc "Update a link"
+  @doc "Updates a link"
   @spec update(Link.t(), map) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()}
   def update(%Link{} = link, attributes) do
     link
@@ -27,7 +27,7 @@ defmodule Reedly.Database.Repositories.LinkRepository do
     |> Repo.update()
   end
 
-  @doc "Delete a link"
+  @doc "Deletes a link"
   @spec delete(Link.t()) :: {:ok, Link.t()}
   def delete(%Link{} = link), do: Repo.delete(link)
 end

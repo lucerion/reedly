@@ -10,6 +10,7 @@ defmodule Reedly.Database.Validators.CategoryValidator do
     incorrect_type: "incorrect type"
   }
 
+  @doc "Validates category allowed type"
   @spec validate_category(Ecto.Changeset.t(), String.t()) :: Ecto.Changeset.t()
   def validate_category(%Ecto.Changeset{changes: %{category_id: nil}} = changeset, _allowed_type), do: changeset
 

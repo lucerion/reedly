@@ -10,7 +10,7 @@ defmodule Reedly.API.Resolvers.FeedEntryResolver do
   @spec all(map, map, resolution) :: {:ok, list(FeedEntry.t())}
   def all(_parent, params, _resolution), do: {:ok, FeedEntries.all(params)}
 
-  @doc "Update a feed entry"
+  @doc "Updates a feed entry"
   @spec update(map, map, resolution) :: {:ok, FeedEntry.t()} | {:error, nil} | {:error, Ecto.Changeset.t()}
   def update(_parent, params, _resolution), do: FeedEntries.update(params)
 end

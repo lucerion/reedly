@@ -6,7 +6,7 @@ defmodule Reedly.API.Mutations.FeedMutations do
   alias Reedly.API.Resolvers.FeedResolver
 
   object :feed_mutations do
-    @desc "Create feed"
+    @desc "Creates a feed"
     field :create_feed, type: :feed_result do
       arg(:feed_url, non_null(:string))
 

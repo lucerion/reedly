@@ -6,7 +6,7 @@ defmodule Reedly.API.Mutations.CategoryMutations do
   alias Reedly.API.Resolvers.CategoryResolver
 
   object :category_mutations do
-    @desc "Create a category"
+    @desc "Creates a category"
     field :create_category, type: :category_result do
       arg(:name, non_null(:string))
       arg(:type, non_null(:string))
@@ -14,7 +14,7 @@ defmodule Reedly.API.Mutations.CategoryMutations do
       resolve(&CategoryResolver.create/3)
     end
 
-    @desc "Update a category"
+    @desc "Updates a category"
     field :update_category, type: :category_result do
       arg(:id, non_null(:integer))
       arg(:name, non_null(:string))
@@ -22,7 +22,7 @@ defmodule Reedly.API.Mutations.CategoryMutations do
       resolve(&CategoryResolver.update/3)
     end
 
-    @desc "Delete a category"
+    @desc "Deletes a category"
     field :delete_category, type: :category_result do
       arg(:id, non_null(:integer))
 

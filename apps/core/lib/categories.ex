@@ -13,11 +13,11 @@ defmodule Reedly.Core.Categories do
   @spec fetch() :: list(Category.t())
   def fetch, do: fetch(%{})
 
-  @doc "Create a category"
+  @doc "Creates a category"
   @spec create(map) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()}
   def create(attributes), do: CategoryRepository.create(attributes)
 
-  @doc "Update a category"
+  @doc "Updates a category"
   @spec update(map) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()} | {:error, nil}
   def update(%{id: id} = attributes) do
     case CategoryRepository.find(id) do
@@ -26,7 +26,7 @@ defmodule Reedly.Core.Categories do
     end
   end
 
-  @doc "Delete a category by id"
+  @doc "Deletes a category by id"
   @spec delete(map) :: {:ok, Category.t()} | {:error, nil}
   def delete(%{id: id}) when is_integer(id) or is_binary(id) do
     case CategoryRepository.find(id) do

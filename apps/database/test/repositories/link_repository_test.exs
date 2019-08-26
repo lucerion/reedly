@@ -14,7 +14,7 @@ defmodule Reedly.Database.Test.LinkRepositoryTest do
     end
   end
 
-  describe "all()" do
+  describe "all/0" do
     test "returns all links" do
       existing_links = LinkTestFactory.create(count: 3)
 

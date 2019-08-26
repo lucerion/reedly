@@ -10,15 +10,15 @@ defmodule Reedly.API.Resolvers.LinkResolver do
   @spec all(map, map, resolution) :: {:ok, list(Link.t())}
   def all(_parent, params, _resolution), do: {:ok, Links.all(params)}
 
-  @doc "Create a link"
+  @doc "Creates a link"
   @spec create(map, map, resolution) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()}
   def create(_parent, params, _resolution), do: Links.create(params)
 
-  @doc "Update a link"
+  @doc "Updates a link"
   @spec update(map, map, resolution) :: {:ok, Link.t()} | {:error, nil} | {:error, Ecto.Changeset.t()}
   def update(_parent, params, _resolution), do: Links.update(params)
 
-  @doc "Delete a link"
+  @doc "Deletes a link"
   @spec delete(map, map, resolution) :: {:ok, Link.t()} | {:error, nil}
   def delete(_parent, params, _resolution), do: Links.delete(params)
 end

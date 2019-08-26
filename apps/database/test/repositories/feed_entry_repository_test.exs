@@ -4,7 +4,7 @@ defmodule Reedly.Database.Test.FeedEntryRepositoryTest do
   alias Reedly.Database.Repositories.FeedEntryRepository
   alias Reedly.Database.Test.{FeedEntryTestHelper, FeedEntryTestFactory}
 
-  describe "all()" do
+  describe "all/0" do
     test "returns all feed entries" do
       existing_entries = FeedEntryTestFactory.create(count: 3)
 

@@ -10,11 +10,11 @@ defmodule Reedly.Core.Links do
   @spec all(map) :: list(Link.t())
   def all(_attributes), do: LinkRepository.all()
 
-  @doc "Create a link"
+  @doc "Creates a link"
   @spec create(map) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()}
   def create(attributes), do: LinkRepository.create(attributes)
 
-  @doc "Update a link"
+  @doc "Updates a link"
   @spec update(map) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()} | {:error, nil}
   def update(%{id: id} = attributes) do
     case LinkRepository.find(id) do
@@ -23,7 +23,7 @@ defmodule Reedly.Core.Links do
     end
   end
 
-  @doc "Delete a link by id"
+  @doc "Deletes a link by id"
   @spec delete(map) :: {:ok, Link.t()} | {:error, nil}
   def delete(%{id: id}) when is_integer(id) or is_binary(id) do
     case LinkRepository.find(id) do

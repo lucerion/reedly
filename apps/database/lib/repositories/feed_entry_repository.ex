@@ -3,15 +3,15 @@ defmodule Reedly.Database.Repositories.FeedEntryRepository do
 
   alias Reedly.Database.{Repo, FeedEntry}
 
-  @doc "Find a feed entry by id"
+  @doc "Fetches a feed entry by id"
   @spec find(integer | String.t()) :: FeedEntry.t() | nil
   def find(id), do: Repo.get(FeedEntry, id)
 
-  @doc "All feed entries"
+  @doc "Fetches all feed entries"
   @spec all :: list(FeedEntry.t())
   def all, do: Repo.all(FeedEntry)
 
-  @doc "Update a feed entry"
+  @doc "Updates a feed entry"
   @spec update(FeedEntry.t(), map) :: {:ok, FeedEntry.t()} | {:error, Ecto.Changeset.t()}
   def update(%FeedEntry{} = feed_entry, attributes) do
     feed_entry
