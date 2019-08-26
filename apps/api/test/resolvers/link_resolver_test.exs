@@ -2,15 +2,29 @@ defmodule Reedly.API.Test.LinkResolverTest do
   use Reedly.API.Test.ResolverCase
 
   alias Reedly.API.Resolvers.LinkResolver
-  alias Reedly.Database.Test.{LinkTestHelper, LinkTestFactory}
+  alias Reedly.Database.Test.{LinkTestHelper, LinkTestFactory, CategoryTestFactory}
 
-  describe "all/3" do
+  describe "filter/3" do
     test "returns all links", %{parent: parent, args: args, resolution: resolution} do
       existing_links = LinkTestFactory.create(count: 3)
 
-      {:ok, links} = LinkResolver.all(parent, args, resolution)
+      {:ok, links} = LinkResolver.filter(parent, args, resolution)
 
       assert LinkTestHelper.equal?(existing_links, links)
+    end
+
+    test "returns links by category when category_id passed in args", %{parent: parent, resolution: resolution} do
+      category_1 = CategoryTestFactory.create(%{type: "link"})
+      category_2 = CategoryTestFactory.create(%{type: "link"})
+
+      existing_category_1_links = LinkTestFactory.create(%{category_id: category_1.id}, count: 2)
+      existing_category_2_links = LinkTestFactory.create(%{category_id: category_2.id}, count: 3)
+
+      {:ok, category_1_links} = LinkResolver.filter(parent, %{category_id: category_1.id}, resolution)
+      {:ok, category_2_links} = LinkResolver.filter(parent, %{category_id: category_2.id}, resolution)
+
+      assert LinkTestHelper.equal?(category_1_links, existing_category_1_links)
+      assert LinkTestHelper.equal?(category_2_links, existing_category_2_links)
     end
   end
 

@@ -8,7 +8,9 @@ defmodule Reedly.API.Queries.LinkQueries do
   object :link_queries do
     @desc "All links"
     field :links, type: list_of(:link) do
-      resolve(&LinkResolver.all/3)
+      arg(:id, :integer)
+
+      resolve(&LinkResolver.filter/3)
     end
   end
 end

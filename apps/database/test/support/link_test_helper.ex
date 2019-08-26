@@ -6,6 +6,7 @@ defmodule Reedly.Database.Test.LinkTestHelper do
   @attributes ~w[
     url
     description
+    category_id
   ]a
   @attributes_with_id [:id | @attributes]
 

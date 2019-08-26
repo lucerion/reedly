@@ -3,15 +3,29 @@ defmodule Reedly.Core.Test.LinksTest do
   use Reedly.Database.Test.RepoCase
 
   alias Reedly.Core.Links
-  alias Reedly.Database.Test.{LinkTestHelper, LinkTestFactory}
+  alias Reedly.Database.Test.{LinkTestHelper, LinkTestFactory, CategoryTestFactory}
 
-  describe "all/1" do
+  describe "fetch/1" do
     test "returns all links" do
       existing_links = LinkTestFactory.create(count: 3)
 
-      links = Links.all()
+      links = Links.fetch()
 
       assert LinkTestHelper.equal?(existing_links, links)
+    end
+
+    test "returns links by category when category id passed in args" do
+      category_1 = CategoryTestFactory.create(%{type: "link"})
+      category_2 = CategoryTestFactory.create(%{type: "link"})
+
+      existing_category_1_links = LinkTestFactory.create(%{category_id: category_1.id}, count: 2)
+      existing_category_2_links = LinkTestFactory.create(%{category_id: category_2.id}, count: 3)
+
+      category_1_links = Links.fetch(%{category_id: category_1.id})
+      category_2_links = Links.fetch(%{category_id: category_2.id})
+
+      assert LinkTestHelper.equal?(category_1_links, existing_category_1_links)
+      assert LinkTestHelper.equal?(category_2_links, existing_category_2_links)
     end
   end
 

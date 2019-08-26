@@ -3,12 +3,15 @@ defmodule Reedly.Core.Links do
 
   alias Reedly.Database.{Link, Repositories.LinkRepository}
 
-  @doc "All links"
-  @spec all() :: list(Link.t())
-  def all, do: all(%{})
+  @doc "Links by category"
+  @spec fetch(map) :: list(Link.t())
+  def fetch(%{category_id: category_id}), do: LinkRepository.filter_by_category(category_id)
 
-  @spec all(map) :: list(Link.t())
-  def all(_attributes), do: LinkRepository.all()
+  @doc "All links"
+  def fetch(_attributes), do: LinkRepository.all()
+
+  @spec fetch() :: list(Link.t())
+  def fetch, do: fetch(%{})
 
   @doc "Creates a link"
   @spec create(map) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()}

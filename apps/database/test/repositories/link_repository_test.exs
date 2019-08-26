@@ -24,6 +24,31 @@ defmodule Reedly.Database.Test.LinkRepositoryTest do
     end
   end
 
+  describe "filter_by_category/1" do
+    test "returns links by category" do
+      category_1 = CategoryTestFactory.create(%{type: "link"})
+      category_2 = CategoryTestFactory.create(%{type: "link"})
+
+      existing_category_1_links = LinkTestFactory.create(%{category_id: category_1.id}, count: 2)
+      existing_category_2_links = LinkTestFactory.create(%{category_id: category_2.id}, count: 3)
+
+      category_1_links = LinkRepository.filter_by_category(category_1.id)
+      category_2_links = LinkRepository.filter_by_category(category_2.id)
+
+      assert LinkTestHelper.equal?(category_1_links, existing_category_1_links)
+      assert LinkTestHelper.equal?(category_2_links, existing_category_2_links)
+    end
+
+    test "preloads category for links" do
+      category = CategoryTestFactory.create(%{type: "link"})
+      LinkTestFactory.create(%{category_id: category.id}, count: 3)
+
+      links = LinkRepository.filter_by_category(category.id)
+
+      assert Enum.all?(links, fn link -> link.category == category end)
+    end
+  end
+
   describe "create/1" do
     test "creates a link" do
       attributes = LinkTestFactory.build_attributes()

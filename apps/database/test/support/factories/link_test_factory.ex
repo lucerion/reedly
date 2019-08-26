@@ -8,13 +8,15 @@ defmodule Reedly.Database.Test.LinkTestFactory do
   @attributes ~w[
     url
     description
+    category_id
   ]a
 
   @doc "Builds link attributes"
   def build_attributes do
     %{
       url: Faker.Internet.url(),
-      description: Faker.Name.title()
+      description: Faker.Name.title(),
+      category_id: nil
     }
   end
 
