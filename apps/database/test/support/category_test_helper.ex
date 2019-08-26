@@ -9,6 +9,9 @@ defmodule Reedly.Database.Test.CategoryTestHelper do
   ]a
   @attributes_with_id [:id | @attributes]
 
+  defp attributes(categories, attributes) when is_list(categories),
+    do: Enum.map(categories, &attributes(&1, attributes))
+
   defp attributes(%Category{} = category), do: attributes(category, @attributes)
   defp attributes(%Category{} = category, attributes), do: Map.take(category, attributes)
 
@@ -16,4 +19,7 @@ defmodule Reedly.Database.Test.CategoryTestHelper do
     do: attributes(category_1, @attributes_with_id) == attributes(category_2, @attributes_with_id)
 
   def equal?(%Category{} = category, attributes), do: attributes(category) == attributes
+
+  def equal?(categories_1, categories_2) when is_list(categories_1) and is_list(categories_2),
+    do: attributes(categories_1, @attributes_with_id) == attributes(categories_2, @attributes_with_id)
 end

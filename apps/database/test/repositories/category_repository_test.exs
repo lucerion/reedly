@@ -18,6 +18,39 @@ defmodule Reedly.Database.Test.CategoryRepositoryTest do
     end
   end
 
+  describe "all/0" do
+    test "returns all categories" do
+      existing_categories = CategoryTestFactory.create(count: 3)
+
+      categories = CategoryRepository.all()
+
+      assert CategoryTestHelper.equal?(categories, existing_categories)
+    end
+  end
+
+  describe "filter_by_type/1" do
+    test "returns categories by type" do
+      existing_feeds_categories = CategoryTestFactory.create(%{type: "feed"}, count: 3)
+      existing_links_categories = CategoryTestFactory.create(%{type: "link"}, count: 2)
+
+      feeds_categories = CategoryRepository.filter_by_type("feed")
+      links_categories = CategoryRepository.filter_by_type("link")
+
+      assert CategoryTestHelper.equal?(feeds_categories, existing_feeds_categories)
+      assert CategoryTestHelper.equal?(links_categories, existing_links_categories)
+    end
+
+    test "preloads feeds for feeds categories" do
+      existing_feed_category = CategoryTestFactory.create(%{type: "feed"})
+      existing_feeds = FeedTestFactory.create(%{category_id: existing_feed_category.id}, count: 3)
+
+      feeds_categories = CategoryRepository.filter_by_type("feed")
+      feeds = Enum.flat_map(feeds_categories, fn feed_category -> feed_category.feeds end)
+
+      assert FeedTestHelper.equal?(feeds, existing_feeds)
+    end
+  end
+
   describe "create/1" do
     test "creates a category" do
       attributes = CategoryTestFactory.build_attributes()

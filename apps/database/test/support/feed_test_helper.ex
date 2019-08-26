@@ -23,6 +23,7 @@ defmodule Reedly.Database.Test.FeedTestHelper do
 
   defp attributes(%Feed{} = feed, attributes) do
     feed
+    |> Repo.preload(:entries)
     |> Map.take(attributes)
     |> Map.update(:entries, [], &FeedEntryTestHelper.attributes(&1))
   end

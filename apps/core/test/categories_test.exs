@@ -5,6 +5,27 @@ defmodule Reedly.Core.Test.CategoriesTest do
   alias Reedly.Core.Categories
   alias Reedly.Database.Test.{CategoryTestHelper, CategoryTestFactory}
 
+  describe "fetch/1" do
+    test "returns all categories" do
+      existing_categories = CategoryTestFactory.create(count: 3)
+
+      categories = Categories.fetch()
+
+      assert CategoryTestHelper.equal?(categories, existing_categories)
+    end
+
+    test "returns categories by type when type passed in args" do
+      existing_feeds_categories = CategoryTestFactory.create(%{type: "feed"}, count: 3)
+      existing_links_categories = CategoryTestFactory.create(%{type: "link"}, count: 2)
+
+      feeds_categories = Categories.fetch(%{type: "feed"})
+      links_categories = Categories.fetch(%{type: "link"})
+
+      assert CategoryTestHelper.equal?(feeds_categories, existing_feeds_categories)
+      assert CategoryTestHelper.equal?(links_categories, existing_links_categories)
+    end
+  end
+
   describe "create/1" do
     test "creates a category" do
       attributes = CategoryTestFactory.build_attributes()
