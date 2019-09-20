@@ -4,9 +4,10 @@ defmodule Reedly.Database.Test.FeedEntryTestFactory do
   use Reedly.Database.Test.TestFactory
 
   alias Reedly.Database.{Repo, FeedEntry}
-  alias Reedly.Database.Test.DateTimeTestHelper
+  alias Reedly.Database.Test.{DateTimeTestHelper, FeedTestFactory, CategoryTestFactory}
 
   @attributes ~w[
+    feed_id
     title
     content
     url
@@ -33,5 +34,20 @@ defmodule Reedly.Database.Test.FeedEntryTestFactory do
     |> Ecto.Changeset.cast(build_attributes(attributes), @attributes)
     |> Repo.insert()
     |> extract_result()
+    |> Repo.preload(:feed)
+  end
+
+  def create_for_category(read_count: read_count, unread_count: unread_count) do
+    read_entries = create(%{read: true}, count: read_count)
+    unread_entries = create(%{read: false}, count: unread_count)
+    category = CategoryTestFactory.create()
+    feed = FeedTestFactory.create(%{category_id: category.id}, entries: read_entries ++ unread_entries)
+
+    %{category: category, feed: feed, read_entries: read_entries, unread_entries: unread_entries}
+  end
+
+  def create_for_category(count: count) do
+    %{category: category, feed: feed} = create_for_category(read_count: 0, unread_count: count)
+    %{category: category, feed: feed, entries: feed.entries}
   end
 end

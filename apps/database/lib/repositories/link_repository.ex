@@ -18,8 +18,8 @@ defmodule Reedly.Database.Repositories.LinkRepository do
   @doc "Fetches links by category id"
   @spec filter_by_category(id) :: list(Link.t())
   def filter_by_category(category_id) do
-    category_id
-    |> by_category_query()
+    Link
+    |> where(category_id: ^category_id)
     |> Repo.all()
     |> Repo.preload(:category)
   end
@@ -43,7 +43,4 @@ defmodule Reedly.Database.Repositories.LinkRepository do
   @doc "Deletes a link"
   @spec delete(Link.t()) :: {:ok, Link.t()}
   def delete(%Link{} = link), do: Repo.delete(link)
-
-  defp by_category_query(category_id),
-    do: from(link in Link, where: link.category_id == ^category_id)
 end

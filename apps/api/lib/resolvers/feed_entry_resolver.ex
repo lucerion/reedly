@@ -7,8 +7,12 @@ defmodule Reedly.API.Resolvers.FeedEntryResolver do
   @type resolution :: %Absinthe.Resolution{}
 
   @doc "All feed entries"
-  @spec all(map, map, resolution) :: {:ok, list(FeedEntry.t())}
-  def all(_parent, params, _resolution), do: {:ok, FeedEntries.all(params)}
+  @spec fetch(map, map, resolution) :: {:ok, list(FeedEntry.t())}
+  def fetch(_parent, params, _resolution) when params == %{},
+    do: {:ok, FeedEntries.all()}
+
+  @doc "Feed entries by criteria"
+  def fetch(_parent, params, _resolution), do: {:ok, FeedEntries.filter(params)}
 
   @doc "Updates a feed entry"
   @spec update(map, map, resolution) :: {:ok, FeedEntry.t()} | {:error, nil} | {:error, Ecto.Changeset.t()}

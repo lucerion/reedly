@@ -36,22 +36,48 @@ defmodule Reedly.Database.Test.FeedTestFactory do
     build_attributes(entries: entries)
   end
 
+  def build_attributes(attributes, entries_count: entries_count) do
+    build_attributes(entries_count: entries_count)
+    |> Map.merge(attributes)
+  end
+
   @doc "Create a feed"
   def create(attributes) when is_map(attributes) do
     %Feed{}
     |> Ecto.Changeset.cast(build_attributes(attributes), @attributes)
     |> Ecto.Changeset.cast_assoc(:entries, with: &FeedEntry.create_changeset/2)
-    |> Repo.insert()
-    |> extract_result()
+    |> insert()
+  end
+
+  def create(attributes, entries: entries) do
+    %Feed{}
+    |> Ecto.Changeset.cast(build_attributes(attributes), @attributes)
+    |> Ecto.Changeset.put_assoc(:entries, entries)
+    |> insert()
+  end
+
+  def create(attributes, entries_count: entries_count) do
+    attributes
+    |> build_attributes(entries_count: entries_count)
+    |> create()
   end
 
   def create(entries: entries) do
-    build_attributes(entries: entries)
-    |> create()
+    %Feed{}
+    |> Ecto.Changeset.cast(build_attributes(), @attributes)
+    |> Ecto.Changeset.put_assoc(:entries, entries)
+    |> insert()
   end
 
   def create(entries_count: entries_count) do
     build_attributes(entries_count: entries_count)
     |> create()
+  end
+
+  defp insert(changeset) do
+    changeset
+    |> Repo.insert()
+    |> extract_result()
+    |> Repo.preload([:category, :entries])
   end
 end

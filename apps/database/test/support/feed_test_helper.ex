@@ -23,7 +23,7 @@ defmodule Reedly.Database.Test.FeedTestHelper do
 
   defp attributes(%Feed{} = feed, attributes) do
     feed
-    |> Repo.preload(:entries)
+    |> Repo.preload([:category, :entries])
     |> Map.take(attributes)
     |> Map.update(:entries, [], &FeedEntryTestHelper.attributes(&1))
   end
@@ -31,8 +31,14 @@ defmodule Reedly.Database.Test.FeedTestHelper do
   def equal?(feeds_1, feeds_2) when is_list(feeds_1) and is_list(feeds_2),
     do: attributes(feeds_1, @attributes_with_id) == attributes(feeds_2, @attributes_with_id)
 
+  def equal?(%Feed{} = feed_1, %Feed{} = feed_2),
+    do: attributes(feed_1, @attributes_with_id) == attributes(feed_2, @attributes_with_id)
+
   def equal?(%Feed{} = feed, attributes), do: attributes(feed) == attributes
 
-  def find_by_ids(ids),
-    do: Repo.all(from(feed in Feed, where: feed.id in ^ids))
+  def find_by_ids(ids) do
+    Feed
+    |> where([feed], feed.id in ^ids)
+    |> Repo.all()
+  end
 end

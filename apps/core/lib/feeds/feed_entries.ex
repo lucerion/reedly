@@ -5,10 +5,14 @@ defmodule Reedly.Core.Feeds.FeedEntries do
 
   @doc "All feed entries"
   @spec all() :: list(FeedEntry.t())
-  def all, do: all(%{})
+  def all, do: FeedEntryRepository.all()
 
-  @spec all(map) :: list(FeedEntry.t())
-  def all(_attributes), do: FeedEntryRepository.all()
+  @doc "Feed entries by criteria"
+  @spec filter(map) :: list(FeedEntry.t())
+  def filter(attributes), do: FeedEntryRepository.filter(attributes)
+
+  @spec filter() :: list(FeedEntry.t())
+  def filter, do: []
 
   @doc "Updates a feed entry"
   @spec update(map) :: {:ok, FeedEntry.t()} | {:error, Ecto.Changeset.t()} | {:error, nil}

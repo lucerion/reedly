@@ -21,11 +21,11 @@ defmodule Reedly.Database.Repositories.CategoryRepository do
   @spec filter_by_type(String.t()) :: list(Category.t())
   def filter_by_type("feed" = type) do
     type
-    |> fetch_by_type()
+    |> fetch_with_type()
     |> Repo.preload(:feeds)
   end
 
-  def filter_by_type(type), do: fetch_by_type(type)
+  def filter_by_type(type), do: fetch_with_type(type)
 
   @doc "Creates a category"
   @spec create(map) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()}
@@ -47,12 +47,9 @@ defmodule Reedly.Database.Repositories.CategoryRepository do
   @spec delete(Category.t()) :: {:ok, Category.t()}
   def delete(%Category{} = category), do: Repo.delete(category)
 
-  defp fetch_by_type(type) do
-    type
-    |> by_type_query()
+  defp fetch_with_type(type) do
+    Category
+    |> where(type: ^type)
     |> Repo.all()
   end
-
-  defp by_type_query(type),
-    do: from(category in Category, where: category.type == ^type)
 end

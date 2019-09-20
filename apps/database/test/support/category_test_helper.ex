@@ -9,11 +9,11 @@ defmodule Reedly.Database.Test.CategoryTestHelper do
   ]a
   @attributes_with_id [:id | @attributes]
 
-  defp attributes(categories, attributes) when is_list(categories),
+  def attributes(categories, attributes) when is_list(categories),
     do: Enum.map(categories, &attributes(&1, attributes))
 
-  defp attributes(%Category{} = category), do: attributes(category, @attributes)
-  defp attributes(%Category{} = category, attributes), do: Map.take(category, attributes)
+  def attributes(%Category{} = category), do: attributes(category, @attributes)
+  def attributes(%Category{} = category, attributes), do: Map.take(category, attributes)
 
   def equal?(%Category{} = category_1, %Category{} = category_2),
     do: attributes(category_1, @attributes_with_id) == attributes(category_2, @attributes_with_id)

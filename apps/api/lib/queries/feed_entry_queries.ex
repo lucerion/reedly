@@ -6,9 +6,13 @@ defmodule Reedly.API.Queries.FeedEntryQueries do
   alias Reedly.API.Resolvers.FeedEntryResolver
 
   object :feed_entry_queries do
-    @desc "All feed entries"
+    @desc "Feed entries"
     field :feed_entries, type: list_of(:feed_entry) do
-      resolve(&FeedEntryResolver.all/3)
+      arg(:feed_id, :integer)
+      arg(:category_id, :integer)
+      arg(:read, :boolean)
+
+      resolve(&FeedEntryResolver.fetch/3)
     end
   end
 end

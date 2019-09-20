@@ -20,13 +20,13 @@ defmodule Reedly.Database.Test.TestFactory do
       def create, do: create(%{})
 
       def create(count: count) when count <= 0,
-        do: create()
+        do: []
 
       def create(count: count),
         do: Enum.map(0..(count - 1), fn _x -> create() end)
 
       def create(attributes, count: count) when count <= 0,
-        do: create(attributes)
+        do: []
 
       def create(attributes, count: count),
         do: Enum.map(0..(count - 1), fn _x -> create(attributes) end)
