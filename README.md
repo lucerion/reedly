@@ -25,7 +25,7 @@ Run tests, type checker and static code analyzer
 
 ### Tests
 
-  * [setup tests](apps/database#tests) the for database app
+  * [setup tests](apps/database#tests) for the `database` app
   * run
 
         mix test
