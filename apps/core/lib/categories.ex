@@ -3,15 +3,11 @@ defmodule Reedly.Core.Categories do
 
   alias Reedly.Database.{Category, Repositories.CategoryRepository}
 
-  @doc "Categories by type"
-  @spec fetch(map) :: list(Category.t())
-  def fetch(%{type: type}), do: CategoryRepository.filter_by_type(type)
+  @type id :: integer | String.t()
 
-  @doc "All categories"
-  def fetch(_attributes), do: CategoryRepository.all()
-
-  @spec fetch() :: list(Category.t())
-  def fetch, do: fetch(%{})
+  @doc "Fetches categories by criteria"
+  @spec filter(map) :: list(Category.t()) | []
+  def filter(attributes), do: CategoryRepository.filter(attributes)
 
   @doc "Creates a category"
   @spec create(map) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()}
@@ -27,8 +23,8 @@ defmodule Reedly.Core.Categories do
   end
 
   @doc "Deletes a category by id"
-  @spec delete(map) :: {:ok, Category.t()} | {:error, nil}
-  def delete(%{id: id}) when is_integer(id) or is_binary(id) do
+  @spec delete(%{id: id}) :: {:ok, Category.t()} | {:error, nil}
+  def delete(%{id: id}) do
     case CategoryRepository.find(id) do
       nil -> {:error, nil}
       category -> CategoryRepository.delete(category)

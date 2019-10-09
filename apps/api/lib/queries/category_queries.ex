@@ -8,9 +8,9 @@ defmodule Reedly.API.Queries.CategoryQueries do
   object :category_queries do
     @desc "Categories"
     field :categories, type: list_of(:category) do
-      arg(:type, :string)
+      arg(:type, non_null(:string))
 
-      resolve(&CategoryResolver.filter/3)
+      resolve(&CategoryResolver.fetch/3)
     end
   end
 end

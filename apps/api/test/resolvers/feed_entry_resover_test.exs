@@ -103,7 +103,7 @@ defmodule Reedly.API.Test.FeedEntryResolverTest do
       assert FeedEntryTestHelper.equal?(feed_2_unread_entries, existing_feed_2_unread_entries)
     end
 
-    test "returns empty list with wrong arguments", %{parent: parent, resolution: resolution} do
+    test "returns empty list with invalid arguments", %{parent: parent, resolution: resolution} do
       assert FeedEntryResolver.fetch(parent, %{arg: "value"}, resolution) == {:ok, []}
     end
   end

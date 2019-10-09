@@ -6,11 +6,11 @@ defmodule Reedly.API.Queries.LinkQueries do
   alias Reedly.API.Resolvers.LinkResolver
 
   object :link_queries do
-    @desc "All links"
+    @desc "Links"
     field :links, type: list_of(:link) do
-      arg(:id, :integer)
+      arg(:category_id, :integer)
 
-      resolve(&LinkResolver.filter/3)
+      resolve(&LinkResolver.fetch/3)
     end
   end
 end

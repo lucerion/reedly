@@ -6,9 +6,13 @@ defmodule Reedly.API.Resolvers.LinkResolver do
 
   @type resolution :: %Absinthe.Resolution{}
 
+  @doc "All links"
+  @spec fetch(map, map, resolution) :: {:ok, list(Link.t())} | {:ok, []}
+  def fetch(_parent, params, _resolution) when params == %{},
+    do: {:ok, Links.all()}
+
   @doc "Links by criteria"
-  @spec filter(map, map, resolution) :: {:ok, list(Link.t())}
-  def filter(_parent, params, _resolution), do: {:ok, Links.fetch(params)}
+  def fetch(_parent, params, _resolution), do: {:ok, Links.filter(params)}
 
   @doc "Creates a link"
   @spec create(map, map, resolution) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()}

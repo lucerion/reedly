@@ -12,17 +12,18 @@ defmodule Reedly.Database.Repositories.LinkRepository do
   def find(id), do: Repo.get(Link, id)
 
   @doc "Fetches all links"
-  @spec all :: list(Link.t())
+  @spec all :: list(Link.t()) | []
   def all, do: Repo.all(Link)
 
-  @doc "Fetches links by category id"
-  @spec filter_by_category(id) :: list(Link.t())
-  def filter_by_category(category_id) do
+  @doc "Fetches links by category"
+  @spec filter(%{category_id: id}) :: list(Link.t()) | []
+  def filter(%{category_id: category_id}) do
     Link
     |> where(category_id: ^category_id)
     |> Repo.all()
-    |> Repo.preload(:category)
   end
+
+  def filter(_attributes), do: []
 
   @doc "Creates a link"
   @spec create(map) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()}

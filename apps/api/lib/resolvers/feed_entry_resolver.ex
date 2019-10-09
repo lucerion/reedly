@@ -7,7 +7,7 @@ defmodule Reedly.API.Resolvers.FeedEntryResolver do
   @type resolution :: %Absinthe.Resolution{}
 
   @doc "All feed entries"
-  @spec fetch(map, map, resolution) :: {:ok, list(FeedEntry.t())}
+  @spec fetch(map, map, resolution) :: {:ok, list(FeedEntry.t())} | {:ok, []}
   def fetch(_parent, params, _resolution) when params == %{},
     do: {:ok, FeedEntries.all()}
 

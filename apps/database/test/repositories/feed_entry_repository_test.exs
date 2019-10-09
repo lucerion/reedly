@@ -21,24 +21,6 @@ defmodule Reedly.Database.Test.FeedEntryRepositoryTest do
     end
   end
 
-  describe "update/2" do
-    test "updates a feed entry" do
-      feed_entry = FeedEntryTestFactory.create(%{read: false})
-
-      {:ok, updated_feed_entry} = FeedEntryRepository.update(feed_entry, %{read: true})
-
-      refute feed_entry.read == updated_feed_entry.read
-    end
-
-    test "not updates a feed entry if updated attribute is not 'read'" do
-      feed_entry = FeedEntryTestFactory.create()
-
-      {:ok, updated_feed_entry} = FeedEntryRepository.update(feed_entry, %{title: "Title updated!"})
-
-      assert feed_entry == updated_feed_entry
-    end
-  end
-
   describe "filter/1" do
     test "returns feed entries by category with category_id argument" do
       %{category: category_1, feed: feed_1, entries: feed_entries_1} =
@@ -66,9 +48,6 @@ defmodule Reedly.Database.Test.FeedEntryRepositoryTest do
 
       assert FeedEntryTestHelper.equal?(filtered_feed_entries_1, feed_entries_1)
       assert FeedEntryTestHelper.equal?(filtered_feed_entries_2, feed_entries_2)
-
-      assert feed_preloaded?(filtered_feed_entries_1, feed_1)
-      assert feed_preloaded?(filtered_feed_entries_2, feed_2)
     end
 
     test "returns read/unread feed entries with read argument" do
@@ -138,16 +117,29 @@ defmodule Reedly.Database.Test.FeedEntryRepositoryTest do
       assert FeedEntryTestHelper.equal?(filtered_feed_1_unread_entries, feed_1_unread_entries)
       assert FeedEntryTestHelper.equal?(filtered_feed_2_read_entries, feed_2_read_entries)
       assert FeedEntryTestHelper.equal?(filtered_feed_2_unread_entries, feed_2_unread_entries)
-
-      assert feed_preloaded?(filtered_feed_1_read_entries, feed_1)
-      assert feed_preloaded?(filtered_feed_1_unread_entries, feed_1)
-      assert feed_preloaded?(filtered_feed_2_read_entries, feed_2)
-      assert feed_preloaded?(filtered_feed_2_unread_entries, feed_2)
     end
 
-    test "returns empty list with wrong arguments" do
+    test "returns empty list with invalid arguments" do
       assert FeedEntryRepository.filter(%{arg: "value"}) == []
       assert FeedEntryRepository.filter(%{}) == []
+    end
+  end
+
+  describe "update/2" do
+    test "updates a feed entry" do
+      feed_entry = FeedEntryTestFactory.create(%{read: false})
+
+      {:ok, updated_feed_entry} = FeedEntryRepository.update(feed_entry, %{read: true})
+
+      refute feed_entry.read == updated_feed_entry.read
+    end
+
+    test "not updates a feed entry if updated attribute is not 'read'" do
+      feed_entry = FeedEntryTestFactory.create()
+
+      {:ok, updated_feed_entry} = FeedEntryRepository.update(feed_entry, %{title: "Title updated!"})
+
+      assert feed_entry == updated_feed_entry
     end
   end
 

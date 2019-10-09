@@ -13,19 +13,11 @@ defmodule Reedly.Database.Repositories.FeedEntryRepository do
   def find(id), do: Repo.get(FeedEntry, id)
 
   @doc "Fetches all feed entries"
-  @spec all :: feed_entries
+  @spec all :: feed_entries | []
   def all, do: fetch(FeedEntry)
 
-  @doc "Updates a feed entry"
-  @spec update(FeedEntry.t(), map) :: {:ok, FeedEntry.t()} | {:error, Ecto.Changeset.t()}
-  def update(%FeedEntry{} = feed_entry, attributes) do
-    feed_entry
-    |> FeedEntry.update_changeset(attributes)
-    |> Repo.update()
-  end
-
   @doc "Fetches read/unread feed entries by category"
-  @spec filter(%{category_id: id, read: boolean}) :: feed_entries
+  @spec filter(%{category_id: id, read: boolean}) :: feed_entries | []
   def filter(%{category_id: category_id, read: read}) do
     FeedEntry
     |> by_category_query(category_id)
@@ -34,32 +26,32 @@ defmodule Reedly.Database.Repositories.FeedEntryRepository do
   end
 
   @doc "Fetches feed entries by category"
-  @spec filter(%{category_id: id}) :: feed_entries
+  @spec filter(%{category_id: id}) :: feed_entries | []
   def filter(%{category_id: category_id}) do
     FeedEntry
     |> by_category_query(category_id)
     |> fetch()
   end
 
-  @doc "Fetches read/unread feed entries by category"
-  @spec filter(%{feed_id: id, read: boolean}) :: feed_entries
+  @doc "Fetches read/unread feed entries by feed"
+  @spec filter(%{feed_id: id, read: boolean}) :: feed_entries | []
   def filter(%{feed_id: feed_id, read: read}) do
     FeedEntry
     |> by_feed_query(feed_id)
     |> by_read_query(read)
-    |> fetch()
+    |> Repo.all()
   end
 
   @doc "Fetches feed entries by feed"
-  @spec filter(%{feed_id: id}) :: feed_entries
+  @spec filter(%{feed_id: id}) :: feed_entries | []
   def filter(%{feed_id: feed_id}) do
     FeedEntry
     |> by_feed_query(feed_id)
-    |> fetch()
+    |> Repo.all()
   end
 
   @doc "Fetches read/unread feed entries"
-  @spec filter(%{read: boolean}) :: feed_entries
+  @spec filter(%{read: boolean}) :: feed_entries | []
   def filter(%{read: read}) do
     FeedEntry
     |> by_read_query(read)
@@ -68,6 +60,14 @@ defmodule Reedly.Database.Repositories.FeedEntryRepository do
 
   @spec filter(%{}) :: []
   def filter(_attributes), do: []
+
+  @doc "Updates a feed entry"
+  @spec update(FeedEntry.t(), map) :: {:ok, FeedEntry.t()} | {:error, Ecto.Changeset.t()}
+  def update(%FeedEntry{} = feed_entry, attributes) do
+    feed_entry
+    |> FeedEntry.update_changeset(attributes)
+    |> Repo.update()
+  end
 
   defp fetch(query) do
     query

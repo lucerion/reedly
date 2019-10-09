@@ -97,11 +97,7 @@ defmodule Reedly.Core.Test.FeedEntriesTest do
       assert FeedEntryTestHelper.equal?(filtered_feed_2_unread_entries, feed_2_unread_entries)
     end
 
-    test "returns empty list without arguments" do
-      assert FeedEntries.filter() == []
-    end
-
-    test "returns empty list with wrong arguments" do
+    test "returns empty list with invalid arguments" do
       assert FeedEntries.filter(%{arg: "value"}) == []
       assert FeedEntries.filter(%{}) == []
     end

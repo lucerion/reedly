@@ -5,27 +5,25 @@ defmodule Reedly.Database.Repositories.CategoryRepository do
 
   alias Reedly.Database.{Repo, Category}
 
+  @type id :: integer | String.t()
+
+  @feed_category_type "feed"
+
   @doc "Fetches a category by id"
-  @spec find(integer | String.t()) :: Category.t() | nil
+  @spec find(id) :: Category.t() | nil
   def find(id), do: Repo.get(Category, id)
 
-  @doc "Fetches all categories"
-  @spec all() :: list(Category.t())
-  def all do
-    Category
-    |> Repo.all()
-    |> Repo.preload(:feeds)
-  end
-
   @doc "Fetches categories by type"
-  @spec filter_by_type(String.t()) :: list(Category.t())
-  def filter_by_type("feed" = type) do
-    type
-    |> fetch_with_type()
+  @spec filter(%{type: String.t()}) :: list(Category.t()) | []
+  def filter(%{type: @feed_category_type}) do
+    @feed_category_type
+    |> filter_by_type()
     |> Repo.preload(:feeds)
   end
 
-  def filter_by_type(type), do: fetch_with_type(type)
+  def filter(%{type: type}), do: filter_by_type(type)
+
+  def filter(_attributes), do: []
 
   @doc "Creates a category"
   @spec create(map) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()}
@@ -47,7 +45,7 @@ defmodule Reedly.Database.Repositories.CategoryRepository do
   @spec delete(Category.t()) :: {:ok, Category.t()}
   def delete(%Category{} = category), do: Repo.delete(category)
 
-  defp fetch_with_type(type) do
+  defp filter_by_type(type) do
     Category
     |> where(type: ^type)
     |> Repo.all()

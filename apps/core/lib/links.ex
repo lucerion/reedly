@@ -3,15 +3,15 @@ defmodule Reedly.Core.Links do
 
   alias Reedly.Database.{Link, Repositories.LinkRepository}
 
-  @doc "Links by category"
-  @spec fetch(map) :: list(Link.t())
-  def fetch(%{category_id: category_id}), do: LinkRepository.filter_by_category(category_id)
+  @type id :: integer | String.t()
 
-  @doc "All links"
-  def fetch(_attributes), do: LinkRepository.all()
+  @doc "Fetches all links"
+  @spec all() :: list(Link.t()) | []
+  def all, do: LinkRepository.all()
 
-  @spec fetch() :: list(Link.t())
-  def fetch, do: fetch(%{})
+  @doc "Fetches links by criteria"
+  @spec filter(map) :: list(Link.t()) | []
+  def filter(attributes), do: LinkRepository.filter(attributes)
 
   @doc "Creates a link"
   @spec create(map) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()}
@@ -27,8 +27,8 @@ defmodule Reedly.Core.Links do
   end
 
   @doc "Deletes a link by id"
-  @spec delete(map) :: {:ok, Link.t()} | {:error, nil}
-  def delete(%{id: id}) when is_integer(id) or is_binary(id) do
+  @spec delete(%{id: id}) :: {:ok, Link.t()} | {:error, nil}
+  def delete(%{id: id}) do
     case LinkRepository.find(id) do
       nil -> {:error, nil}
       link -> LinkRepository.delete(link)
