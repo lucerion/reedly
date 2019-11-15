@@ -26,8 +26,9 @@ defmodule Reedly.Core.MixProject do
   defp deps do
     [
       {:database, in_umbrella: true},
-      {:httpoison, "~> 1.5.0"},
+      {:httpoison, "~> 1.6.0"},
       {:feeder_ex, "~> 1.1.0"},
+      {:timex, "~> 3.5.0"},
       {:faker, "~> 0.12.0", only: :test},
       {:mock, "~> 0.3.0", only: :test}
     ]
