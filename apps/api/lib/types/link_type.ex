@@ -8,6 +8,7 @@ defmodule Reedly.API.Types.LinkType do
     field(:id, :integer)
     field(:url, :string)
     field(:description, :string)
+    field(:category, :category)
   end
 
   @desc "Link result type"

@@ -5,6 +5,10 @@ defmodule Reedly.Core.Feeds do
   alias Reedly.Core.Feeds.Mappers.FeedMapper
   alias Reedly.Core.Helpers.HTTPHelper
 
+  @doc "Fetches all feeds"
+  @spec all() :: list(Feed.t()) | []
+  def all, do: FeedRepository.all()
+
   @doc "Creates a feed"
   @spec create(map) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
   def create(%{feed_url: feed_url}) do
@@ -21,10 +25,7 @@ defmodule Reedly.Core.Feeds do
 
   @doc "Updates all feeds"
   @spec update() :: :ok
-  def update do
-    FeedRepository.all()
-    |> Enum.each(&update(&1))
-  end
+  def update, do: Enum.each(all(), &update(&1))
 
   @doc "Updates a feed"
   @spec update(Feed.t()) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}

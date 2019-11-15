@@ -5,10 +5,6 @@ defmodule Reedly.Core.Categories do
 
   @type id :: integer | String.t()
 
-  @doc "Fetches categories by criteria"
-  @spec filter(map) :: list(Category.t()) | []
-  def filter(attributes), do: CategoryRepository.filter(attributes)
-
   @doc "Creates a category"
   @spec create(map) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()}
   def create(attributes), do: CategoryRepository.create(attributes)

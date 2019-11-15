@@ -2,19 +2,22 @@ defmodule Reedly.Database.Test.FeedRepositoryTest do
   use Reedly.Database.Test.RepoCase
 
   alias Reedly.Database.Repositories.FeedRepository
-  alias Reedly.Database.Test.{FeedTestHelper, FeedTestFactory, CategoryTestFactory}
+  alias Reedly.Database.Test.{FeedTestHelper, FeedTestFactory, CategoryTestFactory, CategoryTestHelper}
 
   describe "all/0" do
     test "returns feeds with their entries" do
+      category = CategoryTestFactory.create()
+
       existing_feeds = [
-        FeedTestFactory.create(entries_count: 1),
-        FeedTestFactory.create(entries_count: 2),
-        FeedTestFactory.create(entries_count: 3)
+        FeedTestFactory.create(%{category_id: category.id}, entries_count: 1),
+        FeedTestFactory.create(%{category_id: category.id}, entries_count: 2),
+        FeedTestFactory.create(%{category_id: category.id}, entries_count: 3)
       ]
 
       feeds = FeedRepository.all()
 
       assert FeedTestHelper.equal?(feeds, existing_feeds)
+      assert category_preloaded?(feeds, category)
     end
   end
 
@@ -104,4 +107,7 @@ defmodule Reedly.Database.Test.FeedRepositoryTest do
       assert validation_error?(result, :category_id, :category_type)
     end
   end
+
+  defp category_preloaded?(feeds, category),
+    do: Enum.all?(feeds, &CategoryTestHelper.equal?(category, &1.category))
 end

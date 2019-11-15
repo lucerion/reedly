@@ -6,10 +6,6 @@ defmodule Reedly.API.Resolvers.CategoryResolver do
 
   @type resolution :: %Absinthe.Resolution{}
 
-  @doc "Categories by criteria"
-  @spec fetch(map, map, resolution) :: {:ok, list(Category.t())} | {:ok, []}
-  def fetch(_parent, params, _resolution), do: {:ok, Categories.filter(params)}
-
   @doc "Creates a category"
   @spec create(map, map, resolution) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()}
   def create(_parent, params, _resolution), do: Categories.create(params)

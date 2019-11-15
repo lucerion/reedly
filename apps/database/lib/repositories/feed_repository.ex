@@ -1,8 +1,6 @@
 defmodule Reedly.Database.Repositories.FeedRepository do
   @moduledoc "Functions to read and change feeds in the database"
 
-  import Ecto.Query
-
   alias Reedly.Database.{Repo, Feed}
 
   @doc "Fetches all feeds"
@@ -10,7 +8,7 @@ defmodule Reedly.Database.Repositories.FeedRepository do
   def all do
     Feed
     |> Repo.all()
-    |> Repo.preload(:entries)
+    |> Repo.preload([:category, :entries])
   end
 
   @doc "Creates a feed"

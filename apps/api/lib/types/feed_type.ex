@@ -10,6 +10,7 @@ defmodule Reedly.API.Types.FeedType do
     field(:url, :string)
     field(:feed_url, :string)
     field(:updated, :naive_datetime)
+    field(:category, :category)
     field(:entries, list_of(:feed_entry))
   end
 

@@ -2,7 +2,7 @@ defmodule Reedly.Database.Test.LinkRepositoryTest do
   use Reedly.Database.Test.RepoCase
 
   alias Reedly.Database.Repositories.LinkRepository
-  alias Reedly.Database.Test.{LinkTestHelper, LinkTestFactory, CategoryTestFactory}
+  alias Reedly.Database.Test.{LinkTestHelper, LinkTestFactory, CategoryTestFactory, CategoryTestHelper}
 
   describe "find/1" do
     test "returns link by id" do
@@ -16,11 +16,13 @@ defmodule Reedly.Database.Test.LinkRepositoryTest do
 
   describe "all/0" do
     test "returns all links" do
-      existing_links = LinkTestFactory.create(count: 3)
+      category = CategoryTestFactory.create()
+      existing_links = LinkTestFactory.create(%{category_id: category.id}, count: 3)
 
       links = LinkRepository.all()
 
       assert LinkTestHelper.equal?(existing_links, links)
+      assert category_preloaded?(links, category)
     end
   end
 
@@ -37,6 +39,9 @@ defmodule Reedly.Database.Test.LinkRepositoryTest do
 
       assert LinkTestHelper.equal?(category_1_links, existing_category_1_links)
       assert LinkTestHelper.equal?(category_2_links, existing_category_2_links)
+
+      assert category_preloaded?(category_1_links, category_1)
+      assert category_preloaded?(category_2_links, category_2)
     end
 
     test "return empty list when attributes are not valid" do
@@ -144,4 +149,7 @@ defmodule Reedly.Database.Test.LinkRepositoryTest do
       assert LinkTestHelper.equal?(link, deleted_link)
     end
   end
+
+  defp category_preloaded?(links, category),
+    do: Enum.all?(links, &CategoryTestHelper.equal?(category, &1.category))
 end

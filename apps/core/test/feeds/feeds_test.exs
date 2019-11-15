@@ -6,7 +6,23 @@ defmodule Reedly.Core.Test.FeedsTest do
 
   alias Reedly.Core.Feeds
   alias Reedly.Core.Test.Mocks
-  alias Reedly.Database.Test.{FeedTestFactory, FeedEntryTestFactory}
+  alias Reedly.Database.Test.{FeedTestFactory, FeedTestHelper, FeedEntryTestFactory, CategoryTestFactory}
+
+  describe "all/0" do
+    test "returns all feeds" do
+      category = CategoryTestFactory.create()
+
+      existing_feeds = [
+        FeedTestFactory.create(%{category_id: category.id}, entries_count: 1),
+        FeedTestFactory.create(%{category_id: category.id}, entries_count: 2),
+        FeedTestFactory.create(%{category_id: category.id}, entries_count: 3)
+      ]
+
+      feeds = Feeds.all()
+
+      assert FeedTestHelper.equal?(feeds, existing_feeds)
+    end
+  end
 
   describe "update/1" do
     test "updates a feed" do

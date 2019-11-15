@@ -5,7 +5,23 @@ defmodule Reedly.API.Test.FeedResolverTest do
 
   alias Reedly.API.Resolvers.FeedResolver
   alias Reedly.Core.Test.Mocks
-  alias Reedly.Database.Test.ValidationTestHelper
+  alias Reedly.Database.Test.{ValidationTestHelper, FeedTestFactory, FeedTestHelper, CategoryTestFactory}
+
+  describe "fetch/3" do
+    test "returns all feeds", %{parent: parent, args: args, resolution: resolution} do
+      category = CategoryTestFactory.create()
+
+      existing_feeds = [
+        FeedTestFactory.create(%{category_id: category.id}, entries_count: 1),
+        FeedTestFactory.create(%{category_id: category.id}, entries_count: 2),
+        FeedTestFactory.create(%{category_id: category.id}, entries_count: 3)
+      ]
+
+      {:ok, feeds} = FeedResolver.fetch(parent, args, resolution)
+
+      assert FeedTestHelper.equal?(feeds, existing_feeds)
+    end
+  end
 
   describe "create/3" do
     test "creates a feed by feed_url", %{parent: parent, resolution: resolution} do
