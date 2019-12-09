@@ -10,7 +10,7 @@ defmodule Reedly.Core.Feeds do
   def all, do: FeedRepository.all()
 
   @doc "Creates a feed"
-  @spec create(map) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
+  @spec create(%{feed_url: String.t()}) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
   def create(%{feed_url: feed_url}) do
     case parse(feed_url) do
       {:ok, attributes} ->
@@ -42,6 +42,7 @@ defmodule Reedly.Core.Feeds do
   defp new_entries(%Feed{entries: entries}, %{entries: new_entries}) do
     existing_entries_ids = Enum.map(entries, & &1.entity_id)
     entry_not_exists = &(!Enum.member?(existing_entries_ids, &1.entity_id))
+
     Enum.filter(new_entries, entry_not_exists)
   end
 

@@ -82,13 +82,7 @@ defmodule Reedly.Database.Repositories.FeedEntryRepository do
     |> where([_feed_entry, _feed, category], category.id == ^category_id)
   end
 
-  defp by_feed_query(query, feed_id) do
-    query
-    |> where(feed_id: ^feed_id)
-  end
+  defp by_feed_query(query, feed_id), do: where(query, feed_id: ^feed_id)
 
-  defp by_read_query(query, read) do
-    query
-    |> where(read: ^read)
-  end
+  defp by_read_query(query, read), do: where(query, read: ^read)
 end

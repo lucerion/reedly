@@ -24,8 +24,7 @@ defmodule Reedly.Core.Feeds.Mappers.FeedEntryMapper do
 
   @doc "Maps a list of parsed feed entries to a feed entries attributes"
   @spec map(list(feeder_ex_entry) | []) :: list(feed_entry_attributes) | []
-  def map(entries) when is_list(entries),
-    do: Enum.map(entries, &map(&1))
+  def map(entries) when is_list(entries), do: Enum.map(entries, &map(&1))
 
   @doc "Maps a parsed feed entry to a feed entry attributes"
   @spec map(feeder_ex_entry) :: feed_entry_attributes()

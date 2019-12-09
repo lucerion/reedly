@@ -5,7 +5,7 @@ defmodule Reedly.Database.Validators.CategoryValidator do
 
   alias Reedly.Database.{Category, Repositories.CategoryRepository}
 
-  @messages %{
+  @error_messages %{
     not_found: "not found",
     incorrect_type: "incorrect type"
   }
@@ -16,18 +16,16 @@ defmodule Reedly.Database.Validators.CategoryValidator do
 
   def validate_category(%Ecto.Changeset{changes: %{category_id: category_id}} = changeset, allowed_type) do
     case CategoryRepository.find(category_id) do
-      nil -> add_error(changeset, :category_id, @messages.not_found, validation: :category)
-      category -> validate_category_type(changeset, category, allowed_type)
+      nil -> add_error(changeset, :category_id, @error_messages.not_found, validation: :category)
+      category -> validate_category_allowed(changeset, category, allowed_type)
     end
   end
 
   def validate_category(%Ecto.Changeset{} = changeset, _allowed_type), do: changeset
 
-  defp validate_category_type(%Ecto.Changeset{} = changeset, %Category{type: type}, allowed_type) do
-    if type == allowed_type do
-      changeset
-    else
-      add_error(changeset, :category_id, @messages.incorrect_type, validation: :category_type)
-    end
-  end
+  defp validate_category_allowed(changeset, %Category{type: type}, allowed_type) when type == allowed_type,
+    do: changeset
+
+  defp validate_category_allowed(changeset, _category, _allowed_type),
+    do: add_error(changeset, :category_id, @error_messages.incorrect_type, validation: :category_type)
 end
