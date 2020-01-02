@@ -14,7 +14,7 @@ defmodule Reedly.Database.Test.FeedTestHelper do
     category_id
     entries
   ]a
-  @attributes_with_id [:id | @attributes]
+  @created_feed_attributes [:id | @attributes]
 
   defp attributes(feeds, attributes) when is_list(feeds),
     do: Enum.map(feeds, &attributes(&1, attributes))
@@ -29,10 +29,10 @@ defmodule Reedly.Database.Test.FeedTestHelper do
   end
 
   def equal?(feeds_1, feeds_2) when is_list(feeds_1) and is_list(feeds_2),
-    do: attributes(feeds_1, @attributes_with_id) == attributes(feeds_2, @attributes_with_id)
+    do: attributes(feeds_1, @created_feed_attributes) == attributes(feeds_2, @created_feed_attributes)
 
   def equal?(%Feed{} = feed_1, %Feed{} = feed_2),
-    do: attributes(feed_1, @attributes_with_id) == attributes(feed_2, @attributes_with_id)
+    do: attributes(feed_1, @created_feed_attributes) == attributes(feed_2, @created_feed_attributes)
 
   def equal?(%Feed{} = feed, attributes), do: attributes(feed) == attributes
 

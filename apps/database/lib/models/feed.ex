@@ -57,12 +57,13 @@ defmodule Reedly.Database.Feed do
 
   @spec update_changeset(%Feed{}, map) :: Ecto.Changeset.t()
   def update_changeset(%Feed{} = feed, attributes) do
-    new_entries = Map.get(attributes, :entries, [])
-
     feed
     |> Repo.preload(:entries)
     |> cast(attributes, @update_allowed_attributes)
     |> validate_category(@allowed_category_type)
-    |> put_assoc(:entries, feed.entries ++ new_entries)
+    |> put_assoc(:entries, entries(feed, attributes))
   end
+
+  defp entries(feed, attributes),
+    do: Enum.uniq_by(feed.entries ++ Map.get(attributes, :entries, []), & &1.entity_id)
 end

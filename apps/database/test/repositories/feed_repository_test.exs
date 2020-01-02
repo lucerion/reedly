@@ -2,7 +2,15 @@ defmodule Reedly.Database.Test.FeedRepositoryTest do
   use Reedly.Database.Test.RepoCase
 
   alias Reedly.Database.Repositories.FeedRepository
-  alias Reedly.Database.Test.{FeedTestHelper, FeedTestFactory, CategoryTestFactory, CategoryTestHelper}
+
+  alias Reedly.Database.Test.{
+    FeedTestHelper,
+    FeedTestFactory,
+    FeedEntryTestHelper,
+    FeedEntryTestFactory,
+    CategoryTestFactory,
+    CategoryTestHelper
+  }
 
   describe "all/0" do
     test "returns feeds with their entries" do
@@ -98,13 +106,50 @@ defmodule Reedly.Database.Test.FeedRepositoryTest do
       assert validation_error?(result, :category_id, :category)
     end
 
-    test "fails when category type is not correct" do
+    test "fails when category type is not allowed" do
       category = CategoryTestFactory.create(%{type: "link"})
       feed = FeedTestFactory.create()
 
       result = FeedRepository.update(feed, %{category_id: category.id})
 
       assert validation_error?(result, :category_id, :category_type)
+    end
+
+    test "adds only new feed entries to existing feed entries" do
+      feed_entry_1 = FeedEntryTestFactory.build_attributes(%{entity_id: "feed_entry_1"})
+      feed_entry_2 = FeedEntryTestFactory.build_attributes(%{entity_id: "feed_entry_2"})
+      feed_entries = [feed_entry_1, feed_entry_2]
+      feed = FeedTestFactory.create(entries: feed_entries)
+
+      new_feed_entry_1 = FeedEntryTestFactory.build_attributes(%{entity_id: "new_feed_entry_1"})
+      new_feed_entry_2 = FeedEntryTestFactory.build_attributes(%{entity_id: "new_feed_entry_2"})
+      new_feed_entries = [new_feed_entry_1, new_feed_entry_2]
+
+      {:ok, updated_feed} = FeedRepository.update(feed, %{entries: [feed_entry_1] ++ new_feed_entries})
+
+      assert FeedEntryTestHelper.equal?(updated_feed.entries, feed_entries ++ new_feed_entries)
+    end
+
+    test "returns existing feed entries without entries attribute" do
+      feed_entry_1 = FeedEntryTestFactory.build_attributes(%{entity_id: "feed_entry_1"})
+      feed_entry_2 = FeedEntryTestFactory.build_attributes(%{entity_id: "feed_entry_2"})
+      feed_entries = [feed_entry_1, feed_entry_2]
+      feed = FeedTestFactory.create(entries: feed_entries)
+
+      {:ok, updated_feed} = FeedRepository.update(feed, %{})
+
+      assert FeedEntryTestHelper.equal?(updated_feed.entries, feed_entries)
+    end
+
+    test "returns existing feed entries when entries attribute is empty array" do
+      feed_entry_1 = FeedEntryTestFactory.build_attributes(%{entity_id: "feed_entry_1"})
+      feed_entry_2 = FeedEntryTestFactory.build_attributes(%{entity_id: "feed_entry_2"})
+      feed_entries = [feed_entry_1, feed_entry_2]
+      feed = FeedTestFactory.create(entries: feed_entries)
+
+      {:ok, updated_feed} = FeedRepository.update(feed, %{entries: []})
+
+      assert FeedEntryTestHelper.equal?(updated_feed.entries, feed_entries)
     end
   end
 

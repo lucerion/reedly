@@ -8,7 +8,7 @@ defmodule Reedly.Database.Test.LinkTestHelper do
     description
     category_id
   ]a
-  @attributes_with_id [:id | @attributes]
+  @created_link_attributes [:id | @attributes]
 
   defp attributes(links) when is_list(links),
     do: attributes(links, @attributes)
@@ -20,10 +20,10 @@ defmodule Reedly.Database.Test.LinkTestHelper do
   defp attributes(%Link{} = link, attributes), do: Map.take(link, attributes)
 
   def equal?(links_1, links_2) when is_list(links_1) and is_list(links_2),
-    do: attributes(links_1, @attributes_with_id) == attributes(links_2, @attributes_with_id)
+    do: attributes(links_1, @created_link_attributes) == attributes(links_2, @created_link_attributes)
 
   def equal?(%Link{} = link_1, %Link{} = link_2),
-    do: attributes(link_1, @attributes_with_id) == attributes(link_2, @attributes_with_id)
+    do: attributes(link_1, @created_link_attributes) == attributes(link_2, @created_link_attributes)
 
   def equal?(%Link{} = link, attributes), do: attributes(link) == attributes
 end
