@@ -13,6 +13,7 @@ defmodule Reedly.API.Types.FeedEntryType do
     field(:published, :naive_datetime)
     field(:read, :boolean)
     field(:feed_id, :integer)
+    field(:feed, :feed)
   end
 
   @desc "Feed entry result type"
