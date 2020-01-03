@@ -25,6 +25,11 @@ defmodule Reedly.Database.FeedEntry do
     published
     read
   ]a
+  @create_required_attributes ~w[
+    title
+    content
+    entity_id
+  ]
 
   @update_allowed_attributes ~w[read]a
 
@@ -45,6 +50,7 @@ defmodule Reedly.Database.FeedEntry do
   def create_changeset(%FeedEntry{} = feed_entry, attributes \\ %{}) do
     feed_entry
     |> cast(attributes, @create_allowed_attributes)
+    |> validate_required(@create_required_attributes)
   end
 
   @spec update_changeset(%FeedEntry{}, map) :: Ecto.Changeset.t()
