@@ -39,6 +39,17 @@ defmodule Reedly.Database.Test.FeedEntryRepositoryTest do
       assert feed_preloaded?(filtered_feed_entries_2, feed_2)
     end
 
+    test "returns feed entries without category when category_id is nil" do
+      %{category: category, feed: feed, entries: feed_entries} =
+        FeedEntryTestFactory.create_for_category(count: 3)
+
+      feed_entries_without_category = FeedEntryTestFactory.create(count: 3)
+
+      filtered_feed_entries = FeedEntryRepository.filter(%{category_id: nil})
+
+      assert FeedEntryTestHelper.equal?(filtered_feed_entries, feed_entries_without_category)
+    end
+
     test "returns feed entries by feed with feed_id argument" do
       %{feed: feed_1, entries: feed_entries_1} = FeedEntryTestFactory.create_for_category(count: 2)
       %{feed: feed_2, entries: feed_entries_2} = FeedEntryTestFactory.create_for_category(count: 3)

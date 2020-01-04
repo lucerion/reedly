@@ -79,8 +79,14 @@ defmodule Reedly.Database.Repositories.FeedEntryRepository do
     query
     |> join(:left, [feed_entry], feed in assoc(feed_entry, :feed))
     |> join(:left, [_feed_entry, feed], category in assoc(feed, :category))
-    |> where([_feed_entry, _feed, category], category.id == ^category_id)
+    |> by_category_id_query(category_id)
   end
+
+  defp by_category_id_query(query, nil),
+    do: where(query, [_feed_entry, _feed, category], is_nil(category.id))
+
+  defp by_category_id_query(query, category_id),
+    do: where(query, [_feed_entry, _feed, category], category.id == ^category_id)
 
   defp by_feed_query(query, feed_id), do: where(query, feed_id: ^feed_id)
 
