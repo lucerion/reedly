@@ -6,7 +6,7 @@ defmodule Reedly.Database.Link do
   import Ecto.Changeset
   import Reedly.Database.Validators.CategoryValidator
 
-  alias Reedly.Database.{Link, Category}
+  alias Reedly.Database.Category
 
   @typedoc "Link model type"
   @type t :: %__MODULE__{
@@ -33,8 +33,8 @@ defmodule Reedly.Database.Link do
     timestamps()
   end
 
-  @spec changeset(%Link{}, map) :: Ecto.Changeset.t()
-  def changeset(%Link{} = link, attributes \\ %{}) do
+  @spec changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
+  def changeset(%__MODULE__{} = link, attributes \\ %{}) do
     link
     |> cast(attributes, @allowed_attributes)
     |> validate_required(@required_attributes)

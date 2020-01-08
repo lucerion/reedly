@@ -5,7 +5,7 @@ defmodule Reedly.Database.Category do
 
   import Ecto.Changeset
 
-  alias Reedly.Database.{Category, Feed, Link}
+  alias Reedly.Database.{Feed, Link}
 
   @typedoc "Category model type"
   @type t :: %__MODULE__{
@@ -31,8 +31,8 @@ defmodule Reedly.Database.Category do
     timestamps()
   end
 
-  @spec create_changeset(%Category{}, map) :: Ecto.Changeset.t()
-  def create_changeset(%Category{} = category, attributes \\ %{}) do
+  @spec create_changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
+  def create_changeset(%__MODULE__{} = category, attributes \\ %{}) do
     category
     |> cast(attributes, @create_allowed_attributes)
     |> validate_required(@create_required_attributes)
@@ -40,8 +40,8 @@ defmodule Reedly.Database.Category do
     |> unique_constraint(:name, name: :categories_name_type_index)
   end
 
-  @spec update_changeset(%Category{}, map) :: Ecto.Changeset.t()
-  def update_changeset(%Category{} = category, attributes) do
+  @spec update_changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
+  def update_changeset(%__MODULE__{} = category, attributes) do
     category
     |> cast(attributes, @update_allowed_attributes)
     |> validate_required(@update_required_attributes)

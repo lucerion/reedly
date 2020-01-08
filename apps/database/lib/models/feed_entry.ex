@@ -5,7 +5,7 @@ defmodule Reedly.Database.FeedEntry do
 
   import Ecto.Changeset
 
-  alias Reedly.Database.{FeedEntry, Feed}
+  alias Reedly.Database.Feed
 
   @typedoc "FeedEntry model type"
   @type t :: %__MODULE__{
@@ -46,15 +46,15 @@ defmodule Reedly.Database.FeedEntry do
     timestamps()
   end
 
-  @spec create_changeset(%FeedEntry{}, map) :: Ecto.Changeset.t()
-  def create_changeset(%FeedEntry{} = feed_entry, attributes \\ %{}) do
+  @spec create_changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
+  def create_changeset(%__MODULE__{} = feed_entry, attributes \\ %{}) do
     feed_entry
     |> cast(attributes, @create_allowed_attributes)
     |> validate_required(@create_required_attributes)
   end
 
-  @spec update_changeset(%FeedEntry{}, map) :: Ecto.Changeset.t()
-  def update_changeset(%FeedEntry{} = feed_entry, attributes) do
+  @spec update_changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
+  def update_changeset(%__MODULE__{} = feed_entry, attributes) do
     feed_entry
     |> cast(attributes, @update_allowed_attributes)
   end

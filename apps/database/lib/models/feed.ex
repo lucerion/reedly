@@ -6,7 +6,7 @@ defmodule Reedly.Database.Feed do
   import Ecto.Changeset
   import Reedly.Database.Validators.CategoryValidator
 
-  alias Reedly.Database.{Repo, Feed, Category, FeedEntry}
+  alias Reedly.Database.{Repo, Category, FeedEntry}
 
   @typedoc "Feed model type"
   @type t :: %__MODULE__{
@@ -45,8 +45,8 @@ defmodule Reedly.Database.Feed do
     timestamps()
   end
 
-  @spec create_changeset(%Feed{}, map) :: Ecto.Changeset.t()
-  def create_changeset(%Feed{} = feed, attributes \\ %{}) do
+  @spec create_changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
+  def create_changeset(%__MODULE__{} = feed, attributes \\ %{}) do
     feed
     |> cast(attributes, @create_allowed_attributes)
     |> validate_required(@create_required_attributes)
@@ -55,8 +55,8 @@ defmodule Reedly.Database.Feed do
     |> cast_assoc(:entries, with: &FeedEntry.create_changeset/2)
   end
 
-  @spec update_changeset(%Feed{}, map) :: Ecto.Changeset.t()
-  def update_changeset(%Feed{} = feed, attributes) do
+  @spec update_changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
+  def update_changeset(%__MODULE__{} = feed, attributes) do
     feed
     |> Repo.preload(:entries)
     |> cast(attributes, @update_allowed_attributes)
