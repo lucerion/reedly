@@ -3,23 +3,26 @@ defmodule Reedly.API.Schema do
 
   use Absinthe.Schema
 
+  alias Reedly.API.Types.{ErrorType, CategoryType, LinkType, FeedEntryType, FeedType}
+  alias Reedly.API.Queries.{LinkQueries, FeedQueries, FeedEntryQueries}
+  alias Reedly.API.Mutations.{CategoryMutations, LinkMutations, FeedMutations, FeedEntryMutations}
   alias Reedly.API.Middlewares.ErrorMiddleware
 
   import_types(Absinthe.Type.Custom)
-  import_types(Reedly.API.Types.ErrorType)
-  import_types(Reedly.API.Types.CategoryType)
-  import_types(Reedly.API.Types.LinkType)
-  import_types(Reedly.API.Types.FeedEntryType)
-  import_types(Reedly.API.Types.FeedType)
+  import_types(ErrorType)
+  import_types(CategoryType)
+  import_types(LinkType)
+  import_types(FeedEntryType)
+  import_types(FeedType)
 
-  import_types(Reedly.API.Queries.LinkQueries)
-  import_types(Reedly.API.Queries.FeedQueries)
-  import_types(Reedly.API.Queries.FeedEntryQueries)
+  import_types(LinkQueries)
+  import_types(FeedQueries)
+  import_types(FeedEntryQueries)
 
-  import_types(Reedly.API.Mutations.CategoryMutations)
-  import_types(Reedly.API.Mutations.LinkMutations)
-  import_types(Reedly.API.Mutations.FeedMutations)
-  import_types(Reedly.API.Mutations.FeedEntryMutations)
+  import_types(CategoryMutations)
+  import_types(LinkMutations)
+  import_types(FeedMutations)
+  import_types(FeedEntryMutations)
 
   def middleware(middlewares, _field, %{identifier: :mutation}), do: middlewares ++ [ErrorMiddleware]
   def middleware(middlewares, _field, _object), do: middlewares

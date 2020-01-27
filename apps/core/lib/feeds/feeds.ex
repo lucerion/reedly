@@ -2,8 +2,7 @@ defmodule Reedly.Core.Feeds do
   @moduledoc "Feeds related business logic"
 
   alias Reedly.Database.{Feed, Repositories.FeedRepository}
-  alias Reedly.Core.Feeds.Mappers.FeedMapper
-  alias Reedly.Core.Helpers.HTTPHelper
+  alias Reedly.Core.{Feeds.Mappers.FeedMapper, Helpers.HTTPHelper}
 
   @doc "Fetches all feeds"
   @spec all() :: list(Feed.t()) | []
