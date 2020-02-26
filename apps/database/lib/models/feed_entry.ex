@@ -17,6 +17,21 @@ defmodule Reedly.Database.FeedEntry do
           read: boolean
         }
 
+  @type id :: String.t() | integer
+
+  @typedoc "FeedEntry creation attributes types"
+  @type create_attributes :: %{
+          title: String.t(),
+          content: String.t(),
+          url: String.t(),
+          entity_id: String.t(),
+          published: NaiveDateTime.t(),
+          read: boolean
+        }
+
+  @typedoc "FeedEntry update attributes types"
+  @type update_attributes :: %{id: id, read: boolean}
+
   @create_allowed_attributes ~w[
     title
     content
@@ -46,14 +61,14 @@ defmodule Reedly.Database.FeedEntry do
     timestamps()
   end
 
-  @spec create_changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
-  def create_changeset(%__MODULE__{} = feed_entry, attributes \\ %{}) do
+  @spec create_changeset(%__MODULE__{}, create_attributes) :: Ecto.Changeset.t()
+  def create_changeset(%__MODULE__{} = feed_entry, attributes) do
     feed_entry
     |> cast(attributes, @create_allowed_attributes)
     |> validate_required(@create_required_attributes)
   end
 
-  @spec update_changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
+  @spec update_changeset(%__MODULE__{}, update_attributes) :: Ecto.Changeset.t()
   def update_changeset(%__MODULE__{} = feed_entry, attributes) do
     feed_entry
     |> cast(attributes, @update_allowed_attributes)

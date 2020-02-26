@@ -40,8 +40,7 @@ defmodule Reedly.Database.Test.FeedEntryRepositoryTest do
     end
 
     test "returns feed entries without category when category_id is nil" do
-      %{category: category, feed: feed, entries: feed_entries} =
-        FeedEntryTestFactory.create_for_category(count: 3)
+      %{category: category, feed: feed, entries: feed_entries} = FeedEntryTestFactory.create_for_category(count: 3)
 
       feed_entries_without_category = FeedEntryTestFactory.create(count: 3)
 

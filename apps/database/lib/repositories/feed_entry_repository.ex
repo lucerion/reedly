@@ -3,13 +3,12 @@ defmodule Reedly.Database.Repositories.FeedEntryRepository do
 
   import Ecto.Query
 
-  alias Reedly.Database.{Repo, FeedEntry}
+  alias Reedly.Database.{Repo, FeedEntry, Feed, Category}
 
-  @type id :: integer | String.t()
   @type feed_entries :: list(FeedEntry.t())
 
   @doc "Fetches a feed entry by id"
-  @spec find(id) :: FeedEntry.t() | nil
+  @spec find(FeedEntry.id()) :: FeedEntry.t() | nil
   def find(id), do: Repo.get(FeedEntry, id)
 
   @doc "Fetches all feed entries"
@@ -17,7 +16,7 @@ defmodule Reedly.Database.Repositories.FeedEntryRepository do
   def all, do: fetch(FeedEntry)
 
   @doc "Fetches read/unread feed entries by category"
-  @spec filter(%{category_id: id, read: boolean}) :: feed_entries | []
+  @spec filter(%{category_id: Category.id(), read: boolean}) :: feed_entries | []
   def filter(%{category_id: category_id, read: read}) do
     FeedEntry
     |> by_category_query(category_id)
@@ -26,7 +25,7 @@ defmodule Reedly.Database.Repositories.FeedEntryRepository do
   end
 
   @doc "Fetches feed entries by category"
-  @spec filter(%{category_id: id}) :: feed_entries | []
+  @spec filter(%{category_id: Category.id()}) :: feed_entries | []
   def filter(%{category_id: category_id}) do
     FeedEntry
     |> by_category_query(category_id)
@@ -34,7 +33,7 @@ defmodule Reedly.Database.Repositories.FeedEntryRepository do
   end
 
   @doc "Fetches read/unread feed entries by feed"
-  @spec filter(%{feed_id: id, read: boolean}) :: feed_entries | []
+  @spec filter(%{feed_id: Feed.id(), read: boolean}) :: feed_entries | []
   def filter(%{feed_id: feed_id, read: read}) do
     FeedEntry
     |> by_feed_query(feed_id)
@@ -43,7 +42,7 @@ defmodule Reedly.Database.Repositories.FeedEntryRepository do
   end
 
   @doc "Fetches feed entries by feed"
-  @spec filter(%{feed_id: id}) :: feed_entries | []
+  @spec filter(%{feed_id: Feed.id()}) :: feed_entries | []
   def filter(%{feed_id: feed_id}) do
     FeedEntry
     |> by_feed_query(feed_id)
@@ -62,7 +61,7 @@ defmodule Reedly.Database.Repositories.FeedEntryRepository do
   def filter(_attributes), do: []
 
   @doc "Updates a feed entry"
-  @spec update(FeedEntry.t(), map) :: {:ok, FeedEntry.t()} | {:error, Ecto.Changeset.t()}
+  @spec update(FeedEntry.t(), FeedEntry.update_attributes()) :: {:ok, FeedEntry.t()} | {:error, Ecto.Changeset.t()}
   def update(%FeedEntry{} = feed_entry, attributes) do
     feed_entry
     |> FeedEntry.update_changeset(attributes)

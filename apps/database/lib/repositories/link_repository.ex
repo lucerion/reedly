@@ -3,12 +3,10 @@ defmodule Reedly.Database.Repositories.LinkRepository do
 
   import Ecto.Query
 
-  alias Reedly.Database.{Repo, Link}
-
-  @type id :: integer | String.t()
+  alias Reedly.Database.{Repo, Link, Category}
 
   @doc "Fetches a link by id"
-  @spec find(id) :: Link.t() | nil
+  @spec find(Link.id()) :: Link.t() | nil
   def find(id), do: Repo.get(Link, id)
 
   @doc "Fetches all links"
@@ -16,7 +14,7 @@ defmodule Reedly.Database.Repositories.LinkRepository do
   def all, do: fetch(Link)
 
   @doc "Fetches links by category"
-  @spec filter(%{category_id: id}) :: list(Link.t()) | []
+  @spec filter(%{category_id: Category.id()}) :: list(Link.t()) | []
   def filter(%{category_id: category_id}) do
     Link
     |> where(category_id: ^category_id)
@@ -26,15 +24,15 @@ defmodule Reedly.Database.Repositories.LinkRepository do
   def filter(_attributes), do: []
 
   @doc "Creates a link"
-  @spec create(map) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()}
-  def create(attributes \\ %{}) do
+  @spec create(Link.attributes()) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()}
+  def create(attributes) do
     %Link{}
     |> Link.changeset(attributes)
     |> Repo.insert()
   end
 
   @doc "Updates a link"
-  @spec update(Link.t(), map) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()}
+  @spec update(Link.t(), Link.attributes()) :: {:ok, Link.t()} | {:error, Ecto.Changeset.t()}
   def update(%Link{} = link, attributes) do
     link
     |> Link.changeset(attributes)

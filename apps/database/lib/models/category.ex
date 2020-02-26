@@ -13,6 +13,20 @@ defmodule Reedly.Database.Category do
           type: String.t()
         }
 
+  @type id :: String.t() | integer
+
+  @typedoc "Category creation attributes types"
+  @type create_attributes :: %{
+          name: String.t(),
+          type: String.t()
+        }
+
+  @typedoc "Category update attributes types"
+  @type update_attributes :: %{
+          id: id,
+          name: String.t()
+        }
+
   @types ~w[feed link]
 
   @create_allowed_attributes ~w[name type]a
@@ -31,8 +45,8 @@ defmodule Reedly.Database.Category do
     timestamps()
   end
 
-  @spec create_changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
-  def create_changeset(%__MODULE__{} = category, attributes \\ %{}) do
+  @spec create_changeset(%__MODULE__{}, create_attributes) :: Ecto.Changeset.t()
+  def create_changeset(%__MODULE__{} = category, attributes) do
     category
     |> cast(attributes, @create_allowed_attributes)
     |> validate_required(@create_required_attributes)
@@ -40,7 +54,7 @@ defmodule Reedly.Database.Category do
     |> unique_constraint(:name, name: :categories_name_type_index)
   end
 
-  @spec update_changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
+  @spec update_changeset(%__MODULE__{}, update_attributes) :: Ecto.Changeset.t()
   def update_changeset(%__MODULE__{} = category, attributes) do
     category
     |> cast(attributes, @update_allowed_attributes)

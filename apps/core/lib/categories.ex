@@ -3,14 +3,12 @@ defmodule Reedly.Core.Categories do
 
   alias Reedly.Database.{Category, Repositories.CategoryRepository}
 
-  @type id :: integer | String.t()
-
   @doc "Creates a category"
-  @spec create(map) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()}
+  @spec create(Category.create_attributes()) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()}
   def create(attributes), do: CategoryRepository.create(attributes)
 
   @doc "Updates a category"
-  @spec update(map) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()} | {:error, nil}
+  @spec update(Category.update_attributes()) :: {:ok, Category.t()} | {:error, Ecto.Changeset.t()} | {:error, nil}
   def update(%{id: id} = attributes) do
     case CategoryRepository.find(id) do
       nil -> {:error, nil}
@@ -19,7 +17,7 @@ defmodule Reedly.Core.Categories do
   end
 
   @doc "Deletes a category by id"
-  @spec delete(%{id: id}) :: {:ok, Category.t()} | {:error, nil}
+  @spec delete(%{id: Category.id()}) :: {:ok, Category.t()} | {:error, nil}
   def delete(%{id: id}) do
     case CategoryRepository.find(id) do
       nil -> {:error, nil}

@@ -14,6 +14,16 @@ defmodule Reedly.Database.Link do
           description: String.t()
         }
 
+  @type id :: integer | String.t()
+
+  @typedoc "Link attributes types"
+  @type attributes :: %{
+          id: id,
+          url: String.t(),
+          description: String.t(),
+          category_id: Category.id()
+        }
+
   @allowed_attributes ~w[
     url
     description
@@ -33,8 +43,8 @@ defmodule Reedly.Database.Link do
     timestamps()
   end
 
-  @spec changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
-  def changeset(%__MODULE__{} = link, attributes \\ %{}) do
+  @spec changeset(%__MODULE__{}, attributes) :: Ecto.Changeset.t()
+  def changeset(%__MODULE__{} = link, attributes) do
     link
     |> cast(attributes, @allowed_attributes)
     |> validate_required(@required_attributes)

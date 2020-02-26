@@ -12,8 +12,8 @@ defmodule Reedly.Database.Repositories.FeedRepository do
   end
 
   @doc "Creates a feed"
-  @spec create(map) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
-  def create(attributes \\ %{}) do
+  @spec create(Feed.create_attributes()) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
+  def create(attributes) do
     %Feed{}
     |> Feed.create_changeset(attributes)
     |> Repo.insert()
@@ -21,7 +21,7 @@ defmodule Reedly.Database.Repositories.FeedRepository do
   end
 
   @doc "Updates a feed"
-  @spec update(Feed.t(), map) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
+  @spec update(Feed.t(), Feed.update_attributes()) :: {:ok, Feed.t()} | {:error, Ecto.Changeset.t()}
   def update(%Feed{} = feed, attributes) do
     feed
     |> Feed.update_changeset(attributes)

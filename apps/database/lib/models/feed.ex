@@ -16,6 +16,24 @@ defmodule Reedly.Database.Feed do
           updated: NaiveDateTime.t()
         }
 
+  @type id :: String.t() | integer
+
+  @typedoc "Feed creation attributes types"
+  @type create_attributes :: %{
+          title: String.t(),
+          url: String.t(),
+          feed_url: String.t(),
+          updated: NaiveDateTime.t(),
+          category_id: Category.id()
+        }
+
+  @typedoc "Feed update attributes types"
+  @type update_attributes :: %{
+          title: String.t(),
+          updated: NaiveDateTime.t(),
+          category_id: Category.id()
+        }
+
   @create_allowed_attributes ~w[
     title
     url
@@ -45,8 +63,8 @@ defmodule Reedly.Database.Feed do
     timestamps()
   end
 
-  @spec create_changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
-  def create_changeset(%__MODULE__{} = feed, attributes \\ %{}) do
+  @spec create_changeset(%__MODULE__{}, create_attributes) :: Ecto.Changeset.t()
+  def create_changeset(%__MODULE__{} = feed, attributes) do
     feed
     |> cast(attributes, @create_allowed_attributes)
     |> validate_required(@create_required_attributes)
@@ -55,7 +73,7 @@ defmodule Reedly.Database.Feed do
     |> cast_assoc(:entries, with: &FeedEntry.create_changeset/2)
   end
 
-  @spec update_changeset(%__MODULE__{}, map) :: Ecto.Changeset.t()
+  @spec update_changeset(%__MODULE__{}, update_attributes) :: Ecto.Changeset.t()
   def update_changeset(%__MODULE__{} = feed, attributes) do
     feed
     |> Repo.preload(:entries)
