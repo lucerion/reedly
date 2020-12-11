@@ -1,3 +1,5 @@
+import_file("~/.iex.exs")
+
 import_if_available Ecto.Query
 
 alias Reedly.Database.Repo
